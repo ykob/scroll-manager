@@ -12,7 +12,7 @@ gulp.task('predefault', cb => {
   runSequence(
     'cleanDest',
     'sprite',
-    ['pug', 'sass', 'watchify', 'vendorScripts', 'copyToDest'],
+    ['pug', 'sass', 'watchify', 'copyToDest'],
     'serve',
     cb
   );
@@ -47,7 +47,7 @@ gulp.task('build', cb => {
   runSequence(
     'cleanDest',
     'sprite',
-    ['pug', 'sass', 'browserify', 'vendorScripts', 'copyToDest'],
+    ['pug', 'sass', 'browserify', 'copyToDest'],
     'cleanBuild',
     'replaceHtml',
     'cleanCss',
