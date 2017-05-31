@@ -1,0 +1,50 @@
+.u-m {
+  &-t {
+    @for $i from 1 through 20 {
+      &-#{$i * 5} {
+        @include l-more-than-tablet-p {
+          margin-top: ($i * 5) * 1px;
+        }
+        @include l-less-than-tablet-p {
+          margin-top: ($i * 2.5) * 1px;
+        }
+      }
+    }
+  }
+  &-b {
+    @for $i from 1 through 20 {
+      &-#{$i * 5} {
+        @include l-more-than-tablet-p {
+          margin-bottom: ($i * 5) * 1px;
+        }
+        @include l-less-than-tablet-p {
+          margin-bottom: ($i * 2.5) * 1px;
+        }
+      }
+    }
+  }
+  &-r {
+    @for $i from 1 through 20 {
+      &-#{$i * 5} {
+        @include l-more-than-tablet-p {
+          margin-right: ($i * 5) * 1px;
+        }
+        @include l-less-than-tablet-p {
+          margin-right: ($i * 2.5) * 1px;
+        }
+      }
+    }
+  }
+  &-l {
+    @for $i from 1 through 20 {
+      &-#{$i * 5} {
+        @include l-more-than-tablet-p {
+          margin-left: ($i * 5) * 1px;
+        }
+        @include l-less-than-tablet-p {
+          margin-left: ($i * 2.5) * 1px;
+        }
+      }
+    }
+  }
+}

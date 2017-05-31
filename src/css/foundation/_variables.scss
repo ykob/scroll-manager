@@ -1,0 +1,24 @@
+$color-facebook: #305097;
+$color-twitter: #00aced;
+$color-hatena: #00a4de;
+$color-googleplus: #db4e3f;
+$color-pocket: #ef4056;
+
+$color-text-black: #222;
+
+// @font-face {
+//   font-family: 'xxx';
+//   src:
+//     url('/font/xxx.ttf') format('truetype'),
+//     url('/font/xxx.woff') format('woff');
+// }
+
+$font-ja: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+
+$max-width: 1600px;
+$min-width: 970px;
+
+$break-point-pc-s: 1366px;
+$break-point-tablet-l: 1024px;
+$break-point-tablet-p: 768px;
+$break-point-mobile: 414px;

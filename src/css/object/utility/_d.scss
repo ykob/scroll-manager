@@ -1,0 +1,31 @@
+.u-d {
+  &-b {
+    display: block;
+  }
+  &-ib {
+    display: inline-block;
+  }
+  &-i {
+    display: inline;
+  }
+  &-fc {
+    display: flex;
+    justify-content: center;
+  }
+  &-fs {
+    display: flex;
+    justify-content: flex-start;
+  }
+  &-fe {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &-fa {
+    display: flex;
+    justify-content: space-around;
+  }
+  &-fb {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,20 @@
+block vars
+
+include ../_mixin/_common.pug
+include ../_mixin/_svg.pug
+
+doctype html
+html(lang="ja")
+  head
+    include ./_head.pug
+  body
+    .l-page(data-page-id=page.id)
+      include ./_gh.pug
+      block contentFixedBefore
+      .l-contents
+        block contentStatic
+      block contentFixedAfter
+      include ./_gf.pug
+    block script
+    script(src="/js/vendor.js")
+    script(src="/js/main.js")

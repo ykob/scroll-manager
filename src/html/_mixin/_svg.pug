@@ -1,0 +1,40 @@
+mixin logo(width)
+  -
+    var classNameBase = '';
+    var height = 0;
+    if (width=='100%')
+      height = '100%'
+    else
+      height = width * 50 / 100
+  svg(
+    xmlns = "http://www.w3.org/2000/svg",
+    width = width,
+    height = height,
+    viewBox="0 0 100 50",
+    class = (attributes.className) ? `${classNameBase} ${attributes.className}` : classNameBase,
+    id = (attributes.id) ? attributes.id : ''
+  )
+
+mixin iconFacebook(width)
+  svg(xmlns="http://www.w3.org/2000/svg" width=width height=width*226.6/117.7 viewBox="0 0 117.7 226.6" class=attributes.className id=attributes.id)
+    path(d="M76.4 226.6V123.2h34.7l5.2-40.3H76.4V57.2c0-11.7 3.2-19.6 20-19.6h21.3v-36C114 1.1 101.3 0 86.6 0 55.8 0 34.8 18.8 34.8 53.2v29.7H0v40.3h34.8v103.4h41.6z")
+
+mixin iconFacebookSquare(width)
+  svg(xmlns="http://www.w3.org/2000/svg" width=width height=width viewBox="0 0 266.9 266.9" class=attributes.className id=attributes.id)
+    path(d="M252.2 0H14.7C6.6 0 0 6.6 0 14.7v237.4c0 8.1 6.6 14.7 14.7 14.7h127.8V163.5h-34.8v-40.3h34.8V93.6c0-34.5 21.1-53.2 51.8-53.2 14.7 0 27.4 1.1 31.1 1.6v36h-21.3c-16.7 0-20 7.9-20 19.6v25.7H224l-5.2 40.3h-34.7V267h68c8.1 0 14.7-6.6 14.7-14.7V14.7c.1-8.1-6.5-14.7-14.6-14.7z")
+
+mixin iconTwitter(width)
+  svg(xmlns="http://www.w3.org/2000/svg" width=width height=width*222.2/273.4 viewBox="0 0 273.4 222.2" class=attributes.className id=attributes.id)
+    path(d="M273.4 26.3c-10.1 4.5-20.9 7.5-32.2 8.8 11.6-6.9 20.5-17.9 24.7-31-10.9 6.4-22.9 11.1-35.7 13.6C220 6.8 205.4 0 189.3 0c-31 0-56.1 25.1-56.1 56.1 0 4.4.5 8.7 1.5 12.8C88 66.5 46.7 44.2 19 10.3c-4.8 8.3-7.6 17.9-7.6 28.2 0 19.5 9.9 36.6 25 46.7-9.2-.3-17.8-2.8-25.4-7v.7c0 27.2 19.3 49.8 45 55-4.7 1.3-9.7 2-14.8 2-3.6 0-7.1-.4-10.6-1 7.1 22.3 27.9 38.5 52.4 39-19.2 15-43.4 24-69.7 24-4.5 0-9-.3-13.4-.8 24.8 15.9 54.3 25.2 86 25.2 103.2 0 159.6-85.5 159.6-159.6 0-2.4-.1-4.9-.2-7.3 11.1-8 20.6-17.9 28.1-29.1z")
+
+mixin iconInstagram(width)
+  svg(xmlns="http://www.w3.org/2000/svg" width=width height=width viewBox="0 0 15 15" class=attributes.className id=attributes.id)
+    path(d="M1.7 15C.8 15 0 14.2 0 13.3V1.7C0 .8.8 0 1.7 0h11.6c.9 0 1.7.8 1.7 1.7v11.6c0 .9-.8 1.7-1.7 1.7H1.7zm-.6-8.7v6.6c0 .5.4.9.9.9h10.8c.5 0 .9-.4.9-.9V6.3l-.2-.3h-1.4l-.3.4c.1.4.2.8.2 1.3 0 2.4-2 4.4-4.5 4.4S3 10.1 3 7.6c0-.4 0-.8.1-1.2L2.9 6H1.4l-.3.3zm6.4-2.2c-1.9 0-3.4 1.5-3.4 3.3s1.5 3.3 3.4 3.3 3.4-1.5 3.4-3.3-1.5-3.3-3.4-3.3zm3.6-2.9c-.5 0-1 .4-1 1v1.7c0 .5.4 1 1 1h1.8c.5 0 1-.4 1-1V2.2c0-.5-.4-1-1-1h-1.8z")
+
+mixin iconHatenaBookmark(width)
+  svg(xmlns="http://www.w3.org/2000/svg" width=width height=width*227.3/272.8 viewBox="0 0 272.8 227.3" class=attributes.className id=attributes.id)
+    path(d="M164.6 121.7q-13.6-15.2-37.8-17c14.4-3.9 24.8-9.6 31.4-17.3s9.8-17.8 9.8-30.7a55 55 0 0 0-6.6-27.1A48.8 48.8 0 0 0 142.2 11 82.37 82.37 0 0 0 116 2.4C105.8.7 87.9 0 62.3 0H0v227.2h64.2q38.7 0 55.8-2.6c11.4-1.8 20.9-4.8 28.6-8.9a52.5 52.5 0 0 0 21.9-21.4c5.1-9.2 7.7-19.9 7.7-32.1 0-16.9-4.5-30.4-13.6-40.5zm-107-71.4h13.3q23.1 0 31 5.2c5.3 3.5 7.9 9.5 7.9 18s-2.9 14-8.5 17.4-16.1 5-31.4 5H57.6V50.3zm52.8 130.3c-6.1 3.7-16.5 5.5-31.1 5.5H57.6v-49.5h22.6c15 0 25.4 1.9 30.9 5.7s8.4 10.4 8.4 20-3 14.7-9.2 18.4zM244 169.7a28.8 28.8 0 1 0 28.8 28.8 28.8 28.8 0 0 0-28.8-28.8zM219 0h50v151.52h-50z")
+
+mixin iconPocket(width)
+  svg(xmlns="http://www.w3.org/2000/svg" width=width height=width*58.9/68.8 viewBox="0 0 68.8 58.9" class=attributes.className id=attributes.id)
+    path(d="M68.8 5.6v18.9c0 19.2-15 34.3-33.5 34.3h-.8c-.3 0-.5.1-.8.1C15.2 58.9.2 44 .2 24.8H0V5.6C0 2.3 2.9 0 6.1 0h56.7c3.3 0 6 2.3 6 5.6zM54.3 18.2c-1.7-1.8-4.6-1.9-6.4-.1L34.4 30.9 21 18c-1.8-1.7-4.7-1.7-6.4.1-1.7 1.8-1.7 4.7.1 6.4l16.6 15.9c.9.8 2 1.3 3.2 1.3s2.3-.4 3.2-1.3l16.6-15.9c1.6-1.6 1.7-4.5 0-6.3z")

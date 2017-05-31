@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "domain": "http://ykob.github.io/scroll-manager/",
+    "websiteName": "scroll-manager",
+    "keywords": "",
+    "themeColor": "#ffffff"
+  },
+  "pages": {
+    "index": {
+      "id": "index",
+      "title": "",
+      "keywords": "",
+      "description": "it manage each scroll effects.",
+      "path": "/",
+      "ogpImg": "ogp.jpg"
+    }
+  }
+}

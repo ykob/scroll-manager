@@ -1,0 +1,28 @@
+- 
+  var titleMerge = (page.title != '') ? page.title + ' │ ' + data.meta.websiteName : data.meta.websiteName;
+  var keywordsMerge = (page.keywords != '') ? page.keywords + ', ' + data.meta.keywords : data.meta.keywords;
+
+meta(charset="utf-8")
+meta(http-equiv="X-UA-Compatible", content="IE=edge")
+title #{titleMerge}
+meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1")
+meta(name="description", content=page.description)
+meta(name="keywords", content=keywordsMerge)
+meta(name="theme-color", content=data.meta.themeColor)
+meta(name="msapplication-TileImage", content="/img/common/ms_tileimage.png")
+meta(name="msapplication-TileColor", content=data.meta.themeColor)
+link(rel="shortcut icon" href="/img/common/icon.ico")
+link(rel="apple-touch-icon" sizes="180x180" href="/img/common/app_icon.png")
+link(rel="stylesheet" href="/css/main.css")
+
+meta(property="og:title", content=titleMerge)
+meta(property="og:site_name", content=data.meta.websiteName)
+meta(property="og:type", content="website")
+meta(property="og:description", content=page.description)
+meta(property="og:url", content=data.meta.domain + page.path)
+meta(property="og:image", content=data.meta.domain + '/img/common/' + page.ogpImg)
+
+meta(name="twitter:card", content="summary_large_image")
+meta(name="twitter:title", content=titleMerge)
+meta(name="twitter:description", content=page.description)
+meta(name="twitter:image", content=data.meta.domain + '/img/common/' + page.ogpImg)
