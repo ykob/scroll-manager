@@ -48,7 +48,6 @@ export default class ScrollManager {
     for (var i = 0; i < this.parallaxItems.length; i++) {
       this.parallaxItems[i].init(this.scrollTop, this.resolution);
     }
-    this.scroll();
   }
   on() {
     window.addEventListener('scroll', () => {
@@ -56,6 +55,7 @@ export default class ScrollManager {
     }, false);
     window.addEventListener('resize', debounce(() => {
       this.resize();
+      this.scroll();
     }, 500), false);
   }
 }
