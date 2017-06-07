@@ -3,7 +3,7 @@ import ScrollItem from './ScrollItem';
 import ParallaxItem from './ParallaxItem'
 
 export default class ScrollManager {
-  constructor() {
+  constructor(opt) {
     this.elm = document.getElementsByClassName('js-scroll-item');
     this.elmParallax = document.getElementsByClassName('js-parallax-item');
     this.items = [];
@@ -13,6 +13,7 @@ export default class ScrollManager {
       x: 0,
       y: 0
     };
+    this.isWorking = (opt.isWorking) ? opt.isWorking : true;
     this.init();
   }
   init() {
@@ -31,6 +32,7 @@ export default class ScrollManager {
   }
   scroll() {
     this.scrollTop = window.pageYOffset;
+    if (this.isWorking === false) return;
     for (var i = 0; i < this.items.length; i++) {
       this.items[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
