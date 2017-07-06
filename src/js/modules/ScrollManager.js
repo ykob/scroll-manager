@@ -13,7 +13,7 @@ export default class ScrollManager {
       x: 0,
       y: 0
     };
-    this.isWorking = (opt && opt.isWorking) ? opt.isWorking : true;
+    this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : true;
     this.init();
   }
   init() {
