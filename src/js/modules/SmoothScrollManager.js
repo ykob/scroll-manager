@@ -1,6 +1,6 @@
 import debounce from 'js-util/debounce';
-import Force3 from './Force3';
 import ScrollItem from './ScrollItem';
+import Hookes from './Hookes';
 
 export default class SmoothScrollManager {
   constructor(opt) {
@@ -18,10 +18,7 @@ export default class SmoothScrollManager {
       y: 0
     };
 
-    this.velocity = [0, 0, 0];
-    this.acceleration = [0, 0, 0];
-    this.anchor = [0, 0, 0];
-    this.mass = 1;
+    this.hookesContents = new Hookes();
 
     this.scrollPrev = null;
     this.scrollNext = null;
@@ -45,7 +42,7 @@ export default class SmoothScrollManager {
     for (var i = 0; i < this.items.length; i++) {
       this.items[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
-    this.anchor[1] = this.scrollTop * -1;
+    this.hookesContents.anchor[1] = this.scrollTop * -1;
   }
   scroll() {
     this.scrollTop = window.pageYOffset;
@@ -74,10 +71,8 @@ export default class SmoothScrollManager {
     }, 100);
   }
   render() {
-    Force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, 0.02);
-    Force3.applyDrag(this.acceleration, 0.3);
-    Force3.updateVelocity(this.velocity, this.acceleration, this.mass);
-    this.elmContents.style.transform = `translate3D(0, ${this.velocity[1]}px, 0)`;
+    this.hookesContents.render();
+    this.elmContents.style.transform = `translate3D(0, ${this.hookesContents.velocity[1]}px, 0)`;
   }
   renderLoop() {
     this.render();
