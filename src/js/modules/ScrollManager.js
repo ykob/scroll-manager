@@ -17,6 +17,10 @@ export default class ScrollManager {
       x: 0,
       y: 0
     };
+    this.scrollPrev = null;
+    this.scrollNext = null;
+    this.resizePrev = null;
+    this.resizeNext = null;
     this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : true;
     this.init();
   }
@@ -34,9 +38,7 @@ export default class ScrollManager {
     this.resize();
     this.on();
   }
-  scroll() {
-    this.scrollTop = window.pageYOffset;
-    if (this.isWorking === false) return;
+  scrollBasis() {
     for (var i = 0; i < this.items.length; i++) {
       this.items[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
@@ -44,18 +46,33 @@ export default class ScrollManager {
       this.parallaxItems[i].scroll(this.scrollTop + this.resolution.y * 0.5);
     }
   }
-  resize() {
+  scroll() {
     this.scrollTop = window.pageYOffset;
-    this.resolution.x = window.innerWidth;
-    this.resolution.y = window.innerHeight;
-    this.bodyResolution.x = document.body.clientWidth;
-    this.bodyResolution.y = document.body.clientHeight;
+    if (this.isWorking === false) return;
+    if (this.scrollPrev) this.scrollPrev();
+    this.scrollBasis();
+    if (this.scrollNext) this.scrollNext();
+  }
+  resizeBasis() {
     for (var i = 0; i < this.items.length; i++) {
       this.items[i].init(this.scrollTop, this.resolution);
     }
     for (var i = 0; i < this.parallaxItems.length; i++) {
       this.parallaxItems[i].init(this.scrollTop, this.resolution);
     }
+  }
+  resize(callback) {
+    this.resolution.x = window.innerWidth;
+    this.resolution.y = window.innerHeight;
+    this.bodyResolution.x = document.body.clientWidth;
+    this.bodyResolution.y = document.body.clientHeight;
+    if (this.resizePrev) this.resizePrev();
+    setTimeout(() => {
+      this.scrollTop = window.pageYOffset;
+      this.resizeBasis();
+      if (this.resizeNext) this.resizeNext();
+      if (callback) callback();
+    }, 100);
   }
   on() {
     window.addEventListener('scroll', () => {
@@ -64,6 +81,6 @@ export default class ScrollManager {
     window.addEventListener('resize', debounce(() => {
       this.resize();
       this.scroll();
-    }, 500), false);
+    }, 400), false);
   }
 }
