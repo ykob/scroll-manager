@@ -1,13 +1,13 @@
 import Force3 from './Force3';
 
 export default class Hookes {
-  constructor(k = 0.02, d = 0.3, m = 1) {
+  constructor(opt) {
     this.velocity = [0, 0, 0];
     this.acceleration = [0, 0, 0];
     this.anchor = [0, 0, 0];
-    this.k = k;
-    this.d = d;
-    this.m = m;
+    this.k = (opt && opt.k !== undefined) ? opt.k : 0.2;
+    this.d = (opt && opt.d !== undefined) ? opt.d : 0.8;
+    this.m = (opt && opt.m !== undefined) ? opt.m : 1;
   }
   render() {
     Force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, this.k);
