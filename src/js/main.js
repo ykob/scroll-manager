@@ -1,6 +1,6 @@
-const ScrollManager = require('./modules/ScrollManager');
+import ScrollManager from './modules/SmoothScrollManager'
 
 const init = () => {
-  new ScrollManager();
+  const scrollManager = new ScrollManager();
 }
 init();
