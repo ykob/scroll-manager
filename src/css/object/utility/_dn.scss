@@ -1,6 +1,6 @@
 .u-dn {
   &-pc {
-    @include l-pc-all {
+    @include l-pc {
       display: none;
     }
   }
@@ -15,7 +15,7 @@
     }
   }
   &-tablet {
-    @include l-tablet-all {
+    @include l-tablet {
       display: none;
     }
   }

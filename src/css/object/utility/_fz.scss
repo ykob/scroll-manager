@@ -1,0 +1,7 @@
+.u-fz {
+  @for $i from 1 through 100 {
+    &-#{$i} {
+      @include fontSize($i);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+.u-trsde {
+  @for $i from 1 through 20 {
+    &-#{$i * 5} {
+      transition-delay: $i * 0.05s;
+    }
+  }
+}
