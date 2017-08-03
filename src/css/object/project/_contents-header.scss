@@ -1,6 +1,20 @@
 .p-contents-header {
   display: flex;
   justify-content: center;
-  text-transform: uppercase;
-  @include flexFontSize(3.5);
+  text-align: center;
+  margin-top: (200 / 1366) * 100%;
+  margin-bottom: (200 / 1366) * 100%;
+  @include l-mobile {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+  &__title {
+    margin-top: 0;
+    text-transform: uppercase;
+    @include flexFontSize(3.5);
+  }
+  &__excerpt {
+    margin: 0;
+    @include fontSizeAll(14, 14, 12);
+  }
 }
