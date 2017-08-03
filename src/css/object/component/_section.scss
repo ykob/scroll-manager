@@ -9,11 +9,19 @@
     }
   }
   &__image {
+    overflow: hidden;
+    position: relative;
     @include l-more-than-mobile {
       width: 60%;
+      padding-top: (60 / 100) * 66.6%;
+    }
+    @include l-mobile {
+      padding-top: (60 / 100) * 100%;
     }
     img {
-      width: 100%;
+      width: 110%;
+      position: absolute;
+      top: -5%; left: -5%;
     }
   }
   &__content {
@@ -24,9 +32,14 @@
       padding-right: 5%;
       padding-left: 5%;
     }
+    @include l-mobile {
+      padding: 20px;
+    }
   }
   &__head {
+    line-height: 1.5;
     margin-top: 0;
+    margin-bottom: 0;
     @include fontSizeAll(32, 24, 21);
   }
 }
