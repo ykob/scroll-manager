@@ -1,0 +1,6 @@
+.p-contents-header {
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+  @include flexFontSize(3.5);
+}
