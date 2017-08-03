@@ -1,14 +1,18 @@
 import debounce from 'js-util/debounce';
+import MathEx from 'js-util/MathEx';
 import ScrollItem from './ScrollItem';
 import Hookes from './Hookes';
 
 export default class SmoothScrollManager {
   constructor(opt) {
     this.elm = document.getElementsByClassName('js-scroll-item');
+    this.elmParallax1 = document.getElementsByClassName('js-parallax1');
+    this.elmParallax2 = document.getElementsByClassName('js-parallax2');
     this.elmContents = document.querySelector('.l-contents');
     this.elmDummyScroll = document.querySelector('.l-dummy-scroll');
     this.items = [];
     this.scrollTop = window.pageYOffset;
+    this.scrollFrame = 0;
     this.resolution = {
       x: 0,
       y: 0
@@ -19,6 +23,8 @@ export default class SmoothScrollManager {
     };
 
     this.hookesContents = new Hookes();
+    this.hookesElements1 = new Hookes();
+    this.hookesElements2 = new Hookes();
 
     this.scrollPrev = null;
     this.scrollNext = null;
@@ -43,9 +49,13 @@ export default class SmoothScrollManager {
       this.items[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
     this.hookesContents.anchor[1] = this.scrollTop * -1;
+    this.hookesElements1.acceleration[1] += this.scrollFrame * 0.5;
+    this.hookesElements2.acceleration[1] -= this.scrollFrame * 0.05;
   }
-  scroll() {
-    this.scrollTop = window.pageYOffset;
+  scroll(event) {
+    const pageYOffset = window.pageYOffset;
+    this.scrollFrame = pageYOffset - this.scrollTop;
+    this.scrollTop = pageYOffset;
     if (this.isWorking === false) return;
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
@@ -72,7 +82,15 @@ export default class SmoothScrollManager {
   }
   render() {
     this.hookesContents.render();
+    this.hookesElements1.render();
+    this.hookesElements2.render();
     this.elmContents.style.transform = `translate3D(0, ${this.hookesContents.velocity[1]}px, 0)`;
+    for (var i = 0; i < this.elmParallax1.length; i++) {
+      this.elmParallax1[i].style.transform = `translate3D(0, ${this.hookesElements1.velocity[1]}px, 0)`;
+    }
+    for (var i = 0; i < this.elmParallax2.length; i++) {
+      this.elmParallax2[i].style.transform = `translate3D(0, ${MathEx.clamp(this.hookesElements2.velocity[1], -5, 5)}%, 0)`;
+    }
   }
   renderLoop() {
     this.render();
@@ -84,11 +102,11 @@ export default class SmoothScrollManager {
   }
   on() {
     window.addEventListener('scroll', () => {
-      this.scroll();
+      this.scroll(event);
     }, false);
     window.addEventListener('resize', debounce(() => {
       this.resize();
-      this.scroll();
+      this.scroll(event);
     }, 400), false);
   }
 }
