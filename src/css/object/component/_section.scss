@@ -1,0 +1,32 @@
+.c-section {
+  @include l-more-than-mobile {
+    display: flex;
+    align-items: center;
+    margin-top: (200 / 1366) * 100%;
+    margin-bottom: (200 / 1366) * 100%;
+    &--reverse {
+      flex-direction: row-reverse;
+    }
+  }
+  &__image {
+    @include l-more-than-mobile {
+      width: 60%;
+    }
+    img {
+      width: 100%;
+    }
+  }
+  &__content {
+    box-sizing: border-box;
+    @include fontSize(14);
+    @include l-more-than-mobile {
+      width: 40%;
+      padding-right: 5%;
+      padding-left: 5%;
+    }
+  }
+  &__head {
+    margin-top: 0;
+    @include fontSizeAll(32, 24, 21);
+  }
+}
