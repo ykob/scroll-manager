@@ -23,8 +23,8 @@ export default class SmoothScrollManager {
     };
 
     this.hookesContents = new Hookes();
-    this.hookesElements1 = new Hookes();
-    this.hookesElements2 = new Hookes();
+    this.hookesElements1 = new Hookes({ k: 0.05, d: 0.7 });
+    this.hookesElements2 = new Hookes({ k: 0.05, d: 0.7 });
 
     this.scrollPrev = null;
     this.scrollNext = null;
@@ -49,8 +49,8 @@ export default class SmoothScrollManager {
       this.items[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
     this.hookesContents.anchor[1] = this.scrollTop * -1;
-    this.hookesElements1.acceleration[1] += this.scrollFrame * 0.5;
-    this.hookesElements2.acceleration[1] -= this.scrollFrame * 0.05;
+    this.hookesElements1.acceleration[1] += this.scrollFrame * 0.2;
+    this.hookesElements2.acceleration[1] -= this.scrollFrame * 0.015;
   }
   scroll(event) {
     const pageYOffset = window.pageYOffset;
@@ -89,7 +89,7 @@ export default class SmoothScrollManager {
       this.elmParallax1[i].style.transform = `translate3D(0, ${this.hookesElements1.velocity[1]}px, 0)`;
     }
     for (var i = 0; i < this.elmParallax2.length; i++) {
-      this.elmParallax2[i].style.transform = `translate3D(0, ${MathEx.clamp(this.hookesElements2.velocity[1], -5, 5)}%, 0)`;
+      this.elmParallax2[i].style.transform = `translate3D(0, ${MathEx.clamp(this.hookesElements2.velocity[1], -10, 10)}%, 0)`;
     }
   }
   renderLoop() {
