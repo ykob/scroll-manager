@@ -51,9 +51,9 @@ export default class SmoothScrollManager {
       this.items[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
     this.hookesContents.anchor[1] = this.scrollTop * -1;
-    this.hookesElements1.acceleration[1] -= this.scrollFrame * 0.2;
-    this.hookesElements2.acceleration[1] -= this.scrollFrame * 0.3;
-    this.hookesElementsR.acceleration[1] -= this.scrollFrame * 0.015;
+    this.hookesElements1.acceleration[1] += this.scrollFrame * 0.2;
+    this.hookesElements2.acceleration[1] += this.scrollFrame * 0.3;
+    this.hookesElementsR.acceleration[1] += this.scrollFrame * 0.01;
   }
   scroll(event) {
     const pageYOffset = window.pageYOffset;
