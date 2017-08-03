@@ -1,6 +1,6 @@
 import debounce from 'js-util/debounce';
 import ScrollItem from './ScrollItem';
-import ParallaxItem from './ParallaxItem'
+import ParallaxItem from './ParallaxItem';
 
 export default class ScrollManager {
   constructor(opt) {
@@ -10,6 +10,10 @@ export default class ScrollManager {
     this.parallaxItems = [];
     this.scrollTop = window.pageYOffset;
     this.resolution = {
+      x: 0,
+      y: 0
+    };
+    this.bodyResolution = {
       x: 0,
       y: 0
     };
@@ -44,6 +48,8 @@ export default class ScrollManager {
     this.scrollTop = window.pageYOffset;
     this.resolution.x = window.innerWidth;
     this.resolution.y = window.innerHeight;
+    this.bodyResolution.x = document.body.clientWidth;
+    this.bodyResolution.y = document.body.clientHeight;
     for (var i = 0; i < this.items.length; i++) {
       this.items[i].init(this.scrollTop, this.resolution);
     }
