@@ -10,7 +10,7 @@
   text-transform: uppercase;
   letter-spacing: 0.2em;
   background: none;
-  @include fontSizeAll(14, 14, 12);
+  @include fontSizeAll(13, 13, 11);
   @include l-more-than-mobile {
     width: 240px;
     padding-top: 20px;
