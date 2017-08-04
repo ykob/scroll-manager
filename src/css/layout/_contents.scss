@@ -1,4 +1,6 @@
 .l-contents {
-  position: fixed;
-  top: 0; right: 0; left: 0;
+  &.is-fixed {
+    position: fixed;
+    top: 0; right: 0; left: 0;
+  }
 }

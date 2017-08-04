@@ -1,5 +1,6 @@
 import debounce from 'js-util/debounce';
 import MathEx from 'js-util/MathEx';
+import isSmartphone from 'js-util/isSmartphone';
 import ScrollItem from './ScrollItem';
 import Hookes from './Hookes';
 
@@ -29,13 +30,16 @@ export default class SmoothScrollManager {
   }
   start() {
     this.isWorking = true;
-    this.isAnimate = true;
-    this.renderLoop();
+    if (!isSmartphone()) {
+      this.isAnimate = true;
+      this.renderLoop();
+    }
     this.resize(() => {
       this.scroll();
     });
   }
   init() {
+    if (!isSmartphone()) this.elmContents.classList.add('is-fixed');
     this.initScrollItems();
     this.initHookes();
     this.on();
@@ -50,6 +54,7 @@ export default class SmoothScrollManager {
     }
   }
   initHookes() {
+    if (isSmartphone()) return;
     this.hookesContents = new Hookes(
       [this.elmContents]
     );
@@ -70,10 +75,10 @@ export default class SmoothScrollManager {
     for (var i = 0; i < this.scrollItems.length; i++) {
       this.scrollItems[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
-    this.hookesContents.anchor[1] = this.scrollTop * -1;
-    this.hookesElements1.acceleration[1] += this.scrollFrame * 0.1;
-    this.hookesElements2.acceleration[1] += this.scrollFrame * 0.2;
-    this.hookesElementsR.acceleration[1] += this.scrollFrame * -0.02;
+    if (this.hookesContents) this.hookesContents.anchor[1] = this.scrollTop * -1;
+    if (this.hookesElements1) this.hookesElements1.acceleration[1] += this.scrollFrame * 0.1;
+    if (this.hookesElements2) this.hookesElements2.acceleration[1] += this.scrollFrame * 0.2;
+    if (this.hookesElementsR) this.hookesElementsR.acceleration[1] += this.scrollFrame * -0.02;
   }
   scroll(event) {
     const pageYOffset = window.pageYOffset;
@@ -88,7 +93,7 @@ export default class SmoothScrollManager {
     for (var i = 0; i < this.scrollItems.length; i++) {
       this.scrollItems[i].init(this.scrollTop, this.resolution);
     }
-    this.elmDummyScroll.style.height = `${this.elmContents.clientHeight}px`;
+    if (!isSmartphone()) this.elmDummyScroll.style.height = `${this.elmContents.clientHeight}px`;
   }
   resize(callback) {
     this.resolution.x = window.innerWidth;
