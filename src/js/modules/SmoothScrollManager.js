@@ -51,8 +51,8 @@ export default class SmoothScrollManager {
       this.items[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
     this.hookesContents.anchor[1] = this.scrollTop * -1;
-    this.hookesElements1.acceleration[1] += this.scrollFrame * 0.3;
-    this.hookesElements2.acceleration[1] += this.scrollFrame * 0.5;
+    this.hookesElements1.acceleration[1] += this.scrollFrame * 0.1;
+    this.hookesElements2.acceleration[1] += this.scrollFrame * 0.2;
     this.hookesElementsR.acceleration[1] -= this.scrollFrame * 0.02;
   }
   scroll(event) {
@@ -86,6 +86,7 @@ export default class SmoothScrollManager {
   render() {
     this.hookesContents.render();
     this.hookesElements1.render();
+    this.hookesElements2.render();
     this.hookesElementsR.render();
     this.elmContents.style.transform = `translate3D(0, ${this.hookesContents.velocity[1]}px, 0)`;
     for (var i = 0; i < this.elmParallax1.length; i++) {
