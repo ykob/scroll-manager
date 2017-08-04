@@ -23,8 +23,8 @@ export default class SmoothScrollManager {
     this.scrollNext = null;
     this.resizePrev = null;
     this.resizeNext = null;
-    this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : true;
-    this.isAnimate = true;
+    this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
+    this.isAnimate = false;
     this.init();
   }
   init() {
@@ -32,7 +32,6 @@ export default class SmoothScrollManager {
     this.initHookes();
     this.resize();
     this.on();
-    this.renderLoop();
   }
   initScrollItems() {
     this.scrollItems = [];
