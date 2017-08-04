@@ -11,7 +11,7 @@ export default class SmoothScrollManager {
     this.elmParallaxR = document.getElementsByClassName('js-parallax-r');
     this.elmContents = document.querySelector('.l-contents');
     this.elmDummyScroll = document.querySelector('.l-dummy-scroll');
-    this.items = [];
+    this.scrollItems = [];
     this.scrollTop = window.pageYOffset;
     this.scrollFrame = 0;
     this.resolution = {
@@ -39,7 +39,7 @@ export default class SmoothScrollManager {
   init() {
     if (this.elm.length > 0) {
       for (var i = 0; i < this.elm.length; i++) {
-        this.items[i] = new ScrollItem(this.elm[i]);
+        this.scrollItems[i] = new ScrollItem(this.elm[i]);
       }
     }
     this.resize();
@@ -47,8 +47,8 @@ export default class SmoothScrollManager {
     this.renderLoop();
   }
   scrollBasis() {
-    for (var i = 0; i < this.items.length; i++) {
-      this.items[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
+    for (var i = 0; i < this.scrollItems.length; i++) {
+      this.scrollItems[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
     this.hookesContents.anchor[1] = this.scrollTop * -1;
     this.hookesElements1.acceleration[1] += this.scrollFrame * 0.1;
@@ -65,8 +65,8 @@ export default class SmoothScrollManager {
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
-    for (var i = 0; i < this.items.length; i++) {
-      this.items[i].init(this.scrollTop, this.resolution);
+    for (var i = 0; i < this.scrollItems.length; i++) {
+      this.scrollItems[i].init(this.scrollTop, this.resolution);
     }
     this.elmDummyScroll.style.height = `${this.elmContents.clientHeight}px`;
   }
