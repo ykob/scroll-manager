@@ -27,10 +27,17 @@ export default class SmoothScrollManager {
     this.isAnimate = false;
     this.init();
   }
+  start() {
+    this.isWorking = true;
+    this.isAnimate = true;
+    this.renderLoop();
+    this.resize(() => {
+      this.scroll();
+    });
+  }
   init() {
     this.initScrollItems();
     this.initHookes();
-    this.resize();
     this.on();
   }
   initScrollItems() {
