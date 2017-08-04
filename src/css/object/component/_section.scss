@@ -9,19 +9,21 @@
     }
   }
   &__image {
-    overflow: hidden;
-    position: relative;
     @include l-more-than-mobile {
       width: 60%;
-      padding-top: (60 / 100) * 66.6%;
     }
-    @include l-mobile {
-      padding-top: (60 / 100) * 100%;
-    }
-    img {
-      width: 120%;
-      position: absolute;
-      top: -10%; left: -10%;
+    &-in {
+      overflow: hidden;
+      position: relative;
+      padding-top: 66.6%;
+
+      @include l-mobile {
+      }
+      img {
+        width: 120%;
+        position: absolute;
+        top: -10%; left: -10%;
+      }
     }
   }
   &__content {
