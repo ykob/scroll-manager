@@ -1,9 +1,9 @@
 .p-contents-header {
+  height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
   text-align: center;
-  margin-top: (200 / 1366) * 100%;
-  margin-bottom: (200 / 1366) * 100%;
   @include l-mobile {
     margin-right: 20px;
     margin-left: 20px;
