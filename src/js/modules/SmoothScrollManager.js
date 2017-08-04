@@ -108,10 +108,10 @@ export default class SmoothScrollManager {
     }
   }
   on() {
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', (event) => {
       this.scroll(event);
     }, false);
-    window.addEventListener('resize', debounce(() => {
+    window.addEventListener('resize', debounce((event) => {
       this.resize();
       this.scroll(event);
     }, 400), false);
