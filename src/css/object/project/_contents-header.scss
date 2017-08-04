@@ -9,12 +9,19 @@
     margin-left: 20px;
   }
   &__title {
+    line-height: 1.1;
     margin-top: 0;
+    margin-bottom: 2rem;
     text-transform: uppercase;
     @include flexFontSize(3.5);
   }
   &__excerpt {
-    margin: 0;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
     @include fontSizeAll(14, 14, 12);
+  }
+  &__btn {
+    display: flex;
+    justify-content: center;
   }
 }
