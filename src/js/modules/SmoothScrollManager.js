@@ -1,5 +1,4 @@
 import debounce from 'js-util/debounce';
-import MathEx from 'js-util/MathEx';
 import isSmartphone from 'js-util/isSmartphone';
 import ScrollItem from './ScrollItem';
 import Hookes from './Hookes';
@@ -24,6 +23,8 @@ export default class SmoothScrollManager {
     this.scrollNext = null;
     this.resizePrev = null;
     this.resizeNext = null;
+    this.renderPrev = null;
+    this.renderNext = null;
     this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
     this.isAnimate = false;
     this.init();
@@ -109,10 +110,12 @@ export default class SmoothScrollManager {
     }, 100);
   }
   render() {
+    if (this.renderPrev) this.renderPrev();
     this.hookesContents.render();
     this.hookesElements1.render();
     this.hookesElements2.render();
     this.hookesElementsR.render();
+    if (this.renderNext) this.renderNext();
   }
   renderLoop() {
     this.render();
