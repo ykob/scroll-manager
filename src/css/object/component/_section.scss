@@ -28,7 +28,6 @@
   }
   &__content {
     box-sizing: border-box;
-    @include fontSizeAll(14, 14, 12);
     @include l-more-than-mobile {
       width: 40%;
       padding-right: 5%;
