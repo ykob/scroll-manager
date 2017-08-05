@@ -67,7 +67,6 @@
   //
   &__label {
     opacity: 0;
-    transition-duration: 0.3s;
     transition-property: color, opacity;
   }
   &__line-v, &__line-h {
@@ -101,16 +100,9 @@
       transform-origin: right;
     }
   }
-  &:before {
-    opacity: 0;
-    transition-duration: 0.6s;
-    transition-delay: 0.2s;
-    transition-property: opacity;
-  }
   &:after {
     transform: scaleX(0);
     transform-origin: left;
-    transition-duration: 0.3s;
     transition-timing-function: $easeOutCirc;
     transition-property: transform;
   }
@@ -138,21 +130,25 @@
   &.is-over & {
     &__label {
       color: #111;
+      transition-duration: 0.3s;
       transition-delay: 0s;
     }
   }
   &.is-over {
     &:after {
+      transition-duration: 0.3s;
       transform: scaleX(1);
     }
   }
   &.is-leave & {
     &__label {
+      transition-duration: 0.3s;
       transition-delay: 0s;
     }
   }
   &.is-leave {
     &:after {
+      transition-duration: 0.3s;
       transform-origin: right;
       transform: scaleX(0);
     }
