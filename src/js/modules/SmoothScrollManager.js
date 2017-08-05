@@ -44,8 +44,10 @@ export default class SmoothScrollManager {
     this.initDummyScroll();
     this.initScrollItems();
     this.initHookes();
-    this.hookesContents.anchor[1] = -this.scrollTop;
-    this.hookesContents.velocity[1] = -this.scrollTop;
+    if (!isSmartphone()) {
+      this.hookesContents.anchor[1] = -this.scrollTop;
+      this.hookesContents.velocity[1] = -this.scrollTop;
+    }
     this.on();
   }
   initDummyScroll() {
