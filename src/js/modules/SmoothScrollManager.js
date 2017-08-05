@@ -27,6 +27,7 @@ export default class SmoothScrollManager {
     this.renderNext = null;
     this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
     this.isAnimate = false;
+    this.isScrollOnLoad = false;
     this.init();
   }
   start() {
@@ -41,13 +42,10 @@ export default class SmoothScrollManager {
   }
   init() {
     if (!isSmartphone()) this.elmContents.classList.add('is-fixed');
+    this.resize();
     this.initDummyScroll();
     this.initScrollItems();
     this.initHookes();
-    if (!isSmartphone()) {
-      this.hookesContents.anchor[1] = -this.scrollTop;
-      this.hookesContents.velocity[1] = -this.scrollTop;
-    }
     this.on();
   }
   initDummyScroll() {
@@ -93,6 +91,11 @@ export default class SmoothScrollManager {
     const pageYOffset = window.pageYOffset;
     this.scrollFrame = pageYOffset - this.scrollTop;
     this.scrollTop = pageYOffset;
+    if (!isSmartphone() && !this.isScrollOnLoad) {
+      this.hookesContents.velocity[1] = -this.scrollTop;
+      this.hookesContents.anchor[1] = -this.scrollTop;
+      this.isScrollOnLoad = true;
+    }
     if (this.isWorking === false) return;
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
