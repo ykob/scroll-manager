@@ -1,2 +1,12 @@
 .l-gf {
+  color: #fff;
+  background-color: #111;
+  @include l-more-than-mobile {
+    padding-top: (200 / 1366) * 100%;
+    padding-bottom: (200 / 1366) * 100%;
+  }
+  @include l-mobile {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
 }

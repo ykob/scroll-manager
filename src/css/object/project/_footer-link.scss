@@ -1,0 +1,16 @@
+.p-footer-link {
+  margin-top: 15px;
+  text-align: center;
+  &__item {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 12px;
+    svg {
+      width: 32px;
+      fill: #fff;
+    }
+  }
+}
