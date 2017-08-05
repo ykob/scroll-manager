@@ -41,9 +41,15 @@ export default class SmoothScrollManager {
   }
   init() {
     if (!isSmartphone()) this.elmContents.classList.add('is-fixed');
+    this.initDummyScroll();
     this.initScrollItems();
     this.initHookes();
+    this.hookesContents.anchor[1] = -this.scrollTop;
+    this.hookesContents.velocity[1] = -this.scrollTop;
     this.on();
+  }
+  initDummyScroll() {
+    if (!isSmartphone()) this.elmDummyScroll.style.height = `${this.elmContents.clientHeight}px`;
   }
   initScrollItems() {
     this.scrollItems = [];
@@ -94,7 +100,7 @@ export default class SmoothScrollManager {
     for (var i = 0; i < this.scrollItems.length; i++) {
       this.scrollItems[i].init(this.scrollTop, this.resolution);
     }
-    if (!isSmartphone()) this.elmDummyScroll.style.height = `${this.elmContents.clientHeight}px`;
+    this.initDummyScroll();
   }
   resize(callback) {
     this.resolution.x = window.innerWidth;
