@@ -1,0 +1,82 @@
+.c-accordion-item {
+  border-bottom: 1px solid #ddd;
+  @include l-more-than-mobile {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  @include l-mobile {
+    padding: 20px;
+  }
+  &__head {
+    cursor: pointer;
+    position: relative;
+    @include fontSizeAll(24, 21, 14);
+  }
+  &__body {
+    height: 0;
+    overflow: hidden;
+    transition-duration: 0.6s;
+    transition-timing-function: $easeOutCirc;
+    &-in {
+      padding-top: 20px;
+    }
+  }
+  &__icon {
+    position: absolute;
+    top: 50%;
+    @include l-more-than-mobile {
+      width: 21px;
+      height: 21px;
+      right: 60px;
+      margin-top: -10px;
+    }
+    @include l-mobile {
+      width: 15px;
+      height: 15px;
+      right: 0;
+      margin-top: -8px;
+    }
+    &:before, &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      background-color: #777;
+    }
+    &:before {
+      width: 1px;
+      top: 0;
+      @include l-more-than-mobile {
+        height: 21px;
+        left: 10px;
+      }
+      @include l-mobile {
+        height: 15px;
+        left: 7px;
+      }
+    }
+    &:after {
+      height: 1px;
+      left: 0;
+      @include l-more-than-mobile {
+        width: 21px;
+        top: 10px;
+      }
+      @include l-mobile {
+        width: 15px;
+        top: 7px;
+      }
+    }
+  }
+  //
+  // Interaction
+  //
+  &__icon {
+    transition-duration: 0.6s;
+    transition-timing-function: $easeOutCirc;
+  }
+  &.is-opened & {
+    &__icon {
+      transform: rotate(135deg);
+    }
+  }
+}
