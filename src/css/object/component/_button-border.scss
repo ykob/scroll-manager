@@ -4,13 +4,13 @@
   line-height: 1.1;
   position: relative;
   border: 0;
-  color: #000;
+  color: #fff;
+  @include fontSizeAll(13, 13, 11);
   font-weight: 700;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   background: none;
-  @include fontSizeAll(13, 13, 11);
   @include l-more-than-mobile {
     width: 240px;
     padding-top: 20px;
@@ -28,10 +28,9 @@
     top: 0; right: 0; bottom: 0; left: 0;
   }
   &:before {
-    background-color: #fff;
   }
   &:after {
-    background-color: #000;
+    background-color: #fff;
   }
   &__label {
     display: inline-block;
@@ -44,7 +43,7 @@
       display: block;
       position: absolute;
       z-index: 10;
-      background-color: #000;
+      background-color: #fff;
     }
   }
   &__line-v {
@@ -138,7 +137,7 @@
   }
   &.is-over & {
     &__label {
-      color: #fff;
+      color: #111;
       transition-delay: 0s;
     }
   }
