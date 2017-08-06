@@ -67,15 +67,15 @@ export default class SmoothScrollManager {
     );
     this.hookesElements1 = new Hookes(
       this.elmContents.getElementsByClassName('js-parallax-1'),
-      { k: 0.05, d: 0.7 }
+      { k: 0.07, d: 0.7 }
     );
     this.hookesElements2 = new Hookes(
       this.elmContents.getElementsByClassName('js-parallax-2'),
-      { k: 0.05, d: 0.7 }
+      { k: 0.07, d: 0.7 }
     );
     this.hookesElementsR = new Hookes(
       this.elmContents.getElementsByClassName('js-parallax-r'),
-      { k: 0.05, d: 0.7, unit: '%', min: -10, max: 10 }
+      { k: 0.07, d: 0.7, unit: '%', min: -10, max: 10 }
     );
   }
   scrollBasis() {
