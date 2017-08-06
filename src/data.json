@@ -1,16 +1,15 @@
 {
   "meta": {
-    "domain": "http://ykob.github.io/scroll-manager/",
-    "websiteName": "scroll-manager",
+    "websiteName": "Scroll Manager",
     "keywords": "",
-    "themeColor": "#ffffff"
+    "themeColor": "#111111"
   },
   "pages": {
     "index": {
       "id": "index",
       "title": "",
       "keywords": "",
-      "description": "it manage each scroll effects.",
+      "description": "Scroll Manager is utility class that controls smooth scroll and showing some elements by scroll event.",
       "path": "/",
       "ogpImg": "ogp.jpg"
     }

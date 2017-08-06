@@ -1,9 +1,9 @@
 // 設定ファイル
 // 対象パスやオプションを指定
 
-const DOMAIN = module.exports.DOMAIN = 'http://www.xxx.com';
+const DOMAIN = module.exports.DOMAIN = 'http://ykob.github.io';
 const DIR = module.exports.DIR =  {
-  PATH: '',
+  PATH: '/scroll-manager',
   SRC: 'src',
   DEST: 'dst',
   BUILD: 'docs'
@@ -13,7 +13,7 @@ module.exports.serve = {
   dest: {
     //tunnel: 'test',
     notify: false,
-    startPath: DIR.PATH,
+    startPath: `${DIR.PATH}/`,
     ghostMode: false,
     server: {
       baseDir: DIR.DEST,
@@ -26,7 +26,7 @@ module.exports.serve = {
   build: {
     //tunnel: 'test',
     notify: false,
-    startPath: DIR.PATH,
+    startPath: `${DIR.PATH}/`,
     ghostMode: false,
     server: {
       baseDir: DIR.BUILD,
@@ -62,10 +62,12 @@ module.exports.pug = {
     `!${DIR.SRC}/**/_*.pug`
   ],
   dest: `${DIR.DEST}${DIR.PATH}`,
-  json: `${DIR.SRC}/data.json`,
   opts: {
     pretty: true
-  }
+  },
+  json: `${DIR.SRC}/data.json`,
+  domain: `${DOMAIN}`,
+  path: `${DIR.PATH}`,
 };
 
 module.exports.sass = {

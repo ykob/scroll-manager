@@ -19,16 +19,19 @@ const getPugTemplatePath = (baseDir, req)=>{
 
 const pugMiddleWare = (req, res, next) => {
   const requestPath = getPugTemplatePath(process.cwd(), req);
+  const data = JSON.parse(fs.readFileSync(confPug.json));
+  data.meta.domain = confPug.domain;
+  data.meta.path = confPug.path;
   if (path.parse(requestPath).ext !== '.html') {
     return next();
   }
   let pugPath = slash(requestPath.replace('.html', '.pug'));
   if (DIR.PATH.length > 0) {
-    pugPath = pugPath.replace(DIR.PATH, '/');
+    pugPath = pugPath.replace(`/src/html${DIR.PATH}/`, '/src/html/');
   }
   console.log("[BS] try to file "+ pugPath);
   const content = pug.renderFile(pugPath, {
-    data: JSON.parse(fs.readFileSync(confPug.json)),
+    data: data,
     pretty: true,
   });
   res.end(new Buffer(content));
