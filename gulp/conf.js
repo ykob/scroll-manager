@@ -147,8 +147,10 @@ module.exports.copy = {
       `${DIR.DEST}${DIR.PATH}/img/**/*.ico`,
       `${DIR.DEST}${DIR.PATH}/font/**/*.*`,
     ],
-    dest: `${DIR.BUILD}`,
-    opts: {}
+    dest: `${DIR.BUILD}${DIR.PATH}`,
+    opts: {
+      base: `${DIR.DEST}${DIR.PATH}`
+    }
   }
 };
 
