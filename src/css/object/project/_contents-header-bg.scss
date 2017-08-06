@@ -6,4 +6,7 @@
   background-image: url('../img/common/kv.jpg');
   background-size: cover;
   background-position: center;
+  &.is-hidden {
+    display: none;
+  }
 }

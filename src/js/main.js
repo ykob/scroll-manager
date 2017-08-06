@@ -15,6 +15,9 @@ const init = () => {
   for (var i = 0; i < elmAccordion.length; i++) {
     new AccordionItem(elmAccordion[i], scrollManager);
   }
+  scrollManager.scrollNext = () => {
+    contentsHeader.scroll();
+  }
   scrollManager.renderNext = () => {
     contentsHeader.render();
   }
