@@ -77,10 +77,6 @@ export default class SmoothScrollManager {
       this.elmContents.getElementsByClassName('js-parallax-r'),
       { k: 0.07, d: 0.7, unit: '%', min: -10, max: 10 }
     );
-
-    this.hookes = {
-
-    }
   }
   scrollBasis() {
     for (var i = 0; i < this.scrollItems.length; i++) {
