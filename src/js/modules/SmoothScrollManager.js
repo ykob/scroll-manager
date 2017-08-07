@@ -77,15 +77,19 @@ export default class SmoothScrollManager {
       this.elmContents.getElementsByClassName('js-parallax-r'),
       { k: 0.07, d: 0.7, unit: '%', min: -10, max: 10 }
     );
+
+    this.hookes = {
+
+    }
   }
   scrollBasis() {
     for (var i = 0; i < this.scrollItems.length; i++) {
       this.scrollItems[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
     if (this.hookesContents) this.hookesContents.anchor[1] = this.scrollTop * -1;
-    if (this.hookesElements1) this.hookesElements1.acceleration[1] += this.scrollFrame * 0.1;
-    if (this.hookesElements2) this.hookesElements2.acceleration[1] += this.scrollFrame * 0.2;
-    if (this.hookesElementsR) this.hookesElementsR.acceleration[1] += this.scrollFrame * -0.02;
+    if (this.hookesElements1) this.hookesElements1.velocity[1] += this.scrollFrame * 0.05;
+    if (this.hookesElements2) this.hookesElements2.velocity[1] += this.scrollFrame * 0.1;
+    if (this.hookesElementsR) this.hookesElementsR.velocity[1] += this.scrollFrame * -0.01;
   }
   scroll(event) {
     const pageYOffset = window.pageYOffset;
