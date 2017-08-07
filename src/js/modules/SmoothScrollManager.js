@@ -26,14 +26,14 @@ export default class SmoothScrollManager {
     this.renderPrev = null;
     this.renderNext = null;
     this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
-    this.isAnimate = false;
+    this.isWorkingSmooth = (opt && opt.isWorkingSmooth !== undefined) ? opt.isWorkingSmooth : false;
     this.isScrollOnLoad = false;
     this.init();
   }
   start() {
     this.isWorking = true;
     if (!isSmartphone()) {
-      this.isAnimate = true;
+      this.isWorkingSmooth = true;
       this.renderLoop();
     }
     this.resize(() => {
@@ -130,7 +130,7 @@ export default class SmoothScrollManager {
   }
   renderLoop() {
     this.render();
-    if (this.isAnimate) {
+    if (this.isWorkingSmooth) {
       requestAnimationFrame(() => {
         this.renderLoop();
       });
