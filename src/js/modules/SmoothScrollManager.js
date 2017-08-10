@@ -41,6 +41,10 @@ export default class SmoothScrollManager {
       this.scroll();
     });
   }
+  stop() {
+    this.isWorking = false;
+    this.isWorkingSmooth = false;
+  }
   init() {
     if (!isSmartphone()) this.elmContents.classList.add('is-fixed');
     this.resize();
