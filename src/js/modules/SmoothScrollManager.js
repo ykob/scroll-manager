@@ -29,6 +29,7 @@ export default class SmoothScrollManager {
     this.isWorkingSmooth = (opt && opt.isWorkingSmooth !== undefined) ? opt.isWorkingSmooth : false;
     this.isScrollOnLoad = false;
     this.init();
+    this.on();
   }
   start() {
     this.isWorking = true;
@@ -46,7 +47,6 @@ export default class SmoothScrollManager {
     this.initDummyScroll();
     this.initScrollItems();
     this.initHookes();
-    this.on();
   }
   initDummyScroll() {
     if (!isSmartphone()) this.elmDummyScroll.style.height = `${this.elmContents.clientHeight}px`;
