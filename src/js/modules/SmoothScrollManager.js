@@ -86,10 +86,10 @@ export default class SmoothScrollManager {
     for (var i = 0; i < this.scrollItems.length; i++) {
       this.scrollItems[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
     }
-    this.hookesContents.anchor[1] = this.scrollTop * -1;
-    this.hookesElements1.velocity[1] += this.scrollFrame * 0.05;
-    this.hookesElements2.velocity[1] += this.scrollFrame * 0.1;
-    this.hookesElementsR.velocity[1] += this.scrollFrame * -0.01;
+    if (this.hookesContents) this.hookesContents.anchor[1] = this.scrollTop * -1;
+    if (this.hookesElements1) this.hookesElements1.velocity[1] += this.scrollFrame * 0.05;
+    if (this.hookesElements2) this.hookesElements2.velocity[1] += this.scrollFrame * 0.1;
+    if (this.hookesElementsR) this.hookesElementsR.velocity[1] += this.scrollFrame * -0.01;
   }
   scroll(event) {
     const pageYOffset = window.pageYOffset;
