@@ -45,8 +45,6 @@ export default class SmoothScrollManager {
     this.isWorkingSmooth = false;
   }
   init() {
-    this.resize();
-    this.initDummyScroll();
     this.initScrollItems();
     this.initHookes();
   }
