@@ -79,8 +79,20 @@ export default class SmoothScrollManager {
       contents.getElementsByClassName('js-parallax-2'),
       { k: 0.07, d: 0.7 }
     );
-    this.hookesElementsR = new Hookes(
-      contents.getElementsByClassName('js-parallax-r'),
+    this.hookesElements3 = new Hookes(
+      contents.getElementsByClassName('js-parallax-3'),
+      { k: 0.07, d: 0.7 }
+    );
+    this.hookesElementsR1 = new Hookes(
+      contents.getElementsByClassName('js-parallax-r1'),
+      { k: 0.07, d: 0.7 }
+    );
+    this.hookesElementsR2 = new Hookes(
+      contents.getElementsByClassName('js-parallax-r2'),
+      { k: 0.07, d: 0.7 }
+    );
+    this.hookesElementsR10p = new Hookes(
+      contents.getElementsByClassName('js-parallax-r10p'),
       { k: 0.07, d: 0.7, unit: '%', min: -10, max: 10 }
     );
   }
@@ -92,7 +104,10 @@ export default class SmoothScrollManager {
       this.hookesContents.anchor[1] = this.scrollTop * -1;
       this.hookesElements1.velocity[1] += this.scrollFrame * 0.05;
       this.hookesElements2.velocity[1] += this.scrollFrame * 0.1;
-      this.hookesElementsR.velocity[1] += this.scrollFrame * -0.01;
+      this.hookesElements3.velocity[1] += this.scrollFrame * 0.15;
+      this.hookesElementsR1.velocity[1] += this.scrollFrame * 0.05;
+      this.hookesElementsR2.velocity[1] += this.scrollFrame * 0.1;
+      this.hookesElementsR10p.velocity[1] += this.scrollFrame * -0.01;
     }
   }
   scroll(event) {
@@ -118,7 +133,10 @@ export default class SmoothScrollManager {
       this.hookesContents.velocity[1] = 0;
       this.hookesElements1.velocity[1] = 0;
       this.hookesElements2.velocity[1] = 0;
-      this.hookesElementsR.velocity[1] = 0;
+      this.hookesElements3.velocity[1] = 0;
+      this.hookesElementsR1.velocity[1] = 0;
+      this.hookesElementsR2.velocity[1] = 0;
+      this.hookesElementsR10p.velocity[1] = 0;
     }
     this.initDummyScroll();
   }
@@ -140,7 +158,10 @@ export default class SmoothScrollManager {
     this.hookesContents.render();
     this.hookesElements1.render();
     this.hookesElements2.render();
-    this.hookesElementsR.render();
+    this.hookesElements3.render();
+    this.hookesElementsR1.render();
+    this.hookesElementsR2.render();
+    this.hookesElementsR10p.render();
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {
