@@ -29,7 +29,8 @@ export default class SmoothScrollManager {
     this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
     this.isWorkingSmooth = (opt && opt.isWorkingSmooth !== undefined) ? opt.isWorkingSmooth : false;
     this.isScrollOnLoad = false;
-    this.init();
+    this.initScrollItems();
+    this.initHookes();
     this.on();
   }
   start() {
@@ -39,14 +40,6 @@ export default class SmoothScrollManager {
     this.resize(() => {
       this.scroll();
     });
-  }
-  stop() {
-    this.isWorking = false;
-    this.isWorkingSmooth = false;
-  }
-  init() {
-    this.initScrollItems();
-    this.initHookes();
   }
   initDummyScroll() {
     if (this.resolution.x <= X_SWITCH_SMOOTH) {
