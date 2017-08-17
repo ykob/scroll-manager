@@ -100,8 +100,8 @@ export default class SmoothScrollManager {
     this.scrollFrame = pageYOffset - this.scrollTop;
     this.scrollTop = pageYOffset;
     if (!this.isScrollOnLoad) {
-      this.hookesContents.velocity[1] = -this.scrollTop;
-      this.hookesContents.anchor[1] = -this.scrollTop;
+      this.hookesContents.velocity[1] = (this.resolution.x > X_SWITCH_SMOOTH) ? -this.scrollTop : 0;
+      this.hookesContents.anchor[1] = (this.resolution.x > X_SWITCH_SMOOTH) ? -this.scrollTop : 0;
       this.isScrollOnLoad = true;
     }
     if (this.isWorking === false) return;
