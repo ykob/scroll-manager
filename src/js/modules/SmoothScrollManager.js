@@ -4,7 +4,7 @@ import Hookes from './Hookes';
 
 const X_SWITCH_SMOOTH = 768;
 const contents = document.querySelector('.l-contents');
-const dummyScroll = document.querySelector('.l-dummy-scroll');
+const dummyScroll = document.querySelector('.js-dummy-scroll');
 
 export default class SmoothScrollManager {
   constructor(opt) {
