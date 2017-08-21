@@ -1,4 +1,6 @@
 import debounce from 'js-util/debounce';
+import isiOS from 'js-util/isiOS';
+import isAndroid from 'js-util/isAndroid';
 import ScrollItem from './ScrollItem';
 import Hookes from './Hookes';
 
@@ -166,10 +168,12 @@ export default class SmoothScrollManager {
     }
   }
   on() {
+    const hookEventForResize = (isiOS() || isAndroid()) ? 'orientationchange' : 'resize';
+
     window.addEventListener('scroll', (event) => {
       this.scroll(event);
     }, false);
-    window.addEventListener('resize', debounce((event) => {
+    window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
       this.scroll(event);
     }, 400), false);

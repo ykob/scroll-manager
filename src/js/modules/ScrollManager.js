@@ -1,4 +1,6 @@
 import debounce from 'js-util/debounce';
+import isiOS from 'js-util/isiOS';
+import isAndroid from 'js-util/isAndroid';
 import ScrollItem from './ScrollItem';
 import ParallaxItem from './ParallaxItem';
 
@@ -75,12 +77,14 @@ export default class ScrollManager {
     }, 100);
   }
   on() {
-    window.addEventListener('scroll', () => {
-      this.scroll();
+    const hookEventForResize = (isiOS() || isAndroid()) ? 'orientationchange' : 'resize';
+
+    window.addEventListener('scroll', (event) => {
+      this.scroll(event);
     }, false);
-    window.addEventListener('resize', debounce(() => {
+    window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
-      this.scroll();
+      this.scroll(event);
     }, 400), false);
   }
 }
