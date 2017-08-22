@@ -13,6 +13,7 @@ export default class SmoothScrollManager {
     this.elmScrollItems = null;
     this.scrollItems = [];
     this.scrollTop = 0;
+    this.scrollTopOnResize = 0;
     this.scrollFrame = 0;
     this.resolution = {
       x: 0,
@@ -37,20 +38,21 @@ export default class SmoothScrollManager {
   }
   start(callback) {
     this.resize(() => {
-      window.scrollTo(0, this.scrollTop);
-      this.isWorking = true;
-      this.isWorkingSmooth = true;
-      this.renderLoop();
-      this.scroll();
-      if (callback) callback();
+      this.scrollTop = this.scrollTopOnResize;
+      window.scrollTo(0, this.scrollTopOnResize);
+      setTimeout(() => {
+        this.isWorking = true;
+        this.isWorkingSmooth = true;
+        this.renderLoop();
+        this.scroll();
+        if (callback) callback();
+      }, 10);
     });
   }
   initDummyScroll() {
-    this.scrollTop = window.pageYOffset;
-    this.hookesContents.velocity[1] = -this.scrollTop;
-    this.hookesContents.anchor[1] = -this.scrollTop;
-    this.hookesForParallax.velocity[1] = this.scrollTop;
-    this.hookesForParallax.anchor[1] = this.scrollTop;
+    this.scrollTopOnResize = window.pageYOffset;
+    this.hookesContents.velocity[1] = this.hookesContents.anchor[1] = -this.scrollTopOnResize;
+    this.hookesForParallax.velocity[1] = this.hookesForParallax.anchor[1] = this.scrollTopOnResize;
     if (this.resolution.x <= X_SWITCH_SMOOTH) {
       contents.style.transform = '';
       contents.classList.remove('is-fixed');
