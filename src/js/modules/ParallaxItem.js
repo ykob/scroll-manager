@@ -10,7 +10,7 @@ export default class ParallaxItem {
   init() {
     const rect = this.elm.getBoundingClientRect();
     this.height = rect.height;
-    this.top = this.scrollManager.scrollTop + rect.top;
+    this.top = window.pageYOffset + rect.top;
   }
   render(scrollTop) {
     this.elm.style.transform = `translate3D(0, ${

@@ -7,7 +7,7 @@ export default class ScrollItem {
   }
   init(scrollTop, resolution) {
     const rect = this.elm.getBoundingClientRect();
-    this.top = scrollTop + rect.top;
+    this.top = window.pageYOffset + rect.top;
     this.bottom = this.top + rect.height;
   }
   show(top, bottom) {

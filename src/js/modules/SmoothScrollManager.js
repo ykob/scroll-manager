@@ -36,10 +36,6 @@ export default class SmoothScrollManager {
     this.on();
   }
   start(callback) {
-    this.hookesContents.velocity[1] = -this.scrollTop;
-    this.hookesContents.anchor[1] = -this.scrollTop;
-    this.hookesForParallax.velocity[1] = this.scrollTop;
-    this.hookesForParallax.anchor[1] = this.scrollTop;
     this.resize(() => {
       window.scrollTo(0, this.scrollTop);
       this.isWorking = true;
@@ -50,6 +46,11 @@ export default class SmoothScrollManager {
     });
   }
   initDummyScroll() {
+    this.scrollTop = window.pageYOffset;
+    this.hookesContents.velocity[1] = -this.scrollTop;
+    this.hookesContents.anchor[1] = -this.scrollTop;
+    this.hookesForParallax.velocity[1] = this.scrollTop;
+    this.hookesForParallax.anchor[1] = this.scrollTop;
     if (this.resolution.x <= X_SWITCH_SMOOTH) {
       contents.style.transform = '';
       contents.classList.remove('is-fixed');
@@ -116,10 +117,10 @@ export default class SmoothScrollManager {
     }
   }
   scroll(event) {
+    if (this.isWorking === false) return;
     const pageYOffset = window.pageYOffset;
     this.scrollFrame = pageYOffset - this.scrollTop;
     this.scrollTop = pageYOffset;
-    if (this.isWorking === false) return;
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
     if (this.scrollNext) this.scrollNext();
