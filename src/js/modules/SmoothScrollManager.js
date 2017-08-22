@@ -1,7 +1,6 @@
 import debounce from 'js-util/debounce';
 import isiOS from 'js-util/isiOS';
 import isAndroid from 'js-util/isAndroid';
-import ScrollItem from './ScrollItem';
 import Hookes from './Hookes';
 
 const X_SWITCH_SMOOTH = 768;
@@ -10,8 +9,6 @@ const dummyScroll = document.querySelector('.js-dummy-scroll');
 
 export default class SmoothScrollManager {
   constructor() {
-    this.elmScrollItems = null;
-    this.scrollItems = [];
     this.scrollTop = 0;
     this.scrollTopOnResize = 0;
     this.scrollFrame = 0;
@@ -33,7 +30,6 @@ export default class SmoothScrollManager {
     this.isWorking = false;
     this.isWorkingSmooth = false;
 
-    this.initScrollItems();
     this.initHookes();
     this.on();
   }
@@ -59,15 +55,6 @@ export default class SmoothScrollManager {
     } else {
       contents.classList.add('is-fixed');
       dummyScroll.style.height = `${contents.clientHeight}px`;
-    }
-  }
-  initScrollItems() {
-    this.scrollItems = [];
-    this.elmScrollItems = contents.querySelectorAll('.js-scroll-item');
-    if (this.elmScrollItems.length > 0) {
-      for (var i = 0; i < this.elmScrollItems.length; i++) {
-        this.scrollItems[i] = new ScrollItem(this.elmScrollItems[i]);
-      }
     }
   }
   initHookes() {
@@ -101,9 +88,6 @@ export default class SmoothScrollManager {
     }
   }
   scrollBasis() {
-    for (var i = 0; i < this.scrollItems.length; i++) {
-      this.scrollItems[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
-    }
     if (this.resolution.x > X_SWITCH_SMOOTH) {
       this.hookes.contents.anchor[1] = this.scrollTop * -1;
       this.hookes.forParallax.anchor[1] = this.scrollTop;
@@ -125,9 +109,6 @@ export default class SmoothScrollManager {
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
-    for (var i = 0; i < this.scrollItems.length; i++) {
-      this.scrollItems[i].init(this.scrollTop, this.resolution);
-    }
     if (this.resolution.x <= X_SWITCH_SMOOTH) {
       for (var key in this.hookes) {
         switch (key) {
