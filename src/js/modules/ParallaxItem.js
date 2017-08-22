@@ -12,10 +12,10 @@ export default class ParallaxItem {
     this.height = rect.height;
     this.top = this.scrollManager.scrollTop + rect.top;
   }
-  render(scrollTop) {
+  render() {
     this.elm.style.transform = `translate3D(0, ${
       MathEx.clamp(
-        ((scrollTop + this.scrollManager.resolution.y * 0.5)
+        ((this.scrollManager.hookes.forParallax.velocity[1] + this.scrollManager.resolution.y * 0.5)
          - (this.top + this.height * 0.5)) / this.scrollManager.resolution.y * 10,
         -10, 10
       )

@@ -34,7 +34,7 @@ const init = () => {
   scrollManager.renderNext = () => {
     contentsHeader.render();
     for (var i = 0; i < parallaxItems.length; i++) {
-      parallaxItems[i].render(scrollManager.hookesForParallax.velocity[1]);
+      parallaxItems[i].render(scrollManager.hookes.forParallax.velocity[1]);
     }
   }
 
