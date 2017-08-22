@@ -2,6 +2,7 @@ import debounce from 'js-util/debounce';
 import isiOS from 'js-util/isiOS';
 import isAndroid from 'js-util/isAndroid';
 import Hookes from './Hookes';
+import ScrollItems from './ScrollItems';
 
 const X_SWITCH_SMOOTH = 768;
 const contents = document.querySelector('.l-contents');
@@ -9,6 +10,7 @@ const dummyScroll = document.querySelector('.js-dummy-scroll');
 
 export default class SmoothScrollManager {
   constructor() {
+    this.scrollItems = new ScrollItems(this);
     this.scrollTop = 0;
     this.scrollTopOnResize = 0;
     this.scrollFrame = 0;
@@ -30,6 +32,7 @@ export default class SmoothScrollManager {
     this.isWorking = false;
     this.isWorkingSmooth = false;
 
+    this.scrollItems.init(document);
     this.initHookes();
     this.on();
   }
@@ -106,6 +109,7 @@ export default class SmoothScrollManager {
     this.scrollTop = pageYOffset;
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
+    this.scrollItems.scroll();
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
@@ -131,6 +135,7 @@ export default class SmoothScrollManager {
     if (this.resizePrev) this.resizePrev();
     setTimeout(() => {
       this.resizeBasis();
+      this.scrollItems.resize();
       if (this.resizeNext) this.resizeNext();
       if (callback) callback();
     }, 100);
@@ -140,6 +145,7 @@ export default class SmoothScrollManager {
     for (var key in this.hookes) {
       this.hookes[key].render();
     }
+    this.scrollItems.render();
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {
