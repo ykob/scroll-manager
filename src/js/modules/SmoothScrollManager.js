@@ -66,6 +66,9 @@ export default class SmoothScrollManager {
     this.hookesContents = new Hookes(
       [contents]
     );
+    this.hookesForParallax = new Hookes(
+      null, { k: 0.07, d: 0.7 }
+    );
     this.hookesElements1 = new Hookes(
       contents.getElementsByClassName('js-smooth-item-1'),
       { k: 0.07, d: 0.7 }
@@ -97,6 +100,7 @@ export default class SmoothScrollManager {
     }
     if (this.resolution.x > X_SWITCH_SMOOTH) {
       this.hookesContents.anchor[1] = this.scrollTop * -1;
+      this.hookesForParallax.anchor[1] = this.scrollTop;
       this.hookesElements1.velocity[1] += this.scrollFrame * 0.05;
       this.hookesElements2.velocity[1] += this.scrollFrame * 0.1;
       this.hookesElements3.velocity[1] += this.scrollFrame * 0.15;
@@ -126,6 +130,8 @@ export default class SmoothScrollManager {
     if (this.resolution.x <= X_SWITCH_SMOOTH) {
       this.hookesContents.anchor[1] = 0;
       this.hookesContents.velocity[1] = 0;
+      this.hookesForParallax.anchor[1] = 0;
+      this.hookesForParallax.velocity[1] = 0;
       this.hookesElements1.velocity[1] = 0;
       this.hookesElements2.velocity[1] = 0;
       this.hookesElements3.velocity[1] = 0;
@@ -151,6 +157,7 @@ export default class SmoothScrollManager {
   render() {
     if (this.renderPrev) this.renderPrev();
     this.hookesContents.render();
+    this.hookesForParallax.render();
     this.hookesElements1.render();
     this.hookesElements2.render();
     this.hookesElements3.render();

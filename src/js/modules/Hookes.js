@@ -17,6 +17,7 @@ export default class Hookes {
     Force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, this.k);
     Force3.applyDrag(this.acceleration, this.d);
     Force3.updateVelocity(this.velocity, this.acceleration, this.m);
+    if (this.elm === null) return;
     for (var i = 0; i < this.elm.length; i++) {
       var v = this.velocity[1];
       if (Math.abs(v) < 0.001) v = 0;
