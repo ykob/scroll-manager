@@ -9,10 +9,10 @@ const contents = document.querySelector('.l-contents');
 const dummyScroll = document.querySelector('.js-dummy-scroll');
 
 export default class SmoothScrollManager {
-  constructor(opt) {
+  constructor() {
     this.elmScrollItems = null;
     this.scrollItems = [];
-    this.scrollTop = window.pageYOffset;
+    this.scrollTop = 0;
     this.scrollFrame = 0;
     this.resolution = {
       x: 0,
@@ -28,8 +28,8 @@ export default class SmoothScrollManager {
     this.resizeNext = null;
     this.renderPrev = null;
     this.renderNext = null;
-    this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
-    this.isWorkingSmooth = (opt && opt.isWorkingSmooth !== undefined) ? opt.isWorkingSmooth : false;
+    this.isWorking = false;
+    this.isWorkingSmooth = false;
 
     this.initScrollItems();
     this.initHookes();
@@ -62,7 +62,7 @@ export default class SmoothScrollManager {
   }
   initScrollItems() {
     this.scrollItems = [];
-    this.elmScrollItems = contents.getElementsByClassName('js-scroll-item');
+    this.elmScrollItems = contents.querySelectorAll('.js-scroll-item');
     if (this.elmScrollItems.length > 0) {
       for (var i = 0; i < this.elmScrollItems.length; i++) {
         this.scrollItems[i] = new ScrollItem(this.elmScrollItems[i]);
@@ -77,27 +77,27 @@ export default class SmoothScrollManager {
       null, { k: 0.07, d: 0.7 }
     );
     this.hookesElements1 = new Hookes(
-      contents.getElementsByClassName('js-smooth-item-1'),
+      contents.querySelectorAll('.js-smooth-item-1'),
       { k: 0.07, d: 0.7 }
     );
     this.hookesElements2 = new Hookes(
-      contents.getElementsByClassName('js-smooth-item-2'),
+      contents.querySelectorAll('.js-smooth-item-2'),
       { k: 0.07, d: 0.7 }
     );
     this.hookesElements3 = new Hookes(
-      contents.getElementsByClassName('js-smooth-item-3'),
+      contents.querySelectorAll('.js-smooth-item-3'),
       { k: 0.07, d: 0.7 }
     );
     this.hookesElementsR1 = new Hookes(
-      contents.getElementsByClassName('js-smooth-item-r1'),
+      contents.querySelectorAll('.js-smooth-item-r1'),
       { k: 0.07, d: 0.7 }
     );
     this.hookesElementsR2 = new Hookes(
-      contents.getElementsByClassName('js-smooth-item-r2'),
+      contents.querySelectorAll('.js-smooth-item-r2'),
       { k: 0.07, d: 0.7 }
     );
     this.hookesElementsR3 = new Hookes(
-      contents.getElementsByClassName('js-smooth-item-r3'),
+      contents.querySelectorAll('.js-smooth-item-r3'),
       { k: 0.07, d: 0.7 }
     );
   }

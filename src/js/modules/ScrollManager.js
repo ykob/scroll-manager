@@ -6,8 +6,8 @@ import ParallaxItem from './ParallaxItem';
 
 export default class ScrollManager {
   constructor(opt) {
-    this.elm = document.getElementsByClassName('js-scroll-item');
-    this.elmParallax = document.getElementsByClassName('js-parallax-item');
+    this.elm = document.querySelectorAll('.js-scroll-item');
+    this.elmParallax = document.querySelectorAll('.js-parallax-item');
     this.items = [];
     this.parallaxItems = [];
     this.scrollTop = window.pageYOffset;
