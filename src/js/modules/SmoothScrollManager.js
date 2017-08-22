@@ -30,17 +30,23 @@ export default class SmoothScrollManager {
     this.renderNext = null;
     this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
     this.isWorkingSmooth = (opt && opt.isWorkingSmooth !== undefined) ? opt.isWorkingSmooth : false;
-    this.isScrollOnLoad = false;
+
     this.initScrollItems();
     this.initHookes();
     this.on();
   }
-  start() {
-    this.isWorking = true;
-    this.isWorkingSmooth = true;
-    this.renderLoop();
+  start(callback) {
+    this.hookesContents.velocity[1] = -this.scrollTop;
+    this.hookesContents.anchor[1] = -this.scrollTop;
+    this.hookesForParallax.velocity[1] = this.scrollTop;
+    this.hookesForParallax.anchor[1] = this.scrollTop;
     this.resize(() => {
+      window.scrollTo(0, this.scrollTop);
+      this.isWorking = true;
+      this.isWorkingSmooth = true;
+      this.renderLoop();
       this.scroll();
+      if (callback) callback();
     });
   }
   initDummyScroll() {
@@ -113,11 +119,6 @@ export default class SmoothScrollManager {
     const pageYOffset = window.pageYOffset;
     this.scrollFrame = pageYOffset - this.scrollTop;
     this.scrollTop = pageYOffset;
-    if (!this.isScrollOnLoad) {
-      this.hookesContents.velocity[1] = (this.resolution.x > X_SWITCH_SMOOTH) ? -this.scrollTop : 0;
-      this.hookesContents.anchor[1] = (this.resolution.x > X_SWITCH_SMOOTH) ? -this.scrollTop : 0;
-      this.isScrollOnLoad = true;
-    }
     if (this.isWorking === false) return;
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
@@ -148,7 +149,6 @@ export default class SmoothScrollManager {
     this.bodyResolution.y = document.body.clientHeight;
     if (this.resizePrev) this.resizePrev();
     setTimeout(() => {
-      this.scrollTop = window.pageYOffset;
       this.resizeBasis();
       if (this.resizeNext) this.resizeNext();
       if (callback) callback();
@@ -182,7 +182,6 @@ export default class SmoothScrollManager {
     }, false);
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
-      this.scroll(event);
     }, 400), false);
   }
 }

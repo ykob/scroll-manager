@@ -22,6 +22,7 @@ const init = () => {
   for (var i = 0; i < elmAccordion.length; i++) {
     new AccordionItem(elmAccordion[i], scrollManager);
   }
+
   scrollManager.scrollNext = () => {
     contentsHeader.scroll();
   }
@@ -33,9 +34,10 @@ const init = () => {
   scrollManager.renderNext = () => {
     contentsHeader.render();
     for (var i = 0; i < parallaxItems.length; i++) {
-      parallaxItems[i].render();
+      parallaxItems[i].render(scrollManager.hookesForParallax.velocity[1]);
     }
   }
+
   scrollManager.start();
 }
 init();
