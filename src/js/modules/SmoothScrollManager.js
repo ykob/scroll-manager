@@ -67,28 +67,28 @@ export default class SmoothScrollManager {
       [contents]
     );
     this.hookesElements1 = new Hookes(
-      contents.getElementsByClassName('js-parallax-1'),
+      contents.getElementsByClassName('js-smooth-item-1'),
       { k: 0.07, d: 0.7 }
     );
     this.hookesElements2 = new Hookes(
-      contents.getElementsByClassName('js-parallax-2'),
+      contents.getElementsByClassName('js-smooth-item-2'),
       { k: 0.07, d: 0.7 }
     );
     this.hookesElements3 = new Hookes(
-      contents.getElementsByClassName('js-parallax-3'),
+      contents.getElementsByClassName('js-smooth-item-3'),
       { k: 0.07, d: 0.7 }
     );
     this.hookesElementsR1 = new Hookes(
-      contents.getElementsByClassName('js-parallax-r1'),
+      contents.getElementsByClassName('js-smooth-item-r1'),
       { k: 0.07, d: 0.7 }
     );
     this.hookesElementsR2 = new Hookes(
-      contents.getElementsByClassName('js-parallax-r2'),
+      contents.getElementsByClassName('js-smooth-item-r2'),
       { k: 0.07, d: 0.7 }
     );
-    this.hookesElementsR10p = new Hookes(
-      contents.getElementsByClassName('js-parallax-r10p'),
-      { k: 0.07, d: 0.7, unit: '%', min: -10, max: 10 }
+    this.hookesElementsR3 = new Hookes(
+      contents.getElementsByClassName('js-smooth-item-r3'),
+      { k: 0.07, d: 0.7 }
     );
   }
   scrollBasis() {
@@ -100,9 +100,9 @@ export default class SmoothScrollManager {
       this.hookesElements1.velocity[1] += this.scrollFrame * 0.05;
       this.hookesElements2.velocity[1] += this.scrollFrame * 0.1;
       this.hookesElements3.velocity[1] += this.scrollFrame * 0.15;
-      this.hookesElementsR1.velocity[1] += this.scrollFrame * 0.05;
-      this.hookesElementsR2.velocity[1] += this.scrollFrame * 0.1;
-      this.hookesElementsR10p.velocity[1] += this.scrollFrame * -0.01;
+      this.hookesElementsR1.velocity[1] += this.scrollFrame * -0.05;
+      this.hookesElementsR2.velocity[1] += this.scrollFrame * -0.1;
+      this.hookesElementsR3.velocity[1] += this.scrollFrame * -0.15;
     }
   }
   scroll(event) {
@@ -131,7 +131,7 @@ export default class SmoothScrollManager {
       this.hookesElements3.velocity[1] = 0;
       this.hookesElementsR1.velocity[1] = 0;
       this.hookesElementsR2.velocity[1] = 0;
-      this.hookesElementsR10p.velocity[1] = 0;
+      this.hookesElementsR3.velocity[1] = 0;
     }
     this.initDummyScroll();
   }
@@ -156,7 +156,7 @@ export default class SmoothScrollManager {
     this.hookesElements3.render();
     this.hookesElementsR1.render();
     this.hookesElementsR2.render();
-    this.hookesElementsR10p.render();
+    this.hookesElementsR3.render();
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {
