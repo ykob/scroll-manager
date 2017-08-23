@@ -48,14 +48,14 @@ export default class SmoothScrollManager {
     });
   }
   initDummyScroll() {
-    this.scrollTopOnResize = window.pageYOffset;
-    this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = -this.scrollTopOnResize;
-    this.hookes.forParallax.velocity[1] = this.hookes.forParallax.anchor[1] = this.scrollTopOnResize;
     if (this.resolution.x <= X_SWITCH_SMOOTH) {
       contents.style.transform = '';
       contents.classList.remove('is-fixed');
       dummyScroll.style.height = `0`;
     } else {
+      this.scrollTopOnResize = window.pageYOffset;
+      this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = -this.scrollTopOnResize;
+      this.hookes.forParallax.velocity[1] = this.hookes.forParallax.anchor[1] = this.scrollTopOnResize;
       contents.classList.add('is-fixed');
       dummyScroll.style.height = `${contents.clientHeight}px`;
     }
