@@ -30,16 +30,17 @@ export default class ScrollItems {
     }
   }
   resize() {
+    const scrollTop = window.pageYOffset;
     for (var i = 0; i < this.scrollItems.length; i++) {
-      this.scrollItems[i].init(this.scrollManager.scrollTop, this.scrollManager.resolution);
+      this.scrollItems[i].init(scrollTop);
     }
     for (var i = 0; i < this.parallaxItems.length; i++) {
-      this.parallaxItems[i].init();
+      this.parallaxItems[i].init(scrollTop);
     }
   }
-  render() {
+  render(isWorking) {
     for (var i = 0; i < this.parallaxItems.length; i++) {
-      this.parallaxItems[i].render();
+      this.parallaxItems[i].render(isWorking);
     }
   }
 }
