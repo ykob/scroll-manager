@@ -6,6 +6,9 @@ export default class ParallaxItem {
     this.elm = elm;
     this.height = 0;
     this.top = 0;
+    this.max = (elm.dataset.max) ? elm.dataset.max : 10;
+    this.min = (elm.dataset.min) ? elm.dataset.min : -10;
+    this.ratio = (elm.dataset.ratio) ? elm.dataset.ratio : 10;
   }
   init() {
     const rect = this.elm.getBoundingClientRect();
@@ -16,8 +19,8 @@ export default class ParallaxItem {
     this.elm.style.transform = `translate3D(0, ${
       MathEx.clamp(
         ((this.scrollManager.hookes.forParallax.velocity[1] + this.scrollManager.resolution.y * 0.5)
-         - (this.top + this.height * 0.5)) / this.scrollManager.resolution.y * 10,
-        -10, 10
+         - (this.top + this.height * 0.5)) / this.scrollManager.resolution.y * this.ratio,
+        this.min, this.max
       )
     }%, 0)`;
   }
