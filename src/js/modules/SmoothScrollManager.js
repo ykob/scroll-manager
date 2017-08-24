@@ -12,7 +12,6 @@ export default class SmoothScrollManager {
   constructor() {
     this.scrollItems = new ScrollItems(this);
     this.scrollTop = 0;
-    this.scrollTopOnResize = 0;
     this.scrollFrame = 0;
     this.resolution = {
       x: 0,
