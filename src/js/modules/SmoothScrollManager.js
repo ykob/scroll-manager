@@ -108,6 +108,14 @@ export default class SmoothScrollManager {
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
+  }
+  resize(callback) {
+    this.isWorking = false;
+    this.scrollTop = window.pageYOffset;
+    this.resolution.x = window.innerWidth;
+    this.resolution.y = window.innerHeight;
+    this.bodyResolution.x = document.body.clientWidth;
+    this.bodyResolution.y = document.body.clientHeight;
     if (this.resolution.x <= X_SWITCH_SMOOTH) {
       for (var key in this.hookes) {
         switch (key) {
@@ -124,20 +132,14 @@ export default class SmoothScrollManager {
       this.hookes.forParallax.velocity[1] = this.hookes.forParallax.anchor[1] = this.scrollTop;
     }
     this.initDummyScroll();
-  }
-  resize(callback) {
-    this.isWorking = false;
-    this.resolution.x = window.innerWidth;
-    this.resolution.y = window.innerHeight;
-    this.bodyResolution.x = document.body.clientWidth;
-    this.bodyResolution.y = document.body.clientHeight;
-    this.scrollTop = window.pageYOffset;
+    window.scrollTo(0, this.scrollTop);
+    this.render();
+    this.scrollItems.resize();
+
     if (this.resizePrev) this.resizePrev();
     setTimeout(() => {
       this.resizeBasis();
       if (this.resizeNext) this.resizeNext();
-      window.scrollTo(0, this.scrollTop);
-      this.scrollItems.resize();
       this.isWorking = true;
       if (callback) callback();
     }, 100);
