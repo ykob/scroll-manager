@@ -53,6 +53,7 @@ export default class SmoothScrollManager {
       contents.classList.add('is-fixed');
       dummyScroll.style.height = `${contents.clientHeight}px`;
     }
+    this.render();
   }
   initHookes() {
     this.hookes = {
