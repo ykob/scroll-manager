@@ -87,4 +87,10 @@ export default class ScrollManager {
       this.scroll(event);
     }, 400), false);
   }
+  off() {
+    this.scrollPrev = null;
+    this.scrollNext = null;
+    this.resizePrev = null;
+    this.resizeNext = null;
+  }
 }

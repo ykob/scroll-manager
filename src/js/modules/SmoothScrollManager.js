@@ -187,4 +187,12 @@ export default class SmoothScrollManager {
       this.resize();
     }, 400), false);
   }
+  off() {
+    this.scrollPrev = null;
+    this.scrollNext = null;
+    this.resizePrev = null;
+    this.resizeNext = null;
+    this.renderPrev = null;
+    this.renderNext = null;
+  }
 }
