@@ -14,6 +14,7 @@ export default class ParallaxItem {
     const rect = this.elm.getBoundingClientRect();
     this.height = rect.height;
     this.top = scrollTop + rect.top;
+    this.elm.style.backfaceVisibility = 'hidden';
   }
   render(iwWorking) {
     const y = (iwWorking) ? MathEx.clamp(

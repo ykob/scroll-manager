@@ -12,6 +12,15 @@ export default class Hookes {
     this.unit = (opt && opt.unit !== undefined) ? opt.unit : 'px';
     this.min = (opt && opt.min !== undefined) ? opt.min : undefined;
     this.max = (opt && opt.max !== undefined) ? opt.max : undefined;
+
+    this.init();
+  }
+  init() {
+    if (this.elm) {
+      for (var i = 0; i < this.elm.length; i++) {
+        this.elm[i].style.backfaceVisibility = 'hidden';
+      }
+    }
   }
   render() {
     Force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, this.k);
