@@ -20,10 +20,10 @@ export default class Hookes {
     if (this.elm === null) return;
     for (var i = 0; i < this.elm.length; i++) {
       var v = this.velocity[1];
-      if (Math.abs(v) < 0.001) v = 0;
+      if (Math.abs(v) < 1) v = 0;
       if (this.min) v = Math.max(v, this.min);
       if (this.max) v = Math.min(v, this.max);
-      this.elm[i].style.transform = `translate3D(0, ${v}${this.unit}, 0)`;
+      this.elm[i].style.transform = `translate3D(0, ${Math.floor(v * 10) / 10}${this.unit}, 0)`;
     }
   }
 }
