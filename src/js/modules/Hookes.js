@@ -28,11 +28,11 @@ export default class Hookes {
     Force3.updateVelocity(this.velocity, this.acceleration, this.m);
     if (this.elm === null) return;
     for (var i = 0; i < this.elm.length; i++) {
+      if (Math.abs(this.acceleration[1]) < 0.01) this.velocity[1] = this.anchor[1];
       var v = this.velocity[1];
-      if (Math.abs(v) < 1) v = 0;
       if (this.min) v = Math.max(v, this.min);
       if (this.max) v = Math.min(v, this.max);
-      this.elm[i].style.transform = `translate3D(0, ${Math.floor(v * 10) / 10}${this.unit}, 0)`;
+      this.elm[i].style.transform = `translate3D(0, ${v}${this.unit}, 0)`;
     }
   }
 }
