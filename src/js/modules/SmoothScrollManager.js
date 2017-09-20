@@ -31,8 +31,8 @@ export default class SmoothScrollManager {
     this.isWorking = false;
     this.isWorkingSmooth = false;
 
-    this.scrollItems.init(document);
     this.initHookes();
+    this.scrollItems.init(document, contents);
     this.on();
   }
   start(callback) {
@@ -59,32 +59,9 @@ export default class SmoothScrollManager {
   initHookes() {
     // Hookesオブジェクトの初期化
     this.hookes = {
-      contents: new Hookes([contents]),
-      forParallax: new Hookes(null, { k: 0.07, d: 0.7 }),
-      elements1: new Hookes(
-        contents.querySelectorAll('.js-smooth-item-1'),
-        { k: 0.07, d: 0.7 }
-      ),
-      elements2: new Hookes(
-        contents.querySelectorAll('.js-smooth-item-2'),
-        { k: 0.07, d: 0.7 }
-      ),
-      elements3: new Hookes(
-        contents.querySelectorAll('.js-smooth-item-3'),
-        { k: 0.07, d: 0.7 }
-      ),
-      elementsR1: new Hookes(
-        contents.querySelectorAll('.js-smooth-item-r1'),
-        { k: 0.07, d: 0.7 }
-      ),
-      elementsR2: new Hookes(
-        contents.querySelectorAll('.js-smooth-item-r2'),
-        { k: 0.07, d: 0.7 }
-      ),
-      elementsR3: new Hookes(
-        contents.querySelectorAll('.js-smooth-item-r3'),
-        { k: 0.07, d: 0.7 }
-      ),
+      contents: new Hookes(),
+      smooth:   new Hookes({ k: 0.07, d: 0.7 }),
+      parallax: new Hookes({ k: 0.07, d: 0.7 }),
     }
   }
   scrollBasis() {
@@ -92,13 +69,8 @@ export default class SmoothScrollManager {
     // スクロール値を元に各Hookesオブジェクトを更新
     if (this.resolution.x > X_SWITCH_SMOOTH) {
       this.hookes.contents.anchor[1] = this.scrollTop * -1;
-      this.hookes.forParallax.anchor[1] = this.scrollTop;
-      this.hookes.elements1.velocity[1] += this.scrollFrame * 0.05;
-      this.hookes.elements2.velocity[1] += this.scrollFrame * 0.1;
-      this.hookes.elements3.velocity[1] += this.scrollFrame * 0.15;
-      this.hookes.elementsR1.velocity[1] += this.scrollFrame * -0.05;
-      this.hookes.elementsR2.velocity[1] += this.scrollFrame * -0.1;
-      this.hookes.elementsR3.velocity[1] += this.scrollFrame * -0.15;
+      this.hookes.smooth.velocity[1] += this.scrollFrame;
+      this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
     }
   }
   scroll(event) {
@@ -132,13 +104,13 @@ export default class SmoothScrollManager {
     if (this.resolution.x > X_SWITCH_SMOOTH) {
       // PCの場合
       this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = -this.scrollTop;
-      this.hookes.forParallax.velocity[1] = this.hookes.forParallax.anchor[1] = this.scrollTop;
+      this.hookes.parallax.velocity[1] = this.hookes.parallax.anchor[1] = this.scrollTop;
     } else {
       // スマホの場合
       for (var key in this.hookes) {
         switch (key) {
           case 'contents':
-          case 'forParallax':
+          case 'parallax':
             this.hookes[key].anchor[1] = this.hookes[key].velocity[1] = 0;
             break;
           default:
@@ -161,12 +133,14 @@ export default class SmoothScrollManager {
   }
   render() {
     if (this.renderPrev) this.renderPrev();
+    // 本文全体のラッパー(contents)をレンダリング
+    contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
     // Hookesオブジェクトをレンダリング
     for (var key in this.hookes) {
       this.hookes[key].render();
     }
     // スクロールイベント連動オブジェクトをレンダリング
-    this.scrollItems.render(this.resolution.x > X_SWITCH_SMOOTH);
+    this.scrollItems.render(this.isWorking && this.resolution.x > X_SWITCH_SMOOTH);
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {
