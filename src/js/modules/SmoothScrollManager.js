@@ -31,12 +31,14 @@ export default class SmoothScrollManager {
     this.isWorking = false;
     this.isWorkingSmooth = false;
 
-    this.initHookes();
-    this.scrollItems.init(document, contents);
     this.on();
   }
   start(callback) {
-    // Smooth Scroll Manager を初期化し、動作を開始する
+    // Hookes と ScrollItems を初期化
+    this.initHookes();
+    this.scrollItems.init(document, contents);
+
+    // Scroll Manager の動作を開始する
     this.resize(() => {
       this.scroll();
       this.isWorkingSmooth = true;
