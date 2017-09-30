@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/ykob/scroll-manager"
   },
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "gulp",
     "build": "NODE_ENV=production gulp build"
