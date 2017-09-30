@@ -1,5 +1,5 @@
 import Hover from 'js-util/Hover.js';
-import ScrollManager from './modules/SmoothScrollManager';
+import ScrollManager from './modules/smooth_scroll_manager/SmoothScrollManager';
 import ContentsHeader from './modules/ContentsHeader';
 import AccordionItem from './modules/AccordionItem';
 

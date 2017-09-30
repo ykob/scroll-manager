@@ -1,4 +1,4 @@
-import Force3 from './Force3';
+import Force3 from '../common/Force3';
 
 export default class Hookes {
   constructor(opt) {
