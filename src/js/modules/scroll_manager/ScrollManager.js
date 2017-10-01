@@ -20,13 +20,13 @@ export default class ScrollManager {
     this.resizePrev = null;
     this.resizeNext = null;
     this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : true;
-    this.init();
   }
   init() {
     this.resize();
     this.on();
   }
   scrollBasis() {
+
   }
   scroll() {
     this.scrollTop = window.pageYOffset;
