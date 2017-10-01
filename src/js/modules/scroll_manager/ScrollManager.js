@@ -1,15 +1,11 @@
 import debounce from 'js-util/debounce';
 import isiOS from 'js-util/isiOS';
 import isAndroid from 'js-util/isAndroid';
-import ScrollItem from './ScrollItem';
-import ParallaxItem from './ParallaxItem';
+import ScrollItems from './ScrollItems';
 
 export default class ScrollManager {
   constructor(opt) {
-    this.elm = document.querySelectorAll('.js-scroll-item');
-    this.elmParallax = document.querySelectorAll('.js-parallax-item');
-    this.items = [];
-    this.parallaxItems = [];
+    this.scrollItems = new ScrollItems(this);
     this.scrollTop = window.pageYOffset;
     this.resolution = {
       x: 0,
@@ -27,26 +23,10 @@ export default class ScrollManager {
     this.init();
   }
   init() {
-    if (this.elm.length > 0) {
-      for (var i = 0; i < this.elm.length; i++) {
-        this.items[i] = new ScrollItem(this.elm[i]);
-      }
-    }
-    if (this.elmParallax.length > 0) {
-      for (var i = 0; i < this.elmParallax.length; i++) {
-        this.parallaxItems[i] = new ParallaxItem(this.elmParallax[i]);
-      }
-    }
     this.resize();
     this.on();
   }
   scrollBasis() {
-    for (var i = 0; i < this.items.length; i++) {
-      this.items[i].show(this.scrollTop + this.resolution.y, this.scrollTop);
-    }
-    for (var i = 0; i < this.parallaxItems.length; i++) {
-      this.parallaxItems[i].scroll(this.scrollTop + this.resolution.y * 0.5);
-    }
   }
   scroll() {
     this.scrollTop = window.pageYOffset;
@@ -56,12 +36,6 @@ export default class ScrollManager {
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
-    for (var i = 0; i < this.items.length; i++) {
-      this.items[i].init(this.scrollTop, this.resolution);
-    }
-    for (var i = 0; i < this.parallaxItems.length; i++) {
-      this.parallaxItems[i].init(this.scrollTop, this.resolution);
-    }
   }
   resize(callback) {
     this.resolution.x = window.innerWidth;

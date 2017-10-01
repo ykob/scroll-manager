@@ -1,10 +1,12 @@
 import Hover from 'js-util/Hover.js';
-import ScrollManager from './modules/smooth_scroll_manager/SmoothScrollManager';
+import SmoothScrollManager from './modules/smooth_scroll_manager/SmoothScrollManager';
+import ScrollManager from './modules/scroll_manager/ScrollManager';
 import ContentsHeader from './modules/ContentsHeader';
 import AccordionItem from './modules/AccordionItem';
 
+const smoothScrollManager = new SmoothScrollManager();
 const scrollManager = new ScrollManager();
-const contentsHeader = new ContentsHeader(scrollManager);
+const contentsHeader = new ContentsHeader(smoothScrollManager);
 const elmHover = document.querySelectorAll('.js-hover');
 const elmAccordion = document.querySelectorAll('.c-accordion-item');
 
@@ -14,16 +16,15 @@ const init = () => {
   }
 
   for (var i = 0; i < elmAccordion.length; i++) {
-    new AccordionItem(elmAccordion[i], scrollManager);
+    new AccordionItem(elmAccordion[i], smoothScrollManager);
   }
 
-  scrollManager.scrollNext = () => {
+  smoothScrollManager.scrollNext = () => {
     contentsHeader.scroll();
   }
-  scrollManager.renderNext = () => {
+  smoothScrollManager.renderNext = () => {
     contentsHeader.render();
   }
-
-  scrollManager.start();
+  smoothScrollManager.start();
 }
 init();

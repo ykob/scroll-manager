@@ -9,7 +9,15 @@
       "id": "index",
       "title": "",
       "keywords": "",
-      "description": "Scroll Manager is utility class that controls smooth scroll and showing some elements by scroll event.",
+      "description": "Smooth Scroll Manager is utility class that controls smooth scroll and showing some elements by scroll event.",
+      "path": "/",
+      "ogpImg": "ogp.jpg"
+    },
+    "index2": {
+      "id": "index2",
+      "title": "",
+      "keywords": "",
+      "description": "Scroll Manager is utility class that controls showing some elements by scroll event.",
       "path": "/",
       "ogpImg": "ogp.jpg"
     }
