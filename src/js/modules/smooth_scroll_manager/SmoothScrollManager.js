@@ -36,7 +36,7 @@ export default class SmoothScrollManager {
   start(callback) {
     // Hookes と ScrollItems を初期化
     this.initHookes();
-    this.scrollItems.init(document, contents);
+    this.scrollItems.init();
 
     // Scroll Manager の動作を開始する
     this.resize(() => {
