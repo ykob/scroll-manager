@@ -33,6 +33,7 @@ export default class ScrollManager {
     if (this.isWorking === false) return;
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
+    this.scrollItems.scroll();
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
@@ -46,6 +47,7 @@ export default class ScrollManager {
     setTimeout(() => {
       this.scrollTop = window.pageYOffset;
       this.resizeBasis();
+      this.scrollItems.resize();
       if (this.resizeNext) this.resizeNext();
       if (callback) callback();
     }, 100);
