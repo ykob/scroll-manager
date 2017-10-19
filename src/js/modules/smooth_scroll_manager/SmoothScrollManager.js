@@ -136,7 +136,8 @@ export default class SmoothScrollManager {
   render() {
     if (this.renderPrev) this.renderPrev();
     // 本文全体のラッパー(contents)をレンダリング
-    contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
+    const y = Math.floor(this.hookes.contents.velocity[1] * 1000) / 1000;
+    contents.style.transform = `translate3D(0, ${y}px, 0)`;
     // Hookesオブジェクトをレンダリング
     for (var key in this.hookes) {
       this.hookes[key].render();
