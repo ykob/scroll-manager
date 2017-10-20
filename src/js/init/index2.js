@@ -19,5 +19,5 @@ export default function() {
   scrollManager.scrollNext = () => {
     contentsHeader.scroll();
   }
-  scrollManager.init();
+  scrollManager.start();
 }

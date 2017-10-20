@@ -21,9 +21,13 @@ export default class ScrollManager {
     this.resizeNext = null;
     this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
   }
-  init() {
-    this.resize();
-    this.on();
+  start() {
+    this.isWorking = true;
+    this.scrollItems.init(document);
+    this.resize(() => {
+      this.scroll();
+      this.on();
+    });
   }
   scrollBasis() {
   }
