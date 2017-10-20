@@ -26,7 +26,6 @@ export default class ScrollManager {
     this.on();
   }
   scrollBasis() {
-
   }
   scroll() {
     this.scrollTop = window.pageYOffset;
