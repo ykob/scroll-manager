@@ -19,7 +19,7 @@ export default class ScrollManager {
     this.scrollNext = null;
     this.resizePrev = null;
     this.resizeNext = null;
-    this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : true;
+    this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
   }
   init() {
     this.resize();
