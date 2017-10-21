@@ -4,7 +4,7 @@ import isAndroid from 'js-util/isAndroid';
 import Hookes from './Hookes';
 import ScrollItems from './ScrollItems';
 
-const X_SWITCH_SMOOTH = 768;
+const X_SWITCH_SMOOTH = 1024;
 const contents = document.querySelector('.l-contents');
 const dummyScroll = document.querySelector('.js-dummy-scroll');
 
