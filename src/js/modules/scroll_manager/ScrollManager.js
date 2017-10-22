@@ -4,7 +4,7 @@ import isAndroid from 'js-util/isAndroid';
 import ScrollItems from './ScrollItems';
 
 export default class ScrollManager {
-  constructor(opt) {
+  constructor() {
     this.scrollItems = new ScrollItems(this);
     this.scrollTop = window.pageYOffset;
     this.resolution = {
@@ -19,7 +19,7 @@ export default class ScrollManager {
     this.scrollNext = null;
     this.resizePrev = null;
     this.resizeNext = null;
-    this.isWorking = (opt && opt.isWorking !== undefined) ? opt.isWorking : false;
+    this.isWorking = false;
   }
   start() {
     this.isWorking = true;
