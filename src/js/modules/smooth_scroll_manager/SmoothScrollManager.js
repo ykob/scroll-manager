@@ -74,6 +74,8 @@ export default class SmoothScrollManager {
       this.hookes.smooth.velocity[1] += this.scrollFrame;
       this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
     }
+    // ScrollItems のスクロールメソッドを実行
+    this.scrollItems.scroll();
   }
   scroll(event) {
     // スクロールイベントの一連の流れ
@@ -86,11 +88,12 @@ export default class SmoothScrollManager {
     // 個別のスクロールイベントを実行
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
-    this.scrollItems.scroll();
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
     // 基礎的なリサイズイベントはここに記述する。
+    // ScrollItems のリサイズメソッドを実行
+    this.scrollItems.resize();
   }
   resize(callback) {
     // リサイズイベントの一連の流れ
@@ -127,7 +130,6 @@ export default class SmoothScrollManager {
     // 個別のリサイズイベントを実行
     if (this.resizePrev) this.resizePrev();
     this.resizeBasis();
-    this.scrollItems.resize();
     if (this.resizeNext) this.resizeNext();
     // スクロールイベントを再開
     this.isWorking = true;
