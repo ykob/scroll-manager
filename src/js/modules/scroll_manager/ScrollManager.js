@@ -17,6 +17,7 @@ export default class ScrollManager {
     };
     this.scrollPrev = null;
     this.scrollNext = null;
+    this.resizeReset = null;
     this.resizePrev = null;
     this.resizeNext = null;
     this.isWorking = false;
@@ -42,6 +43,9 @@ export default class ScrollManager {
   resizeBasis() {
   }
   resize(callback) {
+    // リサイズイベントに関する要素の一時リセット
+    if (this.resizeReset) this.resizeReset();
+    // 各値を取得
     this.resolution.x = window.innerWidth;
     this.resolution.y = window.innerHeight;
     this.bodyResolution.x = document.body.clientWidth;
@@ -69,6 +73,7 @@ export default class ScrollManager {
   off() {
     this.scrollPrev = null;
     this.scrollNext = null;
+    this.resizeReset = null;
     this.resizePrev = null;
     this.resizeNext = null;
   }

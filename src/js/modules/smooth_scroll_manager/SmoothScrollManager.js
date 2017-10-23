@@ -24,6 +24,7 @@ export default class SmoothScrollManager {
     this.hookes = {};
     this.scrollPrev = null;
     this.scrollNext = null;
+    this.resizeReset = null;
     this.resizePrev = null;
     this.resizeNext = null;
     this.renderPrev = null;
@@ -99,6 +100,8 @@ export default class SmoothScrollManager {
     // リサイズイベントの一連の流れ
     // リサイズ中にスクロールイベントが勝手に叩かれるのをキャンセル
     this.isWorking = false;
+    // リサイズイベントに関する要素の一時リセット
+    if (this.resizeReset) this.resizeReset();
     // 各値を取得
     this.scrollTop = window.pageYOffset;
     this.resolution.x = window.innerWidth;
@@ -169,6 +172,7 @@ export default class SmoothScrollManager {
   off() {
     this.scrollPrev = null;
     this.scrollNext = null;
+    this.resizeReset = null;
     this.resizePrev = null;
     this.resizeNext = null;
     this.renderPrev = null;
