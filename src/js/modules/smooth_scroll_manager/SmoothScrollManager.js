@@ -112,7 +112,7 @@ export default class SmoothScrollManager {
     if (this.resolution.x > X_SWITCH_SMOOTH) {
       // PCの場合
       this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = -this.scrollTop;
-      this.hookes.parallax.velocity[1] = this.hookes.parallax.anchor[1] = this.scrollTop;
+      this.hookes.parallax.velocity[1] = this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
     } else {
       // スマホの場合
       for (var key in this.hookes) {
