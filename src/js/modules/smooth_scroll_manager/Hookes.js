@@ -6,7 +6,7 @@ export default class Hookes {
     this.acceleration = [0, 0, 0];
     this.anchor = [0, 0, 0];
     this.k = (opt && opt.k !== undefined) ? opt.k : 0.3;
-    this.d = (opt && opt.d !== undefined) ? opt.d : 0.8;
+    this.d = (opt && opt.d !== undefined) ? opt.d : 0.7;
     this.m = (opt && opt.m !== undefined) ? opt.m : 1;
   }
   render() {
