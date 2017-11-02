@@ -1,7 +1,7 @@
-import Hover from 'js-util/Hover.js';
-import SmoothScrollManager from '../modules/smooth_scroll_manager/SmoothScrollManager';
-import ContentsHeader from '../modules/ContentsHeader';
-import AccordionItem from '../modules/AccordionItem';
+const Hover = require('js-util/Hover.js');
+const SmoothScrollManager = require('../modules/smooth_scroll_manager/SmoothScrollManager').default;
+const ContentsHeader = require('../modules/ContentsHeader').default;
+const AccordionItem = require('../modules/AccordionItem').default;
 
 const scrollManager = new SmoothScrollManager();
 const contentsHeader = new ContentsHeader(scrollManager);

@@ -1,4 +1,4 @@
-import ScrollItem from './ScrollItem';
+const ScrollItem = require('./ScrollItem').default;
 
 export default class ScrollItems {
   constructor(scrollManager) {

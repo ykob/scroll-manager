@@ -1,7 +1,7 @@
-import debounce from 'js-util/debounce';
-import isiOS from 'js-util/isiOS';
-import isAndroid from 'js-util/isAndroid';
-import ScrollItems from './ScrollItems';
+const debounce = require('js-util/debounce');
+const isiOS = require('js-util/isiOS');
+const isAndroid = require('js-util/isAndroid');
+const ScrollItems = require('./ScrollItems').default;
 
 export default class ScrollManager {
   constructor() {

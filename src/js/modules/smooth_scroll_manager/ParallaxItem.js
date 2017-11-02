@@ -1,4 +1,4 @@
-import MathEx from 'js-util/MathEx';
+const MathEx = require('js-util/MathEx');
 
 export default class ParallaxItem {
   constructor(elm, scrollManager, hookes, opt) {
