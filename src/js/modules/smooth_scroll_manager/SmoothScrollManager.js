@@ -5,7 +5,7 @@ const Hookes = require('./Hookes').default;
 const ScrollItems = require('./ScrollItems').default;
 
 const X_SWITCH_SMOOTH = 1024;
-const contents = document.querySelector('.l-contents');
+const contents = document.querySelector('.js-contents');
 const dummyScroll = document.querySelector('.js-dummy-scroll');
 
 export default class SmoothScrollManager {
