@@ -7,10 +7,10 @@ export default class ParallaxItem {
     this.elm = elm;
     this.height = 0;
     this.top = 0;
-    this.maxX = (opt && opt.maxX) ? opt.maxX : 10;
-    this.minX = (opt && opt.minX) ? opt.minX : -10;
+    this.maxX = (opt && opt.maxX) ? opt.maxX : 10000;
+    this.minX = (opt && opt.minX) ? opt.minX : -10000;
     this.ratioX = (opt && opt.ratioX) ? opt.ratioX : 0;
-    this.unitX = (opt && opt.unitX) ? opt.unitX : '%';
+    this.unitX = (opt && opt.unitX) ? opt.unitX : 'px';
     this.maxY = (opt && opt.maxY) ? opt.maxY : 10;
     this.minY = (opt && opt.minY) ? opt.minY : -10;
     this.ratioY = (opt && opt.ratioY) ? opt.ratioY : 0.012;
