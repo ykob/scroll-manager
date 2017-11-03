@@ -7,10 +7,14 @@ export default class ParallaxItem {
     this.elm = elm;
     this.height = 0;
     this.top = 0;
-    this.max = (opt && opt.max) ? opt.max : 10;
-    this.min = (opt && opt.min) ? opt.min : -10;
-    this.ratio = (opt && opt.ratio) ? opt.ratio : 0.012;
-    this.unit = (opt && opt.unit) ? opt.unit : '%';
+    this.maxX = (opt && opt.maxX) ? opt.maxX : 10;
+    this.minX = (opt && opt.minX) ? opt.minX : -10;
+    this.ratioX = (opt && opt.ratioX) ? opt.ratioX : 0;
+    this.unitX = (opt && opt.unitX) ? opt.unitX : '%';
+    this.maxY = (opt && opt.maxY) ? opt.maxY : 10;
+    this.minY = (opt && opt.minY) ? opt.minY : -10;
+    this.ratioY = (opt && opt.ratioY) ? opt.ratioY : 0.012;
+    this.unitY = (opt && opt.unitY) ? opt.unitY : '%';
   }
   init(scrollTop) {
     const rect = this.elm.getBoundingClientRect();
@@ -19,11 +23,16 @@ export default class ParallaxItem {
     this.elm.style.backfaceVisibility = 'hidden';
   }
   render(iwWorking) {
-    const y = (iwWorking) ? MathEx.clamp(
-      (this.hookes.velocity[1] - (this.top + this.height * 0.5)) * this.ratio,
-      this.min,
-      this.max
+    const x = (iwWorking) ? MathEx.clamp(
+      this.hookes.velocity[0] * this.ratioX,
+      this.minX,
+      this.maxX
     ) : 0;
-    this.elm.style.transform = `translate3D(0, ${y}${this.unit}, 0)`;
+    const y = (iwWorking) ? MathEx.clamp(
+      (this.hookes.velocity[1] - (this.top + this.height * 0.5)) * this.ratioY,
+      this.minY,
+      this.maxY
+    ) : 0;
+    this.elm.style.transform = `translate3D(${x}${this.unitX}, ${y}${this.unitY}, 0)`;
   }
 }

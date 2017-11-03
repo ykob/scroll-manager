@@ -91,6 +91,12 @@ export default class SmoothScrollManager {
     this.scrollBasis();
     if (this.scrollNext) this.scrollNext();
   }
+  tilt(event) {
+    if (this.isWorking === false) return;
+    if (this.resolution.x > X_SWITCH_SMOOTH) {
+      this.hookes.parallax.anchor[0] = (event.clientX / this.resolution.x * 2 - 1) * -100;
+    }
+  }
   resizeBasis() {
     // 基礎的なリサイズイベントはここに記述する。
     // ScrollItems のリサイズメソッドを実行
@@ -164,6 +170,9 @@ export default class SmoothScrollManager {
 
     window.addEventListener('scroll', (event) => {
       this.scroll(event);
+    }, false);
+    window.addEventListener('mousemove', (event) => {
+      this.tilt(event);
     }, false);
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
