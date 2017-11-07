@@ -1,0 +1,25 @@
+.p-local-navi {
+  @include l-more-than-mobile {
+    display: flex;
+    justify-content: center;
+    margin-top: (100 / 1366) * 100%;
+    margin-bottom: (100 / 1366) * 100%;
+  }
+  @include l-mobile {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  &__item {
+    display: block;
+    margin-right: 2em;
+    margin-left: 2em;
+    color: $color-text-black;
+    @include fontSizeAll(16, 14, 12);
+    text-decoration: none;
+    @include l-mobile {
+      margin-top: 8px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+  }
+}
