@@ -49,15 +49,14 @@ export default class ScrollItems {
     }
   }
   resize() {
-    const scrollTop = window.pageYOffset;
     for (var i = 0; i < this.scrollItems.length; i++) {
-      this.scrollItems[i].init(scrollTop);
+      this.scrollItems[i].init(this.scrollManager.scrollTop);
     }
     for (var i = 0; i < this.smoothItems.length; i++) {
-      this.smoothItems[i].init(scrollTop);
+      this.smoothItems[i].init(this.scrollManager.scrollTop);
     }
     for (var i = 0; i < this.parallaxItems.length; i++) {
-      this.parallaxItems[i].init(scrollTop);
+      this.parallaxItems[i].init(this.scrollManager.scrollTop);
     }
   }
   render(isWorking) {
