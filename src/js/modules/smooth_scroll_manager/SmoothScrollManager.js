@@ -31,21 +31,39 @@ export default class SmoothScrollManager {
     this.renderNext = null;
     this.isWorking = false;
     this.isWorkingSmooth = false;
-
-    this.on();
   }
   start(callback) {
-    // Hookes と ScrollItems を初期化
-    this.initHookes();
-    this.scrollItems.init();
+    setTimeout(() => {
+      this.scrollTop = window.pageYOffset;
 
-    // Scroll Manager の動作を開始する
-    this.resize(() => {
-      this.scroll();
-      this.isWorkingSmooth = true;
-      this.renderLoop();
-      if (callback) callback();
-    });
+      // Hookes と ScrollItems を初期化
+      this.initHookes();
+      this.scrollItems.init();
+
+      // hash があった場合は指定の箇所にスクロール位置を調整する
+      const { hash } = location;
+      if (hash) {
+        const target = document.querySelector(hash);
+        const targetRect = target.getBoundingClientRect();
+        const anchorY = this.scrollTop + targetRect.top;
+        window.scrollTo(0, anchorY);
+        this.scrollTop = anchorY;
+        if (this.resolution.x > X_SWITCH_SMOOTH) {
+          this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
+          this.hookes.parallax.velocity[1] = this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
+        }
+      }
+
+      // Scroll Manager の動作を開始する
+      this.resize(() => {
+        this.scroll();
+        this.isWorkingSmooth = true;
+        this.renderLoop();
+        this.on();
+        if (callback) callback();
+      });
+    }, 100);
+
   }
   initDummyScroll() {
     // ダミースクロールの初期化
