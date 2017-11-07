@@ -42,8 +42,8 @@ export default class SmoothScrollManager {
 
       // hash があった場合は指定の箇所にスクロール位置を調整する
       const { hash } = location;
-      if (hash) {
-        const target = document.querySelector(hash);
+      const target = (hash) ? document.querySelector(hash) : null;
+      if (target) {
         const targetRect = target.getBoundingClientRect();
         const anchorY = this.scrollTop + targetRect.top;
         window.scrollTo(0, anchorY);
