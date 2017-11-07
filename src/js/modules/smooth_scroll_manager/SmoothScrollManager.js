@@ -4,7 +4,6 @@ const isAndroid = require('js-util/isAndroid');
 const Hookes = require('./Hookes').default;
 const ScrollItems = require('./ScrollItems').default;
 
-const X_SWITCH_SMOOTH = 1024;
 const contents = document.querySelector('.js-contents');
 const dummyScroll = document.querySelector('.js-dummy-scroll');
 
@@ -21,6 +20,7 @@ export default class SmoothScrollManager {
       x: 0,
       y: 0
     };
+    this.X_SWITCH_SMOOTH = 1024;
     this.hookes = {};
     this.scrollPrev = null;
     this.scrollNext = null;
@@ -62,7 +62,7 @@ export default class SmoothScrollManager {
   }
   initDummyScroll() {
     // ダミースクロールの初期化
-    if (this.resolution.x <= X_SWITCH_SMOOTH) {
+    if (this.resolution.x <= this.X_SWITCH_SMOOTH) {
       contents.style.transform = '';
       contents.classList.remove('is-fixed');
       dummyScroll.style.height = `0`;
@@ -83,7 +83,7 @@ export default class SmoothScrollManager {
   scrollBasis() {
     // 基礎的なスクロールイベントはここに記述する。
     // スクロール値を元に各Hookesオブジェクトを更新
-    if (this.resolution.x > X_SWITCH_SMOOTH) {
+    if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       this.hookes.contents.anchor[1] = this.scrollTop * -1;
       this.hookes.smooth.velocity[1] += this.scrollFrame;
       this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
@@ -106,7 +106,7 @@ export default class SmoothScrollManager {
   }
   tilt(event) {
     if (this.isWorking === false) return;
-    if (this.resolution.x > X_SWITCH_SMOOTH) {
+    if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       this.hookes.parallax.anchor[0] = (event.clientX / this.resolution.x * 2 - 1) * -100;
     }
   }
@@ -128,7 +128,7 @@ export default class SmoothScrollManager {
     this.bodyResolution.x = document.body.clientWidth;
     this.bodyResolution.y = document.body.clientHeight;
     // window幅によってHookesオブジェクトの値を再設定する
-    if (this.resolution.x > X_SWITCH_SMOOTH) {
+    if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       // PCの場合
       this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = -this.scrollTop;
       this.hookes.parallax.velocity[1] = this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
@@ -167,7 +167,7 @@ export default class SmoothScrollManager {
       this.hookes[key].render();
     }
     // スクロールイベント連動オブジェクトをレンダリング
-    this.scrollItems.render(this.isWorking && this.resolution.x > X_SWITCH_SMOOTH);
+    this.scrollItems.render(this.isWorking && this.resolution.x > this.X_SWITCH_SMOOTH);
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {
