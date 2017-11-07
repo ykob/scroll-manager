@@ -48,10 +48,6 @@ export default class SmoothScrollManager {
         const anchorY = this.scrollTop + targetRect.top;
         window.scrollTo(0, anchorY);
         this.scrollTop = anchorY;
-        if (this.resolution.x > X_SWITCH_SMOOTH) {
-          this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
-          this.hookes.parallax.velocity[1] = this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
-        }
       }
 
       // Scroll Manager の動作を開始する
@@ -63,7 +59,6 @@ export default class SmoothScrollManager {
         if (callback) callback();
       });
     }, 100);
-
   }
   initDummyScroll() {
     // ダミースクロールの初期化
