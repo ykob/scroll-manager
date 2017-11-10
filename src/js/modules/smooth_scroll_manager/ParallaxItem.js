@@ -16,6 +16,7 @@ export default class ParallaxItem {
     this.unitY = (opt && opt.unitY) ? opt.unitY : '%';
   }
   init(scrollTop) {
+    this.elm.style = '';
     const rect = this.elm.getBoundingClientRect();
     this.height = rect.height;
     this.top = scrollTop + rect.top;
