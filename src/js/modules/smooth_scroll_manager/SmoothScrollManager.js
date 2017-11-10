@@ -14,6 +14,7 @@ export default class SmoothScrollManager {
     this.scrollItems = new ScrollItems(this);
     this.scrollTop = 0;
     this.scrollFrame = 0;
+    this.scrollTopPause = 0;
     this.resolution = {
       x: 0,
       y: 0
@@ -61,6 +62,26 @@ export default class SmoothScrollManager {
         if (callback) callback();
       });
     }, 100);
+  }
+  pause() {
+    // スムーススクロールの一時停止
+    this.isWorking = false;
+    contents.style.position = 'fixed';
+    // スマホ時には本文のtranslate値を更新してスクロールを固定する。
+    this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = this.scrollTop * -1;
+    this.scrollTopPause = this.scrollTop;
+    window.scrollTo(0, this.scrollTop);
+  }
+  play() {
+    // スムーススクロールの再生
+    contents.style.position = '';
+    this.scrollTop = this.scrollTopPause;
+    // スマホ時には本文のtranslate値をゼロにしてスクロールを復帰させる。
+    if (this.resolution.x <= this.X_SWITCH_SMOOTH) {
+      this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = 0;
+    }
+    window.scrollTo(0, this.scrollTop);
+    this.isWorking = true;
   }
   initDummyScroll() {
     // ダミースクロールの初期化
@@ -169,7 +190,7 @@ export default class SmoothScrollManager {
       this.hookes[key].render();
     }
     // スクロールイベント連動オブジェクトをレンダリング
-    this.scrollItems.render(this.isWorking && this.resolution.x > this.X_SWITCH_SMOOTH);
+    this.scrollItems.render(this.isWorkingSmooth && this.resolution.x > this.X_SWITCH_SMOOTH);
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {

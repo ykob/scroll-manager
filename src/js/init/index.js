@@ -9,6 +9,7 @@ const contentsHeader = new ContentsHeader(scrollManager);
 const elmAnchorLink = document.querySelectorAll('.js-anchor-link');
 const elmHover = document.querySelectorAll('.js-hover');
 const elmAccordion = document.querySelectorAll('.c-accordion-item');
+const elmOpenModal = document.querySelectorAll('.js-open-modal');
 
 export default function() {
   for (var i = 0; i < elmAnchorLink.length; i++) {
@@ -19,6 +20,16 @@ export default function() {
   }
   for (var i = 0; i < elmAccordion.length; i++) {
     new AccordionItem(elmAccordion[i], scrollManager);
+  }
+  for (var i = 0; i < elmOpenModal.length; i++) {
+    elmOpenModal[i].addEventListener('click', () => {
+      if (scrollManager.isWorking) {
+        scrollManager.pause();
+      } else {
+        scrollManager.play();
+        console.log(scrollManager.isWorking);
+      }
+    });
   }
 
   scrollManager.scrollNext = () => {

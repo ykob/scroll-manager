@@ -1,5 +1,6 @@
 .c-button-border {
   box-sizing: border-box;
+  cursor: pointer;
   display: block;
   line-height: 1.1;
   position: relative;
@@ -32,6 +33,12 @@
   &:after {
     background-color: #fff;
   }
+  &--black {
+    color: #222;
+    &:after {
+      background-color: #222;
+    }
+  }
   &__label {
     display: inline-block;
     position: relative;
@@ -44,6 +51,11 @@
       position: absolute;
       z-index: 10;
       background-color: #fff;
+    }
+    &--black {
+      &:before, &:after {
+        background-color: #222;
+      }
     }
   }
   &__line-v {
@@ -132,6 +144,9 @@
       color: #111;
       transition-duration: 0.3s;
       transition-delay: 0s;
+      &--black {
+        color: #fff;
+      }
     }
   }
   &.is-over {
