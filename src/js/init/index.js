@@ -1,6 +1,7 @@
 const Hover = require('js-util/Hover.js');
 const SmoothScrollManager = require('../modules/smooth_scroll_manager/SmoothScrollManager').default;
 const AnchorLink = require('../modules/smooth_scroll_manager/AnchorLink').default;
+const loadContentImgs = require('../modules/common/loadContentImgs').default;
 const ContentsHeader = require('../modules/ContentsHeader').default;
 const AccordionItem = require('../modules/AccordionItem').default;
 
@@ -38,5 +39,9 @@ export default function() {
   scrollManager.renderNext = () => {
     contentsHeader.render();
   }
-  scrollManager.start();
+  scrollManager.start(() => {
+    loadContentImgs(() => {
+      scrollManager.resize();
+    });
+  });
 }
