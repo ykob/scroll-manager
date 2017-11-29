@@ -4,11 +4,11 @@ export default function(callback) {
   const imgs = document.querySelectorAll('img');
 
   if (imgs.length > 0) {
-    const imgArray = [];
+    const imgArr = [];
     for (var i = 0; i < imgs.length; i++) {
-      imgArray[i] = imgs[i].src;
+      imgArr[i] = imgs[i].src;
     }
-    loadImage(imgArray, callback);
+    loadImage(imgArr, callback);
   } else {
     callback();
   }
