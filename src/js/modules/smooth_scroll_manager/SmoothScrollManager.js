@@ -46,12 +46,14 @@ export default class SmoothScrollManager {
       // hash があった場合は指定の箇所にスクロール位置を調整する
       const { hash } = location;
       const target = (hash) ? document.querySelector(hash) : null;
+      let anchorY = 0;
       if (target) {
         const targetRect = target.getBoundingClientRect();
-        const anchorY = this.scrollTop + targetRect.top;
-        window.scrollTo(0, anchorY);
-        this.scrollTop = anchorY;
+        anchorY = this.scrollTop + targetRect.top;
       }
+      // 初期スクロール値を強制的に0にする。(pjax遷移の際に有効にする)
+      // window.scrollTo(0, anchorY);
+      // this.scrollTop = anchorY;
 
       // Scroll Manager の動作を開始する
       this.resize(() => {
