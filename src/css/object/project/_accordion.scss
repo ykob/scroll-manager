@@ -1,4 +1,4 @@
-.c-accordion-item {
+.p-accordion {
   border-bottom: 1px solid #ddd;
   @include l-more-than-mobile {
     padding-top: 50px;
@@ -8,15 +8,11 @@
     padding: 20px;
   }
   &__head {
-    cursor: pointer;
     position: relative;
     @include fontSizeAll(24, 21, 14);
   }
   &__body {
-    height: 0;
     overflow: hidden;
-    transition-duration: 0.6s;
-    transition-timing-function: $easeOutCirc;
     &-in {
       padding-top: 20px;
     }

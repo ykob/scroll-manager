@@ -33,8 +33,7 @@
 // -----------------------------------------------------------------
 // Component
 // -----------------------------------------------------------------
-@import "object/component/_accordion-item";
-@import "object/component/_accordion-wrap";
+@import "object/component/_accordion";
 @import "object/component/_button-border";
 @import "object/component/_section";
 @import "object/component/_text-link-underline";
@@ -42,6 +41,8 @@
 // -----------------------------------------------------------------
 // Project
 // -----------------------------------------------------------------
+@import "object/project/_accordion-wrap";
+@import "object/project/_accordion";
 @import "object/project/_contents-header-bg";
 @import "object/project/_contents-header";
 @import "object/project/_footer-copy";

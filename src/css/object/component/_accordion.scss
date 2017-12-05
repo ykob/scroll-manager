@@ -1,0 +1,15 @@
+.c-accordion {
+  &__trigger {
+    cursor: pointer;
+  }
+  &__body {
+    height: 0;
+    overflow: hidden;
+    transition-duration: .4s;
+    transition-timing-function: $easeOutCirc;
+    transition-property: height;
+    &-in {
+      overflow: hidden;
+    }
+  }
+}
