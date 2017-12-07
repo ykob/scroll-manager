@@ -171,12 +171,13 @@ export default class SmoothScrollManager {
         }
       }
     }
+    // 個別のリサイズイベントを実行（ページの高さ変更前）
+    if (this.resizePrev) this.resizePrev();
     // 本文やダミースクロールのレイアウトを再設定
     this.initDummyScroll();
     this.render();
     window.scrollTo(0, this.scrollTop);
-    // 個別のリサイズイベントを実行
-    if (this.resizePrev) this.resizePrev();
+    // 個別のリサイズイベントを実行（ページの高さ変更後）
     this.resizeBasis();
     if (this.resizeNext) this.resizeNext();
     // スクロールイベントを再開
