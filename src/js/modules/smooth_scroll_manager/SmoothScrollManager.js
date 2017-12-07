@@ -34,6 +34,7 @@ export default class SmoothScrollManager {
     this.renderNext = null;
     this.isWorking = false;
     this.isWorkingSmooth = false;
+    this.isAlreadyAddEvent = false;
   }
   start(callback) {
     setTimeout(() => {
@@ -204,6 +205,8 @@ export default class SmoothScrollManager {
     }
   }
   on() {
+    if (this.isAlreadyAddEvent) return;
+
     const hookEventForResize = (isiOS() || isAndroid()) ? 'orientationchange' : 'resize';
 
     window.addEventListener('scroll', (event) => {
@@ -215,6 +218,8 @@ export default class SmoothScrollManager {
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
     }, 400), false);
+
+    this.isAlreadyAddEvent = true;
   }
   off() {
     this.scrollPrev = null;
