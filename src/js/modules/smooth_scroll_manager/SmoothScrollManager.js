@@ -194,7 +194,7 @@ export default class SmoothScrollManager {
       this.hookes[key].render();
     }
     // スクロールイベント連動オブジェクトをレンダリング
-    this.scrollItems.render(this.isWorkingSmooth && this.resolution.x > this.X_SWITCH_SMOOTH);
+    this.scrollItems.render(this.isValidSmooth());
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {
@@ -230,5 +230,8 @@ export default class SmoothScrollManager {
     this.resizeNext = null;
     this.renderPrev = null;
     this.renderNext = null;
+  }
+  isValidSmooth() {
+    return this.isWorkingSmooth && this.resolution.x > this.X_SWITCH_SMOOTH;
   }
 }
