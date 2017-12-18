@@ -38,27 +38,33 @@ export default class SmoothScrollManager {
   }
   start(callback) {
     setTimeout(() => {
+      // 初期スクロール値を取得する。(pjax遷移の際は不要)
       this.scrollTop = window.pageYOffset;
 
       // Hookes と ScrollItems を初期化
       this.initHookes();
       this.scrollItems.init();
 
-      // hash があった場合は指定の箇所にスクロール位置を調整する
-      const { hash } = location;
-      const target = (hash) ? document.querySelector(hash) : null;
-      let anchorY = 0;
-      if (target) {
-        const targetRect = target.getBoundingClientRect();
-        anchorY = this.scrollTop + targetRect.top;
-      }
-      // 初期スクロール値を強制的に0にする。(pjax遷移の際に有効にする)
-      // window.scrollTo(0, anchorY);
-      // this.scrollTop = anchorY;
-
-      // Scroll Manager の動作を開始する
+      // Resizeイベントを実行してページのレイアウトを初期化する
       this.resize(() => {
+        // hash があった場合は指定の箇所にスクロール位置を調整する
+        this.isWorking = false;
+        const { hash } = location;
+        const target = (hash) ? document.querySelector(hash) : null;
+        const anchorY = (target) ? this.scrollTop + target.getBoundingClientRect().top : -1; // IE＋Pjax遷移時に0だと真っ白になるバグを-1にすることで回避
+        window.scrollTo(0, anchorY);
+        this.scrollTop = anchorY;
+        if (this.resolution.x > this.X_SWITCH_SMOOTH) {
+          this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
+          this.hookes.parallax.anchor[1] = this.hookes.parallax.velocity[1] = this.scrollTop + this.resolution.y * 0.5;
+        }
+        contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
+        this.isWorking = true;
+
+        // ページロード時にスクロールイベントを着火させる。
         this.scroll();
+
+        // Scroll Manager の動作を開始する
         this.isWorkingSmooth = true;
         this.renderLoop();
         this.on();
