@@ -1,17 +1,19 @@
-export default class AccordionItem {
+export default class Accordion {
   constructor(elm, scrollManager) {
     this.elm = elm;
-    this.head = elm.querySelector('.c-accordion-item__head');
-    this.body = elm.querySelector('.c-accordion-item__body');
-    this.bodyIn = elm.querySelector('.c-accordion-item__body-in');
+    this.trigger = elm.querySelector('.js-accordion-trigger');
+    this.body = elm.querySelector('.js-accordion-body');
+    this.bodyIn = elm.querySelector('.js-accordion-body-in');
     this.scrollManager = scrollManager;
-    this.isAnimate = false;
     this.on();
   }
+  resize() {
+    if (this.elm.classList.contains('is-opened')) {
+      this.body.style.height = `${this.bodyIn.clientHeight}px`;
+    }
+  }
   on() {
-    this.head.addEventListener('click', () => {
-      if (this.isAnimate) return;
-      this.isAnimate = true;
+    this.trigger.addEventListener('click', () => {
       if (this.elm.classList.contains('is-opened')) {
         this.elm.classList.remove('is-opened');
         this.body.style.height = `0`;
@@ -22,7 +24,6 @@ export default class AccordionItem {
     });
     this.body.addEventListener('transitionend', () => {
       this.scrollManager.resize();
-      this.isAnimate = false;
     });
   }
 }

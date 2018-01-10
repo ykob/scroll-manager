@@ -42,28 +42,37 @@ export default class SmoothScrollManager {
     this.renderNext = null;
     this.isWorking = false;
     this.isWorkingSmooth = false;
+    this.isAlreadyAddEvent = false;
   }
   start(callback) {
     setTimeout(() => {
+      // 初期スクロール値を取得する。(pjax遷移の際は不要)
       this.scrollTop = window.pageYOffset;
 
       // Hookes と ScrollItems を初期化
       this.initHookes();
       this.scrollItems.init();
 
-      // hash があった場合は指定の箇所にスクロール位置を調整する
-      const { hash } = location;
-      const target = (hash) ? document.querySelector(hash) : null;
-      if (target) {
-        const targetRect = target.getBoundingClientRect();
-        const anchorY = this.scrollTop + targetRect.top;
+      // Resizeイベントを実行してページのレイアウトを初期化する
+      this.resize(() => {
+        // hash があった場合は指定の箇所にスクロール位置を調整する
+        this.isWorking = false;
+        const { hash } = location;
+        const target = (hash) ? document.querySelector(hash) : null;
+        const anchorY = (target) ? this.scrollTop + target.getBoundingClientRect().top : -1; // IE＋Pjax遷移時に0だと真っ白になるバグを-1にすることで回避
         window.scrollTo(0, anchorY);
         this.scrollTop = anchorY;
-      }
+        if (this.resolution.x > this.X_SWITCH_SMOOTH) {
+          this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
+          this.hookes.parallax.anchor[1] = this.hookes.parallax.velocity[1] = this.scrollTop + this.resolution.y * 0.5;
+        }
+        contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
+        this.isWorking = true;
 
-      // Scroll Manager の動作を開始する
-      this.resize(() => {
+        // ページロード時にスクロールイベントを着火させる。
         this.scroll();
+
+        // Scroll Manager の動作を開始する
         this.isWorkingSmooth = true;
         this.renderLoop();
         this.on();
@@ -106,9 +115,9 @@ export default class SmoothScrollManager {
   initHookes() {
     // Hookesオブジェクトの初期化
     this.hookes = {
-      contents: new Hookes({ k: 0.33, d: 0.7 }),
-      smooth:   new Hookes({ k: 0.28, d: 0.75 }),
-      parallax: new Hookes({ k: 0.28, d: 0.75 }),
+      contents: new Hookes({ k: 0.625, d: 0.8 }),
+      smooth:   new Hookes({ k: 0.2, d: 0.7 }),
+      parallax: new Hookes({ k: 0.28, d: 0.7 }),
     }
   }
   scrollBasis() {
@@ -176,12 +185,13 @@ export default class SmoothScrollManager {
         }
       }
     }
+    // 個別のリサイズイベントを実行（ページの高さ変更前）
+    if (this.resizePrev) this.resizePrev();
     // 本文やダミースクロールのレイアウトを再設定
     this.initDummyScroll();
     this.render();
     window.scrollTo(0, this.scrollTop);
-    // 個別のリサイズイベントを実行
-    if (this.resizePrev) this.resizePrev();
+    // 個別のリサイズイベントを実行（ページの高さ変更後）
     this.resizeBasis();
     if (this.resizeNext) this.resizeNext();
     // スクロールイベントを再開
@@ -198,7 +208,7 @@ export default class SmoothScrollManager {
       this.hookes[key].render();
     }
     // スクロールイベント連動オブジェクトをレンダリング
-    this.scrollItems.render(this.isWorkingSmooth && this.resolution.x > this.X_SWITCH_SMOOTH);
+    this.scrollItems.render(this.isValidSmooth());
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {
@@ -210,6 +220,8 @@ export default class SmoothScrollManager {
     }
   }
   on() {
+    if (this.isAlreadyAddEvent) return;
+
     const hookEventForResize = (isiOS() || isAndroid()) ? 'orientationchange' : 'resize';
 
     window.addEventListener('scroll', (event) => {
@@ -221,6 +233,8 @@ export default class SmoothScrollManager {
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
     }, 400), false);
+
+    this.isAlreadyAddEvent = true;
   }
   off() {
     this.scrollPrev = null;
@@ -230,5 +244,8 @@ export default class SmoothScrollManager {
     this.resizeNext = null;
     this.renderPrev = null;
     this.renderNext = null;
+  }
+  isValidSmooth() {
+    return this.isWorkingSmooth && this.resolution.x > this.X_SWITCH_SMOOTH;
   }
 }
