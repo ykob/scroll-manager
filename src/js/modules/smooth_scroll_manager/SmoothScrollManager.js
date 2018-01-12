@@ -58,7 +58,7 @@ export default class SmoothScrollManager {
       this.scrollItems.init();
     }).then(() => {
       // Resizeイベントを実行してページのレイアウトを初期化する
-      this.resize()
+      this.resize();
     }).then(() => {
       // hash があった場合は指定の箇所にスクロール位置を調整する
       this.isWorking = false;
