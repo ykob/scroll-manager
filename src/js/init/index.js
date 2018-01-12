@@ -38,7 +38,7 @@ export default function() {
   }
   scrollManager.resizeNext = () => {
     for (var i = 0; i < accordions.length; i++) {
-      accordions[i].resize()
+      accordions[i].resize();
     }
   }
   scrollManager.renderNext = () => {

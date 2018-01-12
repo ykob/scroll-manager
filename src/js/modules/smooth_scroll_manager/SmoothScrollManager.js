@@ -56,6 +56,7 @@ export default class SmoothScrollManager {
       this.initHookes();
       this.scrollItems.init();
     }).then(() => {
+      // Resizeイベントを実行してページのレイアウトを初期化する
       this.resize()
     }).then(() => {
       // hash があった場合は指定の箇所にスクロール位置を調整する
@@ -158,7 +159,7 @@ export default class SmoothScrollManager {
     // ScrollItems のリサイズメソッドを実行
     this.scrollItems.resize();
   }
-  resize(callback) {
+  resize() {
     // リサイズイベントの一連の流れ
     // リサイズ中にスクロールイベントが勝手に叩かれるのをキャンセル
     this.isWorking = false;
@@ -199,7 +200,6 @@ export default class SmoothScrollManager {
     if (this.resizeNext) this.resizeNext();
     // スクロールイベントを再開
     this.isWorking = true;
-    if (callback) callback();
   }
   render() {
     if (this.renderPrev) this.renderPrev();
