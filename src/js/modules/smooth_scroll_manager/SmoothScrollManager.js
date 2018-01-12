@@ -6,7 +6,8 @@
 * http://opensource.org/licenses/mit-license.php
 */
 
-require('babel-polyfill')
+require('babel-polyfill');
+
 const debounce = require('js-util/debounce');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
