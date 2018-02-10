@@ -101,25 +101,6 @@ module.exports.replace = {
   }
 };
 
-module.exports.sprite = {
-  src: [
-    `${DIR.SRC}/img/sprite/**/*.png`
-  ],
-  dest: {
-    img: `${DIR.DEST}${DIR.PATH}/img/common`,
-    css: `${DIR.SRC}/css/foundation`
-  },
-  opts: {
-    imgName: 'sprite.png',
-    cssName: '_sprite.scss',
-    imgPath: '../img/common/sprite.png',
-    padding: 10,
-    cssOpts: {
-      functions: false
-    }
-  }
-};
-
 module.exports.cleanCss = {
   src: `${DIR.DEST}/css/main.css`,
   dest: `${DIR.BUILD}/css`
@@ -139,7 +120,6 @@ module.exports.copy = {
   dest: {
     src: [
       `${DIR.SRC}/img/**/*.*`,
-      `!${DIR.SRC}/img/sprite/*.*`,
       `${DIR.SRC}/font/**/*.*`,
     ],
     dest: `${DIR.DEST}`,
