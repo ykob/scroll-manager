@@ -18,28 +18,30 @@ gulp.task('predefault', cb => {
 });
 
 gulp.task('default', ['predefault'], () => {
-  gulp.watch(
-    [`./${DIR.SRC}/**/*.pug`],
-    reload
-  );
-
-  gulp.watch(
+  $.watch(
     [`./${DIR.SRC}/**/*.{scss,sass}`],
-    ['sass', reload]
-  );
+    () => {
+      gulp.start(['sass'])
+    }
+  ).on('change', reload);
 
-  gulp.watch(
-    [`./${DIR.DEST}/**/*.js`],
-    reload
-  );
+  $.watch(
+    [`./${DIR.SRC}/**/*.pug`]
+  ).on('change', reload);
 
-  gulp.watch(
+  $.watch(
+    [`./${DIR.DEST}/**/*.js`]
+  ).on('change', reload);
+
+  $.watch(
     [
       `./${DIR.SRC}/img/**/*.*`,
-      `./${DIR.SRC}/font/**/*.*`,
+      `./${DIR.SRC}/font/**/*.*`
     ],
-    ['copyToDest', reload]
-  );
+    () => {
+      gulp.start(['copyToDest'])
+    }
+  ).on('change', reload);
 });
 
 gulp.task('build', cb => {
