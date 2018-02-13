@@ -4,6 +4,7 @@ const runSequence = require('run-sequence');
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 
+const $ = require('./gulp/plugins');
 const DIR = require('./gulp/conf').DIR;
 
 requireDir('./gulp/tasks');
