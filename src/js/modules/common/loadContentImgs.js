@@ -1,14 +1,14 @@
-const loadImage = require('./loadImage').default;
+const loadImgs = require('./loadImgs').default;
 
-export default function(callback) {
-  const imgs = document.querySelectorAll('img');
+export default function(contents, callback) {
+  const imgs = contents.querySelectorAll('img');
 
   if (imgs.length > 0) {
     const imgArr = [];
     for (var i = 0; i < imgs.length; i++) {
       imgArr[i] = imgs[i].src;
     }
-    loadImage(imgArr, callback);
+    loadImgs(imgArr, callback);
   } else {
     callback();
   }
