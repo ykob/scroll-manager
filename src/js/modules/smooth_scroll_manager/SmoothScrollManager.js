@@ -43,7 +43,7 @@ export default class SmoothScrollManager {
     this.renderPrev = null;
     this.renderNext = null;
     this.isWorking = false;
-    this.isWorkingSmooth = false;
+    this.isWorkingRender = false;
     this.isAlreadyAddEvent = false;
   }
   start(callback) {
@@ -82,7 +82,7 @@ export default class SmoothScrollManager {
       this.scroll();
 
       // Scroll Manager の動作を開始する
-      this.isWorkingSmooth = true;
+      this.isWorkingRender = true;
       this.renderLoop();
       this.on();
     }).then(() => {
@@ -221,7 +221,7 @@ export default class SmoothScrollManager {
   }
   renderLoop() {
     this.render();
-    if (this.isWorkingSmooth) {
+    if (this.isWorkingRender) {
       requestAnimationFrame(() => {
         this.renderLoop();
       });
@@ -254,6 +254,6 @@ export default class SmoothScrollManager {
     this.renderNext = null;
   }
   isValidSmooth() {
-    return this.isWorkingSmooth && this.resolution.x > this.X_SWITCH_SMOOTH;
+    return this.isWorkingRender && this.resolution.x > this.X_SWITCH_SMOOTH;
   }
 }
