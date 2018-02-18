@@ -44,6 +44,7 @@ export default class SmoothScrollManager {
     this.renderNext = null;
     this.isWorking = false;
     this.isWorkingRender = false;
+    this.isWorkingTransform = false;
     this.isAlreadyAddEvent = false;
   }
   start(callback) {
@@ -83,6 +84,7 @@ export default class SmoothScrollManager {
 
       // Scroll Manager の動作を開始する
       this.isWorkingRender = true;
+      this.isWorkingTransform = true;
       this.renderLoop();
       this.on();
     }).then(() => {
@@ -209,8 +211,10 @@ export default class SmoothScrollManager {
   render() {
     if (this.renderPrev) this.renderPrev();
     // 本文全体のラッパー(contents)をレンダリング
-    const y = Math.floor(this.hookes.contents.velocity[1] * 1000) / 1000;
-    this.contents.style.transform = `translate3D(0, ${y}px, 0)`;
+    if (this.isWorkingTransform === true) {
+      const y = Math.floor(this.hookes.contents.velocity[1] * 1000) / 1000;
+      this.contents.style.transform = `translate3D(0, ${y}px, 0)`;
+    }
     // Hookesオブジェクトをレンダリング
     for (var key in this.hookes) {
       this.hookes[key].render();
