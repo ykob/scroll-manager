@@ -1,6 +1,6 @@
 export default class ConsoleSignature {
   constructor() {
-    this.message = `this content is rendered with scroll-manager`;
+    this.message = `Render the contents with scroll-manager.`;
     this.url = `https://github.com/ykob/scroll-manager`;
     this.show();
   }
