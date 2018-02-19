@@ -1,3 +1,11 @@
+/**
+* Scroll Manager
+*
+* Copyright (c) 2018 Yoichi Kobayashi
+* Released under the MIT license
+* http://opensource.org/licenses/mit-license.php
+*/
+
 const debounce = require('js-util/debounce');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');

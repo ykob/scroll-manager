@@ -1,5 +1,5 @@
 /**
-* Scroll Manager
+* Smooth Scroll Manager
 *
 * Copyright (c) 2018 Yoichi Kobayashi
 * Released under the MIT license
