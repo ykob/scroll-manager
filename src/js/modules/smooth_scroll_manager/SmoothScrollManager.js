@@ -42,7 +42,7 @@ export default class SmoothScrollManager {
     this.resizeNext = null;
     this.renderPrev = null;
     this.renderNext = null;
-    this.isWorking = false;
+    this.isWorkingScroll = false;
     this.isWorkingRender = false;
     this.isWorkingTransform = false;
     this.isAlreadyAddEvent = false;
@@ -66,7 +66,7 @@ export default class SmoothScrollManager {
       this.resize();
     }).then(() => {
       // hash があった場合は指定の箇所にスクロール位置を調整する
-      this.isWorking = false;
+      this.isWorkingScroll = false;
       const { hash } = location;
       const target = (hash) ? document.querySelector(hash) : null;
       const anchorY = (target) ? this.scrollTop + target.getBoundingClientRect().top : -1; // IE＋Pjax遷移時に0だと真っ白になるバグを-1にすることで回避
@@ -77,7 +77,7 @@ export default class SmoothScrollManager {
         this.hookes.parallax.anchor[1] = this.hookes.parallax.velocity[1] = this.scrollTop + this.resolution.y * 0.5;
       }
       this.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
-      this.isWorking = true;
+      this.isWorkingScroll = true;
 
       // ページロード時にスクロールイベントを着火させる。
       this.scroll();
@@ -93,7 +93,7 @@ export default class SmoothScrollManager {
   }
   pause() {
     // スムーススクロールの一時停止
-    this.isWorking = false;
+    this.isWorkingScroll = false;
     this.contents.style.position = 'fixed';
     // スマホ時には本文のtranslate値を更新してスクロールを固定する。
     this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = this.scrollTop * -1;
@@ -109,7 +109,7 @@ export default class SmoothScrollManager {
       this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = 0;
     }
     window.scrollTo(0, this.scrollTop);
-    this.isWorking = true;
+    this.isWorkingScroll = true;
   }
   initDummyScroll() {
     // ダミースクロールの初期化
@@ -145,7 +145,7 @@ export default class SmoothScrollManager {
   scroll(event) {
     // スクロールイベントの一連の流れ
     // フラグが立たない場合はスクロールイベント内の処理を実行しない。
-    if (this.isWorking === false) return;
+    if (this.isWorkingScroll === false) return;
     // スクロール値の取得
     const pageYOffset = window.pageYOffset;
     this.scrollFrame = pageYOffset - this.scrollTop;
@@ -156,7 +156,7 @@ export default class SmoothScrollManager {
     if (this.scrollNext) this.scrollNext();
   }
   tilt(event) {
-    if (this.isWorking === false) return;
+    if (this.isWorkingScroll === false) return;
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       this.hookes.parallax.anchor[0] = (event.clientX / this.resolution.x * 2 - 1) * -100;
     }
@@ -169,7 +169,7 @@ export default class SmoothScrollManager {
   resize() {
     // リサイズイベントの一連の流れ
     // リサイズ中にスクロールイベントが勝手に叩かれるのをキャンセル
-    this.isWorking = false;
+    this.isWorkingScroll = false;
     // リサイズイベントに関する要素の一時リセット
     if (this.resizeReset) this.resizeReset();
     // 各値を取得
@@ -206,7 +206,7 @@ export default class SmoothScrollManager {
     this.resizeBasis();
     if (this.resizeNext) this.resizeNext();
     // スクロールイベントを再開
-    this.isWorking = true;
+    this.isWorkingScroll = true;
   }
   render() {
     if (this.renderPrev) this.renderPrev();
