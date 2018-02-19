@@ -44,9 +44,8 @@ export default function() {
   scrollManager.renderNext = () => {
     contentsHeader.render();
   }
-  scrollManager.start(() => {
-    loadContentImgs(document, () => {
-      scrollManager.resize();
-    });
+  loadContentImgs(document, () => {
+    scrollManager.start();
   });
+
 }

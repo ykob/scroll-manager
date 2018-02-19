@@ -6,8 +6,6 @@
 * http://opensource.org/licenses/mit-license.php
 */
 
-require('babel-polyfill');
-
 const debounce = require('js-util/debounce');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
@@ -48,23 +46,16 @@ export default class SmoothScrollManager {
     this.isAlreadyAddEvent = false;
   }
   start(callback) {
-    const promise = new Promise((resolve) => {
-      setTimeout(resolve, 100);
-    });
-
     // スムーススクロールさせる対象のラッパーDOMを取得
     this.contents = document.querySelector('.js-contents');
 
-    promise.then(() => {
+    setTimeout(() => {
       // 初期スクロール値を取得する。(pjax遷移の際は不要)
       this.scrollTop = window.pageYOffset;
       // Hookes と ScrollItems を初期化
       this.initHookes();
       this.scrollItems.init();
-    }).then(() => {
-      // Resizeイベントを実行してページのレイアウトを初期化する
-      this.resize();
-    }).then(() => {
+
       // hash があった場合は指定の箇所にスクロール位置を調整する
       this.isWorkingScroll = false;
       const { hash } = location;
@@ -79,17 +70,20 @@ export default class SmoothScrollManager {
       this.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
       this.isWorkingScroll = true;
 
-      // ページロード時にスクロールイベントを着火させる。
-      this.scroll();
-
       // Scroll Manager の動作を開始する
       this.isWorkingRender = true;
       this.isWorkingTransform = true;
       this.renderLoop();
       this.on();
-    }).then(() => {
-      callback();
-    });
+
+      // Resizeイベントを実行してページのレイアウトを初期化する
+      this.resize();
+
+      // ページロード時にスクロールイベントを着火させる。
+      this.scroll();
+
+      if (callback) callback();
+    }, 100);
   }
   pause() {
     // スムーススクロールの一時停止
