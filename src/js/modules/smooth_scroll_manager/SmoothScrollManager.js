@@ -52,6 +52,9 @@ export default class SmoothScrollManager {
     setTimeout(() => {
       // 初期スクロール値を取得する。(pjax遷移の際は不要)
       this.scrollTop = window.pageYOffset;
+      this.resolution.x = window.innerWidth;
+      this.resolution.y = window.innerHeight;
+
       // Hookes と ScrollItems を初期化
       this.initHookes();
       this.scrollItems.init();
@@ -60,17 +63,18 @@ export default class SmoothScrollManager {
       this.isWorkingScroll = false;
       const { hash } = location;
       const target = (hash) ? document.querySelector(hash) : null;
-      const anchorY = (target) ? this.scrollTop + target.getBoundingClientRect().top : -1; // IE＋Pjax遷移時に0だと真っ白になるバグを-1にすることで回避
-      window.scrollTo(0, anchorY);
-      this.scrollTop = anchorY;
+      if (target) {
+        this.scrollTop += target.getBoundingClientRect().top;
+        window.scrollTo(0, this.scrollTop);
+      }
       if (this.resolution.x > this.X_SWITCH_SMOOTH) {
         this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
         this.hookes.parallax.anchor[1] = this.hookes.parallax.velocity[1] = this.scrollTop + this.resolution.y * 0.5;
       }
       this.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
-      this.isWorkingScroll = true;
 
       // Scroll Manager の動作を開始する
+      this.isWorkingScroll = true;
       this.isWorkingRender = true;
       this.isWorkingTransform = true;
       this.renderLoop();
@@ -83,7 +87,7 @@ export default class SmoothScrollManager {
       this.scroll();
 
       if (callback) callback();
-    }, 100);
+    }, 200);
   }
   pause() {
     // スムーススクロールの一時停止
