@@ -16,9 +16,9 @@ export default class SmoothItem {
     this.top = scrollTop + rect.top;
     this.elm.style.backfaceVisibility = 'hidden';
   }
-  render(iwWorking) {
+  render(isWorking) {
     let v = 0;
-    if (iwWorking) {
+    if (isWorking) {
       v = this.hookes.velocity[1] * this.ratio;
       if (Math.abs(this.hookes.acceleration[1]) < 0.01) this.hookes.velocity[1] = this.hookes.anchor[1];
       if (this.min) v = Math.max(v, this.min);

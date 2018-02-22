@@ -23,13 +23,13 @@ export default class ParallaxItem {
     this.elm.style.backfaceVisibility = 'hidden';
     this.render();
   }
-  render(iwWorking) {
-    const x = (iwWorking) ? MathEx.clamp(
+  render(isWorking) {
+    const x = (isWorking) ? MathEx.clamp(
       this.hookes.velocity[0] * this.ratioX,
       this.rangeX * -1,
       this.rangeX
     ) : 0;
-    const y = (iwWorking) ? MathEx.clamp(
+    const y = (isWorking) ? MathEx.clamp(
       (this.hookes.velocity[1] - (this.top + this.height * 0.5)) * this.ratioY,
       this.rangeY * -1,
       this.rangeY
