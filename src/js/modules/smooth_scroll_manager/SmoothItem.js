@@ -1,3 +1,5 @@
+const MathEx = require('js-util/MathEx');
+
 export default class SmoothItem {
   constructor(elm, scrollManager, hookes, opt) {
     this.scrollManager = scrollManager;
@@ -5,10 +7,9 @@ export default class SmoothItem {
     this.elm = elm;
     this.height = 0;
     this.top = 0;
-    this.max = (opt && opt.max) ? opt.max : null;
-    this.min = (opt && opt.min) ? opt.min : null;
-    this.ratio = (opt && opt.ratio) ? opt.ratio : 0.1;
-    this.unit = (opt && opt.unit) ? opt.unit : 'px';
+    this.rangeY = (opt && opt.rangeY) ? opt.rangeY : null;
+    this.ratioY = (opt && opt.ratioY) ? opt.ratioY : 0.1;
+    this.unitY = (opt && opt.unitY) ? opt.unitY : 'px';
   }
   init(scrollTop) {
     const rect = this.elm.getBoundingClientRect();
@@ -17,13 +18,13 @@ export default class SmoothItem {
     this.elm.style.backfaceVisibility = 'hidden';
   }
   render(isWorking) {
-    let v = 0;
+    let x = 0;
+    let y = 0;
     if (isWorking) {
-      v = this.hookes.velocity[1] * this.ratio;
+      y = this.hookes.velocity[1] * this.ratioY;
       if (Math.abs(this.hookes.acceleration[1]) < 0.01) this.hookes.velocity[1] = this.hookes.anchor[1];
-      if (this.min) v = Math.max(v, this.min);
-      if (this.max) v = Math.min(v, this.max);
+      if (this.rangeY) y = MathEx.clamp(y, -this.rangeY, this.rangeY);
     }
-    this.elm.style.transform = `translate3D(0, ${v}${this.unit}, 0)`;
+    this.elm.style.transform = `translate3D(0, ${y}${this.unitY}, 0)`;
   }
 }
