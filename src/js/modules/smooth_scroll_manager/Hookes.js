@@ -1,3 +1,4 @@
+const glMatrix = require('gl-matrix');
 const Force3 = require('../common/Force3').default;
 
 export default class Hookes {
@@ -13,5 +14,6 @@ export default class Hookes {
     Force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, this.k);
     Force3.applyDrag(this.acceleration, this.d);
     Force3.updateVelocity(this.velocity, this.acceleration, this.m);
+    if (glMatrix.vec3.length(this.acceleration) < 0.001) this.acceleration = [0, 0, 0];
   }
 }
