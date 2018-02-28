@@ -18,13 +18,17 @@ gulp.task('predefault', cb => {
   );
 });
 
+gulp.task('watch-sass', ['sass'], () => {
+  reload();
+});
+
 gulp.task('default', ['predefault'], () => {
   $.watch(
     [`./${DIR.SRC}/**/*.{scss,sass}`],
     () => {
-      gulp.start(['sass'])
+      gulp.start(['watch-sass'])
     }
-  ).on('change', reload);
+  );
 
   $.watch(
     [`./${DIR.SRC}/**/*.pug`]
