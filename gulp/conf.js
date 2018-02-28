@@ -86,8 +86,8 @@ module.exports.sass = {
   browsers: [
     'last 2 versions',
     'ie >= 11',
-    'Android >= 4',
-    'ios_saf >= 9',
+    'Android >= 5',
+    'ios_saf >= 10',
   ]
 };
 
