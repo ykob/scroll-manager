@@ -46,6 +46,11 @@ export default class SmoothScrollManager {
     this.isAlreadyAddEvent = false;
   }
   start(callback) {
+    // 動作用のフラグを一旦すべてオフ
+    this.isWorkingScroll = false;
+    this.isWorkingRender = false;
+    this.isWorkingTransform = false;
+
     // スムーススクロールさせる対象のラッパーDOMを取得
     this.contents = document.querySelector('.js-contents');
 
