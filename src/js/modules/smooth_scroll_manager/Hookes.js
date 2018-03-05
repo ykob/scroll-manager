@@ -14,6 +14,12 @@ export default class Hookes {
     Force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, this.k);
     Force3.applyDrag(this.acceleration, this.d);
     Force3.updateVelocity(this.velocity, this.acceleration, this.m);
-    if (glMatrix.vec3.length(this.acceleration) < 0.001) this.acceleration = [0, 0, 0];
+
+    const sub = [0, 0, 0];
+    glMatrix.vec3.sub(sub, this.anchor, this.velocity);
+    if (glMatrix.vec3.length(this.acceleration) < 0.01 && glMatrix.vec3.length(sub) < 0.01) {
+      this.acceleration = [0, 0, 0];
+      this.velocity[1] = this.anchor[1];
+    };
   }
 }
