@@ -179,8 +179,8 @@ export default class SmoothScrollManager {
     this.scrollTop = window.pageYOffset;
     this.resolution.x = window.innerWidth;
     this.resolution.y = window.innerHeight;
-    this.bodyResolution.x = document.body.clientWidth;
-    this.bodyResolution.y = document.body.clientHeight;
+    this.bodyResolution.x = this.contents.clientWidth;
+    this.bodyResolution.y = this.contents.clientHeight;
     // window幅によってHookesオブジェクトの値を再設定する
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       // PCの場合
