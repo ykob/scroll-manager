@@ -20,6 +20,6 @@ export default class Hookes {
     if (glMatrix.vec3.length(this.acceleration) < 0.01 && glMatrix.vec3.length(sub) < 0.01) {
       this.acceleration = [0, 0, 0];
       this.velocity[1] = this.anchor[1];
-    };
+    }
   }
 }
