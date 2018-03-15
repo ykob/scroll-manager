@@ -15,10 +15,15 @@ const ScrollItems = require('./ScrollItems').default;
 
 const consoleSignature = new ConsoleSignature();
 
+const CLASSNAME_DUMMY_SCROLL = 'js-dummy-scroll';
+const CLASSNAME_CONTENTS = 'js-contents';
+
 export default class SmoothScrollManager {
   constructor() {
-    this.dummyScroll = document.querySelector('.js-dummy-scroll');
-    this.contents = null;
+    this.elm = {
+      dummyScroll: document.querySelector(`.${CLASSNAME_DUMMY_SCROLL}`),
+      contents: null,
+    };
     this.scrollItems = new ScrollItems(this);
     this.scrollTop = 0;
     this.scrollFrame = 0;
@@ -52,7 +57,7 @@ export default class SmoothScrollManager {
     this.isWorkingTransform = false;
 
     // スムーススクロールさせる対象のラッパーDOMを取得
-    this.contents = document.querySelector('.js-contents');
+    this.elm.contents = document.querySelector(`.${CLASSNAME_CONTENTS}`);
 
     setTimeout(() => {
       // 初期スクロール値を取得する。(pjax遷移の際は不要)
@@ -76,7 +81,7 @@ export default class SmoothScrollManager {
         this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
         this.hookes.parallax.anchor[1] = this.hookes.parallax.velocity[1] = this.scrollTop + this.resolution.y * 0.5;
       }
-      this.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
+      this.elm.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
 
       // Scroll Manager の動作を開始する
       this.isWorkingScroll = true;
@@ -97,7 +102,7 @@ export default class SmoothScrollManager {
   pause() {
     // スムーススクロールの一時停止
     this.isWorkingScroll = false;
-    this.contents.style.position = 'fixed';
+    this.elm.contents.style.position = 'fixed';
     // スマホ時には本文のtranslate値を更新してスクロールを固定する。
     this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = this.scrollTop * -1;
     this.scrollTopPause = this.scrollTop;
@@ -105,7 +110,7 @@ export default class SmoothScrollManager {
   }
   play() {
     // スムーススクロールの再生
-    this.contents.style.position = '';
+    this.elm.contents.style.position = '';
     this.scrollTop = this.scrollTopPause;
     // スマホ時には本文のtranslate値をゼロにしてスクロールを復帰させる。
     if (this.resolution.x <= this.X_SWITCH_SMOOTH) {
@@ -117,12 +122,12 @@ export default class SmoothScrollManager {
   initDummyScroll() {
     // ダミースクロールの初期化
     if (this.resolution.x <= this.X_SWITCH_SMOOTH) {
-      this.contents.style.transform = '';
-      this.contents.classList.remove('is-fixed');
-      this.dummyScroll.style.height = `0`;
+      this.elm.contents.style.transform = '';
+      this.elm.contents.classList.remove('is-fixed');
+      this.elm.dummyScroll.style.height = `0`;
     } else {
-      this.contents.classList.add('is-fixed');
-      this.dummyScroll.style.height = `${this.contents.clientHeight}px`;
+      this.elm.contents.classList.add('is-fixed');
+      this.elm.dummyScroll.style.height = `${this.elm.contents.clientHeight}px`;
     }
     this.render();
   }
@@ -179,8 +184,8 @@ export default class SmoothScrollManager {
     this.scrollTop = window.pageYOffset;
     this.resolution.x = window.innerWidth;
     this.resolution.y = window.innerHeight;
-    this.bodyResolution.x = this.contents.clientWidth;
-    this.bodyResolution.y = this.contents.clientHeight;
+    this.bodyResolution.x = this.elm.contents.clientWidth;
+    this.bodyResolution.y = this.elm.contents.clientHeight;
     // window幅によってHookesオブジェクトの値を再設定する
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       // PCの場合
@@ -216,7 +221,7 @@ export default class SmoothScrollManager {
     // 本文全体のラッパー(contents)をレンダリング
     if (this.isWorkingTransform === true) {
       const y = Math.floor(this.hookes.contents.velocity[1] * 1000) / 1000;
-      this.contents.style.transform = `translate3D(0, ${y}px, 0)`;
+      this.elm.contents.style.transform = `translate3D(0, ${y}px, 0)`;
     }
     // Hookesオブジェクトをレンダリング
     for (var key in this.hookes) {
