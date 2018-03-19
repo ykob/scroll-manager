@@ -259,7 +259,7 @@ export default class SmoothScrollManager {
     window.addEventListener('mouseout', () => {
       this.mousemove.x = 0;
       this.mousemove.y = 0;
-    });
+    }, false);
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
     }, 400), false);
