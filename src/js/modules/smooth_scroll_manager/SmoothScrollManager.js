@@ -251,15 +251,18 @@ export default class SmoothScrollManager {
     window.addEventListener('scroll', (event) => {
       this.scroll(event);
     }, false);
+
     window.addEventListener('mousemove', (event) => {
       this.mousemove.x = event.clientX / this.resolution.x * 2.0 - 1.0;
       this.mousemove.y = -(event.clientY / this.resolution.y * 2.0 - 1.0);
       this.tilt();
     }, false);
+
     window.addEventListener('mouseout', () => {
       this.mousemove.x = 0;
       this.mousemove.y = 0;
     }, false);
+
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
     }, 400), false);
