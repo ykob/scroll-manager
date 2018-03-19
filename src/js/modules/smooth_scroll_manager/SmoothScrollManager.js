@@ -36,6 +36,10 @@ export default class SmoothScrollManager {
       x: 0,
       y: 0
     };
+    this.mousemove = {
+      x: 0,
+      y: 0
+    };
     this.X_SWITCH_SMOOTH = 1024;
     this.hookes = {};
     this.scrollPrev = null;
@@ -163,10 +167,10 @@ export default class SmoothScrollManager {
     this.scrollBasis();
     if (this.scrollNext) this.scrollNext();
   }
-  tilt(event) {
+  tilt() {
     if (this.isWorkingScroll === false) return;
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
-      this.hookes.parallax.anchor[0] = (event.clientX / this.resolution.x * 2 - 1) * -100;
+      this.hookes.parallax.anchor[0] = this.mousemove.x * -100;
     }
   }
   resizeBasis() {
@@ -248,8 +252,14 @@ export default class SmoothScrollManager {
       this.scroll(event);
     }, false);
     window.addEventListener('mousemove', (event) => {
-      this.tilt(event);
+      this.mousemove.x = event.clientX / this.resolution.x * 2.0 - 1.0;
+      this.mousemove.y = -(event.clientY / this.resolution.y * 2.0 - 1.0);
+      this.tilt();
     }, false);
+    window.addEventListener('mouseout', () => {
+      this.mousemove.x = 0;
+      this.mousemove.y = 0;
+    });
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
     }, 400), false);
