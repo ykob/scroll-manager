@@ -141,6 +141,7 @@ export default class SmoothScrollManager {
       contents: new Hookes({ k: 0.625, d: 0.8 }),
       smooth:   new Hookes({ k: 0.2, d: 0.7 }),
       parallax: new Hookes({ k: 0.28, d: 0.7 }),
+      mouse:    new Hookes({ k: 0.625, d: 0.8 }),
     }
   }
   scrollBasis() {
@@ -166,12 +167,6 @@ export default class SmoothScrollManager {
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
     if (this.scrollNext) this.scrollNext();
-  }
-  tilt() {
-    if (this.isWorkingScroll === false) return;
-    if (this.resolution.x > this.X_SWITCH_SMOOTH) {
-      this.hookes.parallax.anchor[0] = this.mousemove.x * -100;
-    }
   }
   resizeBasis() {
     // 基礎的なリサイズイベントはここに記述する。
@@ -253,14 +248,13 @@ export default class SmoothScrollManager {
     }, false);
 
     window.addEventListener('mousemove', (event) => {
-      this.mousemove.x = event.clientX / this.resolution.x * 2.0 - 1.0;
-      this.mousemove.y = -(event.clientY / this.resolution.y * 2.0 - 1.0);
-      this.tilt();
+      this.hookes.mouse.anchor[0] = event.clientX / this.resolution.x * 2.0 - 1.0;
+      this.hookes.mouse.anchor[1] = -(event.clientY / this.resolution.y * 2.0 - 1.0);
     }, false);
 
     window.addEventListener('mouseout', () => {
-      this.mousemove.x = 0;
-      this.mousemove.y = 0;
+      this.hookes.mouse.anchor[0] = 0;
+      this.hookes.mouse.anchor[1] = 0;
     }, false);
 
     window.addEventListener(hookEventForResize, debounce((event) => {
