@@ -48,8 +48,8 @@ export default class ScrollManager {
   scrollBasis() {
   }
   scroll() {
-    this.scrollTop = window.pageYOffset;
     if (this.isWorking === false) return;
+    this.scrollTop = window.pageYOffset;
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
     this.scrollItems.scroll();
