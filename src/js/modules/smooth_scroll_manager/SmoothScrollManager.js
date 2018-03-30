@@ -106,32 +106,40 @@ export default class SmoothScrollManager {
   pause() {
     // スムーススクロールの一時停止
     this.isWorkingScroll = false;
+
     // スマホ時には本文のtranslate値を更新してスクロールを固定する。
     if (this.resolution.x <= this.X_SWITCH_SMOOTH) {
       this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = this.scrollTop * -1;
     }
+
+    // 一時停止時の位置を記憶
     this.scrollTopPause = this.scrollTop;
     window.scrollTo(0, this.scrollTop);
   }
   play() {
     // スムーススクロールの再生
     this.isWorkingScroll = true;
+
     // スマホ時には本文のtranslate値をゼロにしてスクロールを復帰させる。
     if (this.resolution.x <= this.X_SWITCH_SMOOTH) {
       this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = 0;
     }
+
+    // 一時停止時の位置に移動（pause後に標準のスクロールがされても元の位置から動いていないように見せるため）
     this.scrollTop = this.scrollTopPause;
     window.scrollTo(0, this.scrollTop);
   }
   initDummyScroll() {
     // ダミースクロールの初期化
-    if (this.resolution.x <= this.X_SWITCH_SMOOTH) {
+    if (this.resolution.x > this.X_SWITCH_SMOOTH) {
+      // PCの場合
+      this.elm.contents.classList.add('is-fixed');
+      this.elm.dummyScroll.style.height = `${this.elm.contents.clientHeight}px`;
+    } else {
+      // スマホの場合
       this.elm.contents.style.transform = '';
       this.elm.contents.classList.remove('is-fixed');
       this.elm.dummyScroll.style.height = `0`;
-    } else {
-      this.elm.contents.classList.add('is-fixed');
-      this.elm.dummyScroll.style.height = `${this.elm.contents.clientHeight}px`;
     }
     this.render();
   }
@@ -146,23 +154,28 @@ export default class SmoothScrollManager {
   }
   scrollBasis() {
     // 基礎的なスクロールイベントはここに記述する。
+
     // スクロール値を元に各Hookesオブジェクトを更新
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       this.hookes.contents.anchor[1] = this.scrollTop * -1;
       this.hookes.smooth.velocity[1] += this.scrollFrame;
       this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
     }
+
     // ScrollItems のスクロールメソッドを実行
     this.scrollItems.scroll();
   }
   scroll(event) {
     // スクロールイベントの一連の流れ
+
     // フラグが立たない場合はスクロールイベント内の処理を実行しない。
     if (this.isWorkingScroll === false) return;
+
     // スクロール値の取得
     const pageYOffset = window.pageYOffset;
     this.scrollFrame = pageYOffset - this.scrollTop;
     this.scrollTop = pageYOffset;
+
     // 個別のスクロールイベントを実行
     if (this.scrollPrev) this.scrollPrev();
     this.scrollBasis();
@@ -170,21 +183,26 @@ export default class SmoothScrollManager {
   }
   resizeBasis() {
     // 基礎的なリサイズイベントはここに記述する。
+
     // ScrollItems のリサイズメソッドを実行
     this.scrollItems.resize();
   }
   resize() {
     // リサイズイベントの一連の流れ
+
     // リサイズ中にスクロールイベントが勝手に叩かれるのをキャンセル
     this.isWorkingScroll = false;
+
     // リサイズイベントに関する要素の一時リセット
     if (this.resizeReset) this.resizeReset();
+
     // 各値を取得
     this.scrollTop = window.pageYOffset;
     this.resolution.x = window.innerWidth;
     this.resolution.y = window.innerHeight;
     this.bodyResolution.x = this.elm.contents.clientWidth;
     this.bodyResolution.y = this.elm.contents.clientHeight;
+
     // window幅によってHookesオブジェクトの値を再設定する
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       // PCの場合
@@ -203,31 +221,45 @@ export default class SmoothScrollManager {
         }
       }
     }
+
     // 個別のリサイズイベントを実行（ページの高さ変更前）
     if (this.resizePrev) this.resizePrev();
+
     // 本文やダミースクロールのレイアウトを再設定
     this.initDummyScroll();
     this.render();
     window.scrollTo(0, this.scrollTop);
-    // 個別のリサイズイベントを実行（ページの高さ変更後）
+
+    // 標準のリサイズイベントを実行
     this.resizeBasis();
+
+    // 個別のリサイズイベントを実行（ページの高さ変更後）
     if (this.resizeNext) this.resizeNext();
+
     // スクロールイベントを再開
     this.isWorkingScroll = true;
   }
   render() {
+    // 各要素のレンダリング
+
+    // 個別のレンダリング処理を実行（標準のレンダリング処理前）
     if (this.renderPrev) this.renderPrev();
+
     // 本文全体のラッパー(contents)をレンダリング
     if (this.isWorkingTransform === true) {
       const y = Math.floor(this.hookes.contents.velocity[1] * 1000) / 1000;
       this.elm.contents.style.transform = `translate3D(0, ${y}px, 0)`;
     }
+
     // Hookesオブジェクトをレンダリング
     for (var key in this.hookes) {
       this.hookes[key].render();
     }
+
     // スクロールイベント連動オブジェクトをレンダリング
     this.scrollItems.render(this.isValidSmooth());
+
+    // 個別のレンダリング処理を実行（標準のレンダリング処理後）
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {
