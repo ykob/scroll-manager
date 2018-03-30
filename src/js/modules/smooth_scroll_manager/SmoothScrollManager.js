@@ -53,6 +53,8 @@ export default class SmoothScrollManager {
     this.isWorkingRender = false;
     this.isWorkingTransform = false;
     this.isAlreadyAddEvent = false;
+
+    this.on();
   }
   start(callback) {
     // 動作用のフラグを一旦すべてオフ
@@ -92,7 +94,6 @@ export default class SmoothScrollManager {
       this.isWorkingRender = true;
       this.isWorkingTransform = true;
       this.renderLoop();
-      this.on();
 
       // Resizeイベントを実行してページのレイアウトを初期化する
       this.resize();
@@ -176,9 +177,13 @@ export default class SmoothScrollManager {
     this.scrollFrame = pageYOffset - this.scrollTop;
     this.scrollTop = pageYOffset;
 
-    // 個別のスクロールイベントを実行
+    // 個別のスクロールイベントを実行（標準のスクロール処理前）
     if (this.scrollPrev) this.scrollPrev();
+
+    // 標準のスクロール処理を実行
     this.scrollBasis();
+
+    // 個別のスクロールイベントを実行（標準のスクロール処理後）
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
@@ -271,31 +276,37 @@ export default class SmoothScrollManager {
     }
   }
   on() {
-    if (this.isAlreadyAddEvent) return;
-
+    // モバイルOSでは orientationchange でリサイズイベントを着火させる。
+    // ステータスバーのtoggleでresizeは着火してしまうのを避ける目的。
     const hookEventForResize = (isiOS() || isAndroid()) ? 'orientationchange' : 'resize';
 
+    // スクロール
     window.addEventListener('scroll', (event) => {
+      if (this.isWorkingScroll === false) return;
       this.scroll(event);
     }, false);
 
+    // リサイズ（debounceで連発を防ぐ）
+    window.addEventListener(hookEventForResize, debounce((event) => {
+      if (this.isWorkingScroll === false) return;
+      this.resize();
+    }, 400), false);
+
+    // マウス座標の取得
     window.addEventListener('mousemove', (event) => {
+      if (this.isWorkingScroll === false) return;
       this.hookes.mouse.anchor[0] = event.clientX / this.resolution.x * 2.0 - 1.0;
       this.hookes.mouse.anchor[1] = -(event.clientY / this.resolution.y * 2.0 - 1.0);
     }, false);
 
     window.addEventListener('mouseout', () => {
+      if (this.isWorkingScroll === false) return;
       this.hookes.mouse.anchor[0] = 0;
       this.hookes.mouse.anchor[1] = 0;
     }, false);
-
-    window.addEventListener(hookEventForResize, debounce((event) => {
-      this.resize();
-    }, 400), false);
-
-    this.isAlreadyAddEvent = true;
   }
   off() {
+    // Reset all individual events.
     this.scrollPrev = null;
     this.scrollNext = null;
     this.resizeReset = null;
@@ -305,6 +316,7 @@ export default class SmoothScrollManager {
     this.renderNext = null;
   }
   isValidSmooth() {
+    // Returns whether or not smooth scroll is valid.
     return this.isWorkingRender && this.resolution.x > this.X_SWITCH_SMOOTH;
   }
 }
