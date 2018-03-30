@@ -251,7 +251,7 @@ export default class SmoothScrollManager {
     if (this.renderPrev) this.renderPrev();
 
     // 本文全体のラッパー(contents)をレンダリング
-    if (this.isWorkingTransform === true) {
+    if (this.isWorkingTransform === true && this.resolution.x > this.X_SWITCH_SMOOTH) {
       const y = Math.floor(this.hookes.contents.velocity[1] * 1000) / 1000;
       this.elm.contents.style.transform = `translate3D(0, ${y}px, 0)`;
     }
