@@ -106,22 +106,22 @@ export default class SmoothScrollManager {
   pause() {
     // スムーススクロールの一時停止
     this.isWorkingScroll = false;
-    this.elm.contents.style.position = 'fixed';
     // スマホ時には本文のtranslate値を更新してスクロールを固定する。
-    this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = this.scrollTop * -1;
+    if (this.resolution.x <= this.X_SWITCH_SMOOTH) {
+      this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = this.scrollTop * -1;
+    }
     this.scrollTopPause = this.scrollTop;
     window.scrollTo(0, this.scrollTop);
   }
   play() {
     // スムーススクロールの再生
-    this.elm.contents.style.position = '';
-    this.scrollTop = this.scrollTopPause;
+    this.isWorkingScroll = true;
     // スマホ時には本文のtranslate値をゼロにしてスクロールを復帰させる。
     if (this.resolution.x <= this.X_SWITCH_SMOOTH) {
       this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = 0;
     }
+    this.scrollTop = this.scrollTopPause;
     window.scrollTo(0, this.scrollTop);
-    this.isWorkingScroll = true;
   }
   initDummyScroll() {
     // ダミースクロールの初期化
