@@ -24,7 +24,7 @@ export default class ParallaxItem {
     this.render();
   }
   render(iwWorking) {
-    if (!iwWorking) return;
+    if (iwWorking === false) return;
     const x = MathEx.clamp(
       this.hookes.velocity[0] * this.ratioX,
       this.rangeX * -1,

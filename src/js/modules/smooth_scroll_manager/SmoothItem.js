@@ -23,7 +23,7 @@ export default class SmoothItem {
   render(isWorking) {
     let x = 0;
     let y = 0;
-    if (isWorking) {
+    if (isWorking === true) {
       x = this.hookes.velocity[1] * this.ratioX;
       y = this.hookes.velocity[1] * this.ratioY;
       if (this.rangeX) x = MathEx.clamp(x, -this.rangeX, this.rangeX);
