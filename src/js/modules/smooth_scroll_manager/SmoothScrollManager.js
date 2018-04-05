@@ -244,7 +244,7 @@ export default class SmoothScrollManager {
     if (this.resizeNext) this.resizeNext();
 
     // スクロールイベントを再開（一時停止中は再開しない）
-    if (this.isPaused === false) his.isWorkingScroll = true;
+    if (this.isPaused === false) this.isWorkingScroll = true;
   }
   render() {
     // 各要素のレンダリング
