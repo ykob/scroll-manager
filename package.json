@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "gl-matrix": "^2.4.0",
-    "js-util": "git://github.com/ykob/js-util.git"
+    "js-util": "git://github.com/ykob/js-util.git",
+    "viewport-units-buggyfill": "^0.6.2"
   }
 }
