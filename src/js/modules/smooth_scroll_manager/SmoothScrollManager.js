@@ -274,13 +274,11 @@ export default class SmoothScrollManager {
 
     // スクロール
     window.addEventListener('scroll', (event) => {
-      if (this.isWorkingScroll === false) return;
       this.scroll(event);
     }, false);
 
     // リサイズ（debounceで連発を防ぐ）
     window.addEventListener(hookEventForResize, debounce((event) => {
-      if (this.isWorkingScroll === false) return;
       this.resize();
     }, 400), false);
 
