@@ -1,3 +1,4 @@
+const easings = require('easing-js');
 const ScrollInnerPage = require('js-util/ScrollInnerPage');
 
 export default class AnchorLink {
@@ -13,7 +14,7 @@ export default class AnchorLink {
     const targetRect = target.getBoundingClientRect();
     const anchorY = this.scrollManager.scrollTop + targetRect.top;
     if (this.scrollManager.resolution.x <= this.scrollManager.X_SWITCH_SMOOTH) {
-      this.scrollInnerPage.start(anchorY, 1000);
+      this.scrollInnerPage.start(anchorY, 600, easings.easeOutExpo);
     } else {
       window.scrollTo(0, anchorY);
     }
