@@ -114,6 +114,9 @@ export default class SmoothScrollManager {
     window.scrollTo(0, this.scrollTop);
   }
   play() {
+    // if it is not paused, this methods doesn't run.
+    if (this.isPaused === false) return;
+
     // スムーススクロールの再生
     this.isWorkingScroll = true;
     this.isPaused = false;
