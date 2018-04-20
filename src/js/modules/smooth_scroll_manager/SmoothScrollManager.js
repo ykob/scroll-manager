@@ -105,6 +105,9 @@ export default class SmoothScrollManager {
     }, 200);
   }
   pause() {
+    // if it is paused, this methods doesn't run.
+    if (this.isPaused === true) return;
+
     // スムーススクロールの一時停止
     this.isWorkingScroll = false;
     this.isPaused = true;
