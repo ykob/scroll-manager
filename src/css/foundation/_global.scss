@@ -30,6 +30,6 @@ select::-ms-expand {
 }
 input::selection,
 textarea::selection {
-  color: $color-text-black;
+  color: $color-text;
   background: rgba(0, 0, 0, 0.2);
 }

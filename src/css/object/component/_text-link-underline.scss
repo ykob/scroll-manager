@@ -1,7 +1,7 @@
 .c-text-link-underline {
   display: inline-block;
   position: relative;
-  color: $color-text-black;
+  color: $color-text;
   text-decoration: none;
   &:before, &:after {
     width: 100%;
@@ -10,7 +10,7 @@
     display: block;
     position: absolute;
     bottom: 0; right: 0; left: 0;
-    background-color: $color-text-black;
+    background-color: $color-text;
   }
   &:before {
     transform-origin: right;
