@@ -15,12 +15,14 @@ export default class ParallaxItem {
     this.ratioY = (opt && opt.ratioY) ? opt.ratioY : 0.012;
     this.unitY = (opt && opt.unitY) ? opt.unitY : '%';
   }
-  init(scrollTop) {
+  init(scrollTop, iwWorking) {
     this.elm.style.transform = '';
-    const rect = this.elm.getBoundingClientRect();
-    this.height = rect.height;
-    this.top = scrollTop + rect.top;
-    this.elm.style.backfaceVisibility = 'hidden';
+    if (iwWorking === true)  {
+      const rect = this.elm.getBoundingClientRect();
+      this.height = rect.height;
+      this.top = scrollTop + rect.top;
+      this.elm.style.backfaceVisibility = 'hidden';
+    }
     this.render();
   }
   render(iwWorking) {

@@ -43,12 +43,12 @@ export default class ScrollItems {
   scroll() {
     for (var i = 0; i < this.scrollItems.length; i++) {
       this.scrollItems[i].show(
-        this.scrollManager.scrollTop + this.scrollManager.resolution.y,
-        this.scrollManager.scrollTop
+        this.scrollManager.scrollTop + this.scrollManager.resolution.y * 0.9,
+        this.scrollManager.scrollTop + this.scrollManager.resolution.y * 0.1
       );
     }
   }
-  resize() {
+  resize(isWorking) {
     for (var i = 0; i < this.scrollItems.length; i++) {
       this.scrollItems[i].init(this.scrollManager.scrollTop);
     }
@@ -56,7 +56,7 @@ export default class ScrollItems {
       this.smoothItems[i].init(this.scrollManager.scrollTop);
     }
     for (var i = 0; i < this.parallaxItems.length; i++) {
-      this.parallaxItems[i].init(this.scrollManager.scrollTop);
+      this.parallaxItems[i].init(this.scrollManager.scrollTop, isWorking);
     }
   }
   render(isWorking) {
