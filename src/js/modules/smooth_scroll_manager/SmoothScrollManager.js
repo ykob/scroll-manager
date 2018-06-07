@@ -6,6 +6,8 @@
 * http://opensource.org/licenses/mit-license.php
 */
 
+require("babel-polyfill");
+
 const debounce = require('js-util/debounce');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
@@ -24,6 +26,7 @@ export default class SmoothScrollManager {
       dummyScroll: document.querySelector(`.${CLASSNAME_DUMMY_SCROLL}`),
       contents: null,
     };
+    this.modules = null;
     this.scrollItems = new ScrollItems(this);
     this.scrollTop = 0;
     this.scrollFrame = 0;
@@ -45,7 +48,7 @@ export default class SmoothScrollManager {
     this.scrollPrev = null;
     this.scrollNext = null;
     this.resizeReset = null;
-    this.resizePrev = null;
+    this.resizePrev = async () => { return; };
     this.resizeNext = null;
     this.renderPrev = null;
     this.renderNext = null;
@@ -96,12 +99,12 @@ export default class SmoothScrollManager {
       this.renderLoop();
 
       // Resizeイベントを実行してページのレイアウトを初期化する
-      this.resize();
+      this.resize().then(() => {
+        // ページロード時にスクロールイベントを着火させる。
+        this.scroll();
 
-      // ページロード時にスクロールイベントを着火させる。
-      this.scroll();
-
-      if (callback) callback();
+        if (callback) callback();
+      });
     }, 200);
   }
   pause() {
@@ -189,8 +192,10 @@ export default class SmoothScrollManager {
 
     // ScrollItems のリサイズメソッドを実行
     this.scrollItems.resize(this.isValidSmooth());
+
+    return;
   }
-  resize() {
+  async resize() {
     // リサイズイベントの一連の流れ
 
     // リサイズ中にスクロールイベントが勝手に叩かれるのをキャンセル
@@ -226,21 +231,25 @@ export default class SmoothScrollManager {
     }
 
     // 個別のリサイズイベントを実行（ページの高さ変更前）
-    if (this.resizePrev) this.resizePrev();
+    await this.resizePrev()
+      .then(() => {
+        // 本文やダミースクロールのレイアウトを再設定
+        this.initDummyScroll();
+        this.render();
+        window.scrollTo(0, this.scrollTop);
 
-    // 本文やダミースクロールのレイアウトを再設定
-    this.initDummyScroll();
-    this.render();
-    window.scrollTo(0, this.scrollTop);
+        // 標準のリサイズイベントを実行
+        this.resizeBasis();
+      })
+      .then(() => {
+        // 個別のリサイズイベントを実行（ページの高さ変更後）
+        if (this.resizeNext) this.resizeNext();
 
-    // 標準のリサイズイベントを実行
-    this.resizeBasis();
+        // スクロールイベントを再開（一時停止中は再開しない）
+        if (this.isPaused === false) this.isWorkingScroll = true;
 
-    // 個別のリサイズイベントを実行（ページの高さ変更後）
-    if (this.resizeNext) this.resizeNext();
-
-    // スクロールイベントを再開（一時停止中は再開しない）
-    if (this.isPaused === false) this.isWorkingScroll = true;
+        return;
+      });
   }
   render() {
     // 各要素のレンダリング
@@ -306,7 +315,7 @@ export default class SmoothScrollManager {
     this.scrollPrev = null;
     this.scrollNext = null;
     this.resizeReset = null;
-    this.resizePrev = null;
+    this.resizePrev = async () => { return; };
     this.resizeNext = null;
     this.renderPrev = null;
     this.renderNext = null;
