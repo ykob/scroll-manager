@@ -8,14 +8,14 @@
 
 require("babel-polyfill");
 
+const ConsoleSignature = require('../common/ConsoleSignature').default;
+const consoleSignature = new ConsoleSignature('this content is rendered with scroll-manager', 'https://github.com/ykob/scroll-manager');
+
 const debounce = require('js-util/debounce');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
-const ConsoleSignature = require('../common/ConsoleSignature').default;
 const Hookes = require('./Hookes').default;
 const ScrollItems = require('./ScrollItems').default;
-
-const consoleSignature = new ConsoleSignature('this content is rendered with scroll-manager', 'https://github.com/ykob/scroll-manager');
 
 const CLASSNAME_DUMMY_SCROLL = 'js-dummy-scroll';
 const CLASSNAME_CONTENTS = 'js-contents';
