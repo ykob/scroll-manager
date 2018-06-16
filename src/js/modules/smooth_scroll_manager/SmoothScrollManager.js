@@ -59,7 +59,7 @@ export default class SmoothScrollManager {
 
     this.on();
   }
-  start(callback) {
+  async start() {
     // 動作用のフラグを一旦すべてオフ
     this.isWorkingScroll = false;
     this.isWorkingRender = false;
@@ -68,44 +68,47 @@ export default class SmoothScrollManager {
     // スムーススクロールさせる対象のラッパーDOMを取得
     this.elm.contents = document.querySelector(`.${CLASSNAME_CONTENTS}`);
 
-    setTimeout(() => {
-      // 初期スクロール値を取得する。(pjax遷移の際は不要)
-      this.scrollTop = window.pageYOffset;
-      this.resolution.x = window.innerWidth;
-      this.resolution.y = window.innerHeight;
+    // It returns Promise with setTimeout to get a scroll top value accurately when a hash is included.
+    return new Promise (resolve => {
+      setTimeout(() => {
+        // 初期スクロール値を取得する。(pjax遷移の際は不要)
+        this.scrollTop = window.pageYOffset;
+        this.resolution.x = window.innerWidth;
+        this.resolution.y = window.innerHeight;
 
-      // Hookes と ScrollItems を初期化
-      this.initHookes();
-      this.scrollItems.init();
+        // Hookes と ScrollItems を初期化
+        this.initHookes();
+        this.scrollItems.init();
 
-      // hash があった場合は指定の箇所にスクロール位置を調整する
-      this.isWorkingScroll = false;
-      const { hash } = location;
-      const target = (hash) ? document.querySelector(hash) : null;
-      if (target) {
-        this.scrollTop += target.getBoundingClientRect().top;
-        window.scrollTo(0, this.scrollTop);
-      }
-      if (this.resolution.x > this.X_SWITCH_SMOOTH) {
-        this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
-        this.hookes.parallax.anchor[1] = this.hookes.parallax.velocity[1] = this.scrollTop + this.resolution.y * 0.5;
-      }
-      this.elm.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
+        // hash があった場合は指定の箇所にスクロール位置を調整する
+        this.isWorkingScroll = false;
+        const { hash } = location;
+        const target = (hash) ? document.querySelector(hash) : null;
+        if (target) {
+          this.scrollTop += target.getBoundingClientRect().top;
+          window.scrollTo(0, this.scrollTop);
+        }
+        if (this.resolution.x > this.X_SWITCH_SMOOTH) {
+          this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
+          this.hookes.parallax.anchor[1] = this.hookes.parallax.velocity[1] = this.scrollTop + this.resolution.y * 0.5;
+        }
+        this.elm.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
 
-      // Scroll Manager の動作を開始する
-      this.isWorkingScroll = true;
-      this.isWorkingRender = true;
-      this.isWorkingTransform = true;
-      this.renderLoop();
+        // Scroll Manager の動作を開始する
+        this.isWorkingScroll = true;
+        this.isWorkingRender = true;
+        this.isWorkingTransform = true;
+        this.renderLoop();
 
-      // Resizeイベントを実行してページのレイアウトを初期化する
-      this.resize().then(() => {
-        // ページロード時にスクロールイベントを着火させる。
-        this.scroll();
+        // Resizeイベントを実行してページのレイアウトを初期化する
+        this.resize().then(() => {
+          // ページロード時にスクロールイベントを着火させる。
+          this.scroll();
 
-        if (callback) callback();
-      });
-    }, 200);
+          resolve();
+        });
+      }, 100);
+    });
   }
   pause() {
     // if it is paused, this methods doesn't run.

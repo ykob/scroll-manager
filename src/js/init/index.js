@@ -45,7 +45,8 @@ export default function() {
     contentsHeader.render();
   }
   loadContentImgs(document, () => {
-    scrollManager.start();
+    scrollManager.start().then(() => {
+    });
   });
 
 }
