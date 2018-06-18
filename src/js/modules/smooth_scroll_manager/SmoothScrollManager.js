@@ -194,8 +194,6 @@ export default class SmoothScrollManager {
 
     // ScrollItems のリサイズメソッドを実行
     this.scrollItems.resize(this.isValidSmooth());
-
-    return;
   }
   async resize() {
     // リサイズイベントの一連の流れ
@@ -242,8 +240,7 @@ export default class SmoothScrollManager {
 
         // 標準のリサイズイベントを実行
         this.resizeBasis();
-      })
-      .then(() => {
+
         // 個別のリサイズイベントを実行（ページの高さ変更後）
         if (this.resizeNext) this.resizeNext();
 
