@@ -250,27 +250,32 @@ export default class SmoothScrollManager {
         return;
       });
   }
-  render() {
-    // 各要素のレンダリング
+  renderBasis() {
+    // It is the basic rendering.
 
-    // 個別のレンダリング処理を実行（標準のレンダリング処理前）
+  }
+  render() {
+    // run before the basic rendering.
     if (this.renderPrev) this.renderPrev();
 
-    // 本文全体のラッパー(contents)をレンダリング
+    // render the content wrapper.
     if (this.isWorkingTransform === true && this.resolution.x > this.X_SWITCH_SMOOTH) {
       const y = Math.floor(this.hookes.contents.velocity[1] * 1000) / 1000;
       this.elm.contents.style.transform = `translate3D(0, ${y}px, 0)`;
     }
 
-    // Hookesオブジェクトをレンダリング
+    // render Hookes objects.
     for (var key in this.hookes) {
       this.hookes[key].render();
     }
 
-    // スクロールイベント連動オブジェクトをレンダリング
+    // render Scroll Items.
     this.scrollItems.render(this.isValidSmooth());
 
-    // 個別のレンダリング処理を実行（標準のレンダリング処理後）
+    // run the basic rendering.
+    this.renderBasis();
+
+    // run after the basic rendering.
     if (this.renderNext) this.renderNext();
   }
   renderLoop() {
