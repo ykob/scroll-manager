@@ -59,7 +59,7 @@ export default class SmoothScrollManager {
 
     this.on();
   }
-  async start() {
+  start() {
     // 動作用のフラグを一旦すべてオフ
     this.isWorkingScroll = false;
     this.isWorkingRender = false;
@@ -81,7 +81,6 @@ export default class SmoothScrollManager {
         this.scrollItems.init();
 
         // hash があった場合は指定の箇所にスクロール位置を調整する
-        this.isWorkingScroll = false;
         const { hash } = location;
         const target = (hash) ? document.querySelector(hash) : null;
         if (target) {
