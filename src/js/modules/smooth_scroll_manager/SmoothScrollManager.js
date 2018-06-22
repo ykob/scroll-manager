@@ -48,7 +48,7 @@ export default class SmoothScrollManager {
     this.scrollPrev = null;
     this.scrollNext = null;
     this.resizeReset = null;
-    this.resizePrev = async () => { return; };
+    this.resizePrev = null;
     this.resizeNext = null;
     this.renderPrev = null;
     this.renderNext = null;
@@ -59,7 +59,7 @@ export default class SmoothScrollManager {
 
     this.on();
   }
-  start() {
+  async start() {
     // 動作用のフラグを一旦すべてオフ
     this.isWorkingScroll = false;
     this.isWorkingRender = false;
@@ -69,7 +69,7 @@ export default class SmoothScrollManager {
     this.elm.contents = document.querySelector(`.${CLASSNAME_CONTENTS}`);
 
     // It returns Promise with setTimeout to get a scroll top value accurately when a hash is included.
-    return new Promise (resolve => {
+    await new Promise((resolve) => {
       setTimeout(() => {
         // 初期スクロール値を取得する。(pjax遷移の際は不要)
         this.scrollTop = window.pageYOffset;
@@ -99,15 +99,12 @@ export default class SmoothScrollManager {
         this.isWorkingTransform = true;
         this.renderLoop();
 
-        // Resizeイベントを実行してページのレイアウトを初期化する
-        this.resize().then(() => {
-          // ページロード時にスクロールイベントを着火させる。
-          this.scroll();
-
-          resolve();
-        });
+        resolve();
       }, 100);
     });
+    await this.resize();
+    this.scroll();
+    return;
   }
   pause() {
     // if it is paused, this methods doesn't run.
@@ -231,8 +228,10 @@ export default class SmoothScrollManager {
     }
 
     // 個別のリサイズイベントを実行（ページの高さ変更前）
-    await this.resizePrev()
-      .then(() => {
+    if (this.resizePrev) this.resizePrev();
+
+    await new Promise((resolve) => {
+      setTimeout(() => {
         // 本文やダミースクロールのレイアウトを再設定
         this.initDummyScroll();
         this.render();
@@ -247,8 +246,11 @@ export default class SmoothScrollManager {
         // スクロールイベントを再開（一時停止中は再開しない）
         if (this.isPaused === false) this.isWorkingScroll = true;
 
-        return;
-      });
+        resolve();
+      }, 100);
+    });
+
+    return;
   }
   renderBasis() {
     // It is the basic rendering.
@@ -319,7 +321,7 @@ export default class SmoothScrollManager {
     this.scrollPrev = null;
     this.scrollNext = null;
     this.resizeReset = null;
-    this.resizePrev = async () => { return; };
+    this.resizePrev = null;
     this.resizeNext = null;
     this.renderPrev = null;
     this.renderNext = null;
