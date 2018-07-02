@@ -39,13 +39,14 @@ export default class ScrollManager {
     this.resizePrev = null;
     this.resizeNext = null;
     this.isWorking = false;
+
+    this.on();
   }
   async start() {
-    this.isWorking = true;
     this.scrollItems.init(document);
+    this.isWorking = true;
     await this.resize();
     this.scroll();
-    this.on();
   }
   scrollBasis() {
     // ScrollItems のスクロールメソッドを実行
