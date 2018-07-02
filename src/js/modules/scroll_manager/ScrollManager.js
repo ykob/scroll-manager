@@ -19,7 +19,8 @@ const ScrollItems = require('./ScrollItems').default;
 export default class ScrollManager {
   constructor() {
     this.scrollItems = new ScrollItems(this);
-    this.scrollTop = window.pageYOffset;
+    this.scrollTop = 0;
+    this.scrollFrame = 0;
     this.resolution = {
       x: 0,
       y: 0
@@ -47,13 +48,25 @@ export default class ScrollManager {
     this.on();
   }
   scrollBasis() {
+    // ScrollItems のスクロールメソッドを実行
+    this.scrollItems.scroll();
   }
   scroll() {
+    // フラグが立たない場合はスクロールイベント内の処理を実行しない。
     if (this.isWorking === false) return;
-    this.scrollTop = window.pageYOffset;
+
+    // スクロール値の取得
+    const pageYOffset = window.pageYOffset;
+    this.scrollFrame = pageYOffset - this.scrollTop;
+    this.scrollTop = pageYOffset;
+
+    // 個別のスクロールイベントを実行（標準のスクロール処理前）
     if (this.scrollPrev) this.scrollPrev();
+
+    // 標準のスクロール処理を実行
     this.scrollBasis();
-    this.scrollItems.scroll();
+
+    // 個別のスクロールイベントを実行（標準のスクロール処理後）
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
