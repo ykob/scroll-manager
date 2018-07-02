@@ -6,6 +6,8 @@
 * http://opensource.org/licenses/mit-license.php
 */
 
+require("babel-polyfill");
+
 const ConsoleSignature = require('../common/ConsoleSignature').default;
 const consoleSignature = new ConsoleSignature('this content is rendered with scroll-manager', 'https://github.com/ykob/scroll-manager');
 
@@ -37,13 +39,12 @@ export default class ScrollManager {
     this.resizeNext = null;
     this.isWorking = false;
   }
-  start() {
+  async start() {
     this.isWorking = true;
     this.scrollItems.init(document);
-    this.resize(() => {
-      this.scroll();
-      this.on();
-    });
+    await this.resize();
+    this.scroll();
+    this.on();
   }
   scrollBasis() {
   }
@@ -56,23 +57,38 @@ export default class ScrollManager {
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
+    // 基礎的なリサイズイベントはここに記述する。
+
+    // ScrollItems のリサイズメソッドを実行
+    this.scrollItems.resize();
   }
-  resize(callback) {
+  async resize() {
     // リサイズイベントに関する要素の一時リセット
     if (this.resizeReset) this.resizeReset();
+
     // 各値を取得
+    this.scrollTop = window.pageYOffset;
     this.resolution.x = window.innerWidth;
     this.resolution.y = window.innerHeight;
     this.bodyResolution.x = document.body.clientWidth;
     this.bodyResolution.y = document.body.clientHeight;
+
+    // 個別のリサイズイベントを実行（ページの高さ変更前）
     if (this.resizePrev) this.resizePrev();
-    setTimeout(() => {
-      this.scrollTop = window.pageYOffset;
-      this.resizeBasis();
-      this.scrollItems.resize();
-      if (this.resizeNext) this.resizeNext();
-      if (callback) callback();
-    }, 100);
+
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        // 標準のリサイズイベントを実行
+        this.resizeBasis();
+
+        // 個別のリサイズイベントを実行（ページの高さ変更後）
+        if (this.resizeNext) this.resizeNext();
+
+        resolve();
+      }, 100);
+    });
+
+    return;
   }
   on() {
     const hookEventForResize = (isiOS() || isAndroid()) ? 'orientationchange' : 'resize';
