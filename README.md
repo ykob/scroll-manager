@@ -2,7 +2,7 @@
 
 ![screenshot](screenshot.gif)
 
-Scroll Manager is utility class that controls smooth scroll and showing some elements by scroll event.  
+It's a utility JavaScript asset that controls smooth scroll and showing elements with scroll event.  
 https://ykob.github.io/scroll-manager/
 
 ## License
