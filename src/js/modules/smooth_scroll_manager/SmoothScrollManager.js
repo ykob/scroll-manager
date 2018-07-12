@@ -50,8 +50,6 @@ export default class SmoothScrollManager {
     this.resizeReset = null;
     this.resizePrev = null;
     this.resizeNext = null;
-    this.renderPrev = null;
-    this.renderNext = null;
     this.isWorkingScroll = false;
     this.isWorkingRender = false;
     this.isWorkingTransform = false;
@@ -97,7 +95,6 @@ export default class SmoothScrollManager {
         this.isWorkingScroll = true;
         this.isWorkingRender = true;
         this.isWorkingTransform = true;
-        this.renderLoop();
 
         resolve();
       }, 100);
@@ -252,13 +249,8 @@ export default class SmoothScrollManager {
 
     return;
   }
-  renderBasis() {
-    // It is the basic rendering.
-
-  }
   render() {
-    // run before the basic rendering.
-    if (this.renderPrev) this.renderPrev();
+    if (this.isWorkingRender === false) return;
 
     // render the content wrapper.
     if (this.isWorkingTransform === true && this.resolution.x > this.X_SWITCH_SMOOTH) {
@@ -273,20 +265,6 @@ export default class SmoothScrollManager {
 
     // render Scroll Items.
     this.scrollItems.render(this.isValidSmooth());
-
-    // run the basic rendering.
-    this.renderBasis();
-
-    // run after the basic rendering.
-    if (this.renderNext) this.renderNext();
-  }
-  renderLoop() {
-    this.render();
-    if (this.isWorkingRender) {
-      requestAnimationFrame(() => {
-        this.renderLoop();
-      });
-    }
   }
   on() {
     // モバイルOSでは orientationchange でリサイズイベントを着火させる。
@@ -323,8 +301,6 @@ export default class SmoothScrollManager {
     this.resizeReset = null;
     this.resizePrev = null;
     this.resizeNext = null;
-    this.renderPrev = null;
-    this.renderNext = null;
   }
   isValidSmooth() {
     // Returns whether or not smooth scroll is valid.
