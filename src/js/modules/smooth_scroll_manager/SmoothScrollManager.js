@@ -76,7 +76,7 @@ export default class SmoothScrollManager {
 
         // Hookes と ScrollItems を初期化
         this.initHookes();
-        this.scrollItems.init();
+        this.scrollItems.init(this.elm.contents);
 
         // hash があった場合は指定の箇所にスクロール位置を調整する
         const { hash } = location;

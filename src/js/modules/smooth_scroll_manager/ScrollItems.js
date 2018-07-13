@@ -9,10 +9,10 @@ export default class ScrollItems {
     this.smoothItems = [];
     this.parallaxItems = [];
   }
-  init() {
-    const elmScrollItems = document.querySelectorAll('.js-scroll-item');
-    const elmSmoothItems = document.querySelectorAll('.js-smooth-item');
-    const elmParallaxItems = document.querySelectorAll('.js-parallax-item');
+  init(contents) {
+    const elmScrollItems = contents.querySelectorAll('.js-scroll-item');
+    const elmSmoothItems = contents.querySelectorAll('.js-smooth-item');
+    const elmParallaxItems = contents.querySelectorAll('.js-parallax-item');
 
     this.scrollItems = [];
     this.smoothItems = [];
