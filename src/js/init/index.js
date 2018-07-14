@@ -8,14 +8,16 @@ const Accordion = require('../modules/Accordion').default;
 
 const modules = {
   scrollManager: new SmoothScrollManager(),
+  contentsHeader: new ContentsHeader(),
 }
 const renderer = new Renderer(modules);
-const contentsHeader = new ContentsHeader(modules.scrollManager);
 const elmAnchorLink = document.querySelectorAll('.js-anchor-link');
 const elmHover = document.querySelectorAll('.js-hover');
 const elmAccordion = document.querySelectorAll('.js-accordion');
 const elmOpenModal = document.querySelectorAll('.js-open-modal');
 const accordions = [];
+
+modules.contentsHeader.modules = modules;
 
 export default function() {
   for (var i = 0; i < elmAnchorLink.length; i++) {
@@ -38,15 +40,12 @@ export default function() {
   }
 
   modules.scrollManager.scrollNext = () => {
-    contentsHeader.scroll();
+    modules.contentsHeader.scroll();
   }
   modules.scrollManager.resizeNext = () => {
     for (var i = 0; i < accordions.length; i++) {
       accordions[i].resize();
     }
-  }
-  modules.scrollManager.renderNext = () => {
-    contentsHeader.render();
   }
   loadContentImgs(document, () => {
     modules.scrollManager.start().then(() => {

@@ -13,6 +13,7 @@ export default class Renderer {
   renderLoop() {
     // write original render events here.
     this.modules.scrollManager.render();
+    this.modules.contentsHeader.render();
 
     // if working flag is on, loop to run render events.
     if (this.isWorking === false) return;
