@@ -1,3 +1,5 @@
+require("babel-polyfill");
+
 const Hover = require('js-util/Hover.js');
 const SmoothScrollManager = require('../modules/smooth_scroll_manager/SmoothScrollManager').default;
 const AnchorLink = require('../modules/smooth_scroll_manager/AnchorLink').default;
@@ -19,7 +21,7 @@ const accordions = [];
 
 modules.contentsHeader.modules = modules;
 
-export default function() {
+export default async function() {
   for (var i = 0; i < elmAnchorLink.length; i++) {
     new AnchorLink(elmAnchorLink[i], modules.scrollManager);
   }
@@ -47,10 +49,8 @@ export default function() {
       accordions[i].resize();
     }
   }
-  loadContentImgs(document, () => {
-    modules.scrollManager.start().then(() => {
-      renderer.start();
-    });
-  });
 
+  await loadContentImgs(document);
+  await modules.scrollManager.start();
+  renderer.start();
 }

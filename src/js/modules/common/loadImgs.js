@@ -1,21 +1,20 @@
-export default function(imgArr, callback) {
+export default function(imgArr) {
   const length = imgArr.length;
-  const loadedImgArr = [];
-  let count = 0;
+  const ps = [];
 
   for (var i = 0; i < length; i++) {
     const index = i;
-    const img = new Image();
-    img.onload = () => {
-      loadedImgArr[index] = img;
-      count++;
-      if (count >= length) callback(loadedImgArr);
-    };
-    img.onerror = () => {
-      console.error(`Failed to load image in loadImgs function.`)
-      count++;
-      if (count >= length) callback(loadedImgArr);
-    };
-    img.src = imgArr[index];
+    ps[index] = new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        resolve();
+      };
+      img.onerror = () => {
+        reject();
+      };
+      img.src = imgArr[index];
+    });
   }
+
+  return Promise.all(ps);
 }
