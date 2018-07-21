@@ -1,6 +1,6 @@
 export default class Renderer {
-  constructor(modules) {
-    this.modules = modules;
+  constructor() {
+    this.modules = null;
     this.isWorking = false;
 
     this.renderPrev = null;
