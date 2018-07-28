@@ -14,6 +14,7 @@ const consoleSignature = new ConsoleSignature('this content is rendered with scr
 const debounce = require('js-util/debounce');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
+const sleep = require('js-util/sleep');
 const Hookes = require('./Hookes').default;
 const ScrollItems = require('./ScrollItems').default;
 
@@ -67,38 +68,35 @@ export default class SmoothScrollManager {
     this.elm.contents = document.querySelector(`.${CLASSNAME_CONTENTS}`);
 
     // It returns Promise with setTimeout to get a scroll top value accurately when a hash is included.
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        // 初期スクロール値を取得する。(pjax遷移の際は不要)
-        this.scrollTop = window.pageYOffset;
-        this.resolution.x = window.innerWidth;
-        this.resolution.y = window.innerHeight;
+    await sleep(100);
 
-        // Hookes と ScrollItems を初期化
-        this.initHookes();
-        this.scrollItems.init(this.elm.contents);
+    // 初期スクロール値を取得する。(pjax遷移の際は不要)
+    this.scrollTop = window.pageYOffset;
+    this.resolution.x = window.innerWidth;
+    this.resolution.y = window.innerHeight;
 
-        // hash があった場合は指定の箇所にスクロール位置を調整する
-        const { hash } = location;
-        const target = (hash) ? document.querySelector(hash) : null;
-        if (target) {
-          this.scrollTop += target.getBoundingClientRect().top;
-          window.scrollTo(0, this.scrollTop);
-        }
-        if (this.resolution.x > this.X_SWITCH_SMOOTH) {
-          this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
-          this.hookes.parallax.anchor[1] = this.hookes.parallax.velocity[1] = this.scrollTop + this.resolution.y * 0.5;
-        }
-        this.elm.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
+    // Hookes と ScrollItems を初期化
+    this.initHookes();
+    this.scrollItems.init(this.elm.contents);
 
-        // Scroll Manager の動作を開始する
-        this.isWorkingScroll = true;
-        this.isWorkingRender = true;
-        this.isWorkingTransform = true;
+    // hash があった場合は指定の箇所にスクロール位置を調整する
+    const { hash } = location;
+    const target = (hash) ? document.querySelector(hash) : null;
+    if (target) {
+      this.scrollTop += target.getBoundingClientRect().top;
+      window.scrollTo(0, this.scrollTop);
+    }
+    if (this.resolution.x > this.X_SWITCH_SMOOTH) {
+      this.hookes.contents.anchor[1] = this.hookes.contents.velocity[1] = this.scrollTop * -1;
+      this.hookes.parallax.anchor[1] = this.hookes.parallax.velocity[1] = this.scrollTop + this.resolution.y * 0.5;
+    }
+    this.elm.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
 
-        resolve();
-      }, 100);
-    });
+    // Scroll Manager の動作を開始する
+    this.isWorkingScroll = true;
+    this.isWorkingRender = true;
+    this.isWorkingTransform = true;
+
     await this.resize();
     this.scroll();
     return;
@@ -227,25 +225,21 @@ export default class SmoothScrollManager {
     // 個別のリサイズイベントを実行（ページの高さ変更前）
     if (this.resizePrev) this.resizePrev();
 
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        // 本文やダミースクロールのレイアウトを再設定
-        this.initDummyScroll();
-        this.render();
-        window.scrollTo(0, this.scrollTop);
+    await sleep(100);
 
-        // 標準のリサイズイベントを実行
-        this.resizeBasis();
+    // 本文やダミースクロールのレイアウトを再設定
+    this.initDummyScroll();
+    this.render();
+    window.scrollTo(0, this.scrollTop);
 
-        // 個別のリサイズイベントを実行（ページの高さ変更後）
-        if (this.resizeNext) this.resizeNext();
+    // 標準のリサイズイベントを実行
+    this.resizeBasis();
 
-        // スクロールイベントを再開（一時停止中は再開しない）
-        if (this.isPaused === false) this.isWorkingScroll = true;
+    // 個別のリサイズイベントを実行（ページの高さ変更後）
+    if (this.resizeNext) this.resizeNext();
 
-        resolve();
-      }, 100);
-    });
+    // スクロールイベントを再開（一時停止中は再開しない）
+    if (this.isPaused === false) this.isWorkingScroll = true;
 
     return;
   }
