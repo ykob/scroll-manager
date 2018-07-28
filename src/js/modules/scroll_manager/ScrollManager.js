@@ -90,17 +90,13 @@ export default class ScrollManager {
     // 個別のリサイズイベントを実行（ページの高さ変更前）
     if (this.resizePrev) this.resizePrev();
 
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        // 標準のリサイズイベントを実行
-        this.resizeBasis();
+    await sleep(100);
 
-        // 個別のリサイズイベントを実行（ページの高さ変更後）
-        if (this.resizeNext) this.resizeNext();
+    // 標準のリサイズイベントを実行
+    this.resizeBasis();
 
-        resolve();
-      }, 100);
-    });
+    // 個別のリサイズイベントを実行（ページの高さ変更後）
+    if (this.resizeNext) this.resizeNext();
 
     return;
   }
