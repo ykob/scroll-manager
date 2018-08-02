@@ -40,10 +40,6 @@ export default class SmoothScrollManager {
       x: 0,
       y: 0
     };
-    this.mousemove = {
-      x: 0,
-      y: 0
-    };
     this.X_SWITCH_SMOOTH = 1024;
     this.hookes = {};
     this.scrollPrev = null;
@@ -145,7 +141,6 @@ export default class SmoothScrollManager {
       contents: new Hookes({ k: 0.625, d: 0.8 }),
       smooth:   new Hookes({ k: 0.2, d: 0.7 }),
       parallax: new Hookes({ k: 0.28, d: 0.7 }),
-      mouse:    new Hookes({ k: 0.625, d: 0.8 }),
     }
   }
   scrollBasis() {
@@ -274,19 +269,6 @@ export default class SmoothScrollManager {
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
     }, 400), false);
-
-    // マウス座標の取得
-    window.addEventListener('mousemove', (event) => {
-      if (this.isWorkingScroll === false) return;
-      this.hookes.mouse.anchor[0] = event.clientX / this.resolution.x * 2.0 - 1.0;
-      this.hookes.mouse.anchor[1] = -(event.clientY / this.resolution.y * 2.0 - 1.0);
-    }, false);
-
-    window.addEventListener('mouseout', () => {
-      if (this.isWorkingScroll === false) return;
-      this.hookes.mouse.anchor[0] = 0;
-      this.hookes.mouse.anchor[1] = 0;
-    }, false);
   }
   off() {
     // Reset all individual events.
