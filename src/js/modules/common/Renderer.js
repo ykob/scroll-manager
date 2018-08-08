@@ -13,6 +13,10 @@ export default class Renderer {
   stop() {
     this.isWorking = false;
   }
+  off() {
+    this.renderPrev = null;
+    this.renderNext = null;
+  }
   renderLoop() {
     if (this.renderPrev) this.renderPrev();
     if (this.render) this.render();
