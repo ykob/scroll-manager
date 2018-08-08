@@ -11,10 +11,10 @@ const init = async () => {
   // preload stylesheet other than Google Chrome browser.
   if (ua.indexOf('Edge') > -1 || ua.indexOf('Chrome') < 0) link.rel = 'stylesheet';
 
+  await sleep(100);
+
   // Making viewport units (vh|vw|vmin|vmax) work properly in Mobile Safari.
   viewportUnitsBuggyfill.init();
-
-  await sleep(100);
 
   // run initialize function.
   switch (pageId) {
