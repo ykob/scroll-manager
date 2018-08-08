@@ -12,6 +12,7 @@ const consoleSignature = new ConsoleSignature('this content is rendered with scr
 const debounce = require('js-util/debounce');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
+const sleep = require('js-util/sleep');
 const ScrollItems = require('./ScrollItems').default;
 
 export default class ScrollManager {
