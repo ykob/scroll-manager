@@ -1,15 +1,15 @@
 const Hover = require('js-util/Hover.js');
-const SmoothScrollManager = require('../modules/smooth_scroll_manager/SmoothScrollManager').default;
-const AnchorLink = require('../modules/smooth_scroll_manager/AnchorLink').default;
 const Renderer = require('../modules/common/Renderer').default;
 const loadContentImgs = require('../modules/common/loadContentImgs').default;
+const SmoothScrollManager = require('../modules/smooth_scroll_manager/SmoothScrollManager').default;
+const AnchorLink = require('../modules/smooth_scroll_manager/AnchorLink').default;
 const ContentsHeader = require('../modules/ContentsHeader').default;
 const Accordion = require('../modules/Accordion').default;
 
 const modules = {
+  renderer: new Renderer(),
   scrollManager: new SmoothScrollManager(),
   contentsHeader: new ContentsHeader(),
-  renderer: new Renderer(),
 }
 const elmAnchorLink = document.querySelectorAll('.js-anchor-link');
 const elmHover = document.querySelectorAll('.js-hover');
@@ -19,7 +19,6 @@ const accordions = [];
 
 modules.scrollManager.modules = modules;
 modules.contentsHeader.modules = modules;
-modules.renderer.modules = modules;
 
 export default async function() {
   for (var i = 0; i < elmAnchorLink.length; i++) {
@@ -48,6 +47,10 @@ export default async function() {
     for (var i = 0; i < accordions.length; i++) {
       accordions[i].resize();
     }
+  }
+  modules.renderer.render = () => {
+    modules.scrollManager.render();
+    modules.contentsHeader.render();
   }
 
   await loadContentImgs(document);
