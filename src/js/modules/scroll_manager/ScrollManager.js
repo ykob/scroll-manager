@@ -6,8 +6,6 @@
 * http://opensource.org/licenses/mit-license.php
 */
 
-require("babel-polyfill");
-
 const ConsoleSignature = require('../common/ConsoleSignature').default;
 const consoleSignature = new ConsoleSignature('this content is rendered with scroll-manager', 'https://github.com/ykob/scroll-manager');
 

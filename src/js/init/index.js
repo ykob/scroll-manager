@@ -1,5 +1,3 @@
-require("babel-polyfill");
-
 const Hover = require('js-util/Hover.js');
 const SmoothScrollManager = require('../modules/smooth_scroll_manager/SmoothScrollManager').default;
 const AnchorLink = require('../modules/smooth_scroll_manager/AnchorLink').default;
