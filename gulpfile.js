@@ -12,36 +12,38 @@ requireDir('./gulp/tasks');
 gulp.task('predefault', cb => {
   runSequence(
     'cleanDest',
-    ['pug', 'sass', 'watchify', 'copyToDest'],
+    ['pug', 'sass', 'scripts', 'copyToDest'],
     'serve',
     cb
   );
-});
-
-gulp.task('watch-sass', ['sass'], () => {
-  reload();
 });
 
 gulp.task('default', ['predefault'], () => {
   $.watch(
     [`./${DIR.SRC}/**/*.{scss,sass}`],
     () => {
-      gulp.start(['watch-sass'])
+      gulp.start(['sass'])
     }
-  );
+  ).on('change', reload);
 
   $.watch(
     [`./${DIR.SRC}/**/*.pug`]
   ).on('change', reload);
 
   $.watch(
-    [`./${DIR.DEST}/**/*.js`]
+    [
+      `./${DIR.SRC}/**/*.js`,
+    ],
+    () => {
+      gulp.start(['scripts'])
+    }
   ).on('change', reload);
 
   $.watch(
     [
       `./${DIR.SRC}/img/**/*.*`,
-      `./${DIR.SRC}/font/**/*.*`
+      `./${DIR.SRC}/font/**/*.*`,
+      `./${DIR.SRC}/json/**/*.*`,
     ],
     () => {
       gulp.start(['copyToDest'])
@@ -52,13 +54,29 @@ gulp.task('default', ['predefault'], () => {
 gulp.task('build', cb => {
   runSequence(
     'cleanDest',
-    ['pug', 'sass', 'browserify', 'copyToDest'],
+    ['pug', 'sass', 'copyToDest'],
     'cleanBuild',
     'replaceHtml',
     'cleanCss',
+    'scripts',
     'imagemin',
-    'uglify',
     'copyToBuild',
+    cb
+  );
+});
+
+gulp.task('buildHtml', cb => {
+  runSequence(
+    'pug',
+    'replaceHtml',
+    cb
+  );
+});
+
+gulp.task('buildCss', cb => {
+  runSequence(
+    'sass',
+    'cleanCss',
     cb
   );
 });

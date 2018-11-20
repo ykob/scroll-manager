@@ -1,5 +1,3 @@
-require("babel-polyfill");
-
 const loadImgs = require('./loadImgs').default;
 
 export default async function(contents, addImgs = []) {

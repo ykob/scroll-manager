@@ -1,4 +1,4 @@
-require("babel-polyfill");
+require('@babel/polyfill');
 
 const viewportUnitsBuggyfill = require('viewport-units-buggyfill');
 const sleep = require('js-util/sleep');
