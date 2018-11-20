@@ -8,7 +8,7 @@ export default class ConsoleSignature {
   show() {
     if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
       const args = [
-        `%c ${this.message} %c ${this.url} \n`,
+        `%c ${this.message} %c ${this.url}`,
         `color: #fff; background: ${this.color}; padding:3px 0;`,
         `padding:3px 1px;`,
       ];
