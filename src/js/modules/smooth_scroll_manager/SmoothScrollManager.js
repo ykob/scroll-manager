@@ -6,14 +6,15 @@
 * http://opensource.org/licenses/mit-license.php
 */
 
+import UaParser from 'ua-parser-js';
 import debounce from 'js-util/debounce';
-import isiOS from 'js-util/isiOS';
-import isAndroid from 'js-util/isAndroid';
 import sleep from 'js-util/sleep';
 import Hookes from './Hookes';
 import ScrollItems from './ScrollItems';
 import ConsoleSignature from '../common/ConsoleSignature';
 
+const uaParser = new UaParser();
+const os = uaParser.getOS().name;
 const consoleSignature = new ConsoleSignature('this content is rendered with scroll-manager', 'https://github.com/ykob/scroll-manager');
 
 const CLASSNAME_DUMMY_SCROLL = 'js-dummy-scroll';
@@ -256,7 +257,9 @@ export default class SmoothScrollManager {
   on() {
     // モバイルOSでは orientationchange でリサイズイベントを着火させる。
     // ステータスバーのtoggleでresizeは着火してしまうのを避ける目的。
-    const hookEventForResize = (isiOS() || isAndroid()) ? 'orientationchange' : 'resize';
+    const hookEventForResize = (os === 'iOS' || os === 'Android')
+      ? 'orientationchange'
+      : 'resize';
 
     // スクロール
     window.addEventListener('scroll', (event) => {
