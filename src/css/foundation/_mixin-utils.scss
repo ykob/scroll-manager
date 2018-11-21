@@ -18,9 +18,7 @@
   @include l-tablet {
     @include fontSize($sizeTab);
   }
-  @include l-mobile {
-    @include fontSizeMobile($sizeSp);
-  }
+  @include fontSizeMobile($sizeSp);
 }
 @mixin flexFontSize($vw) {
   @include l-pc-l {
