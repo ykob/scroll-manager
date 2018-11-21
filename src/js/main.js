@@ -1,6 +1,5 @@
 require('@babel/polyfill');
 
-import viewportUnitsBuggyfill from 'viewport-units-buggyfill';
 import UaParser from 'ua-parser-js';
 import sleep from 'js-util/sleep';
 
@@ -14,9 +13,6 @@ const init = async () => {
   if (browser !== 'Chrome' && browser !== 'Edge') link.rel = 'stylesheet';
 
   await sleep(100);
-
-  // Making viewport units (vh|vw|vmin|vmax) work properly in Mobile Safari.
-  viewportUnitsBuggyfill.init();
 
   // run initialize function.
   switch (pageId) {
