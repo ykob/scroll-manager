@@ -1,6 +1,6 @@
-const Hover = require('js-util/Hover.js');
-const ScrollManager = require('../modules/scroll_manager/ScrollManager').default;
-const Accordion = require('../modules/Accordion').default;
+import Hover from 'js-util/Hover.js';
+import ScrollManager from '../modules/scroll_manager/ScrollManager';
+import Accordion from '../modules/Accordion';
 
 const scrollManager = new ScrollManager();
 const elmHover = document.querySelectorAll('.js-hover');

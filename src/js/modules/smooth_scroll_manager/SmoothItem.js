@@ -1,4 +1,4 @@
-const MathEx = require('js-util/MathEx');
+import MathEx from 'js-util/MathEx';
 
 export default class SmoothItem {
   constructor(elm, scrollManager, hookes, opt) {

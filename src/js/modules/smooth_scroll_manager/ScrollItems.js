@@ -1,6 +1,6 @@
-const ScrollItem = require('./ScrollItem').default;
-const SmoothItem = require('./SmoothItem').default;
-const ParallaxItem = require('./ParallaxItem').default;
+import ScrollItem from './ScrollItem';
+import SmoothItem from './SmoothItem';
+import ParallaxItem from './ParallaxItem';
 
 export default class ScrollItems {
   constructor(scrollManager) {

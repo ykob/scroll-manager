@@ -1,10 +1,10 @@
-const Hover = require('js-util/Hover.js');
-const Renderer = require('../modules/common/Renderer').default;
-const loadContentImgs = require('../modules/common/loadContentImgs').default;
-const SmoothScrollManager = require('../modules/smooth_scroll_manager/SmoothScrollManager').default;
-const AnchorLink = require('../modules/smooth_scroll_manager/AnchorLink').default;
-const ContentsHeader = require('../modules/ContentsHeader').default;
-const Accordion = require('../modules/Accordion').default;
+import Hover from 'js-util/Hover.js';
+import Renderer from '../modules/common/Renderer';
+import loadContentImgs from '../modules/common/loadContentImgs';
+import SmoothScrollManager from '../modules/smooth_scroll_manager/SmoothScrollManager';
+import AnchorLink from '../modules/smooth_scroll_manager/AnchorLink';
+import ContentsHeader from '../modules/ContentsHeader';
+import Accordion from '../modules/Accordion';
 
 const modules = {
   renderer: new Renderer(),
@@ -32,7 +32,7 @@ export default async function() {
   }
   for (var i = 0; i < elmOpenModal.length; i++) {
     elmOpenModal[i].addEventListener('click', () => {
-      if (scrollManager.isWorking) {
+      if (modules.scrollManager.isWorking) {
         modules.scrollManager.pause();
       } else {
         modules.scrollManager.play();

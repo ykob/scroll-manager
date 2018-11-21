@@ -1,4 +1,4 @@
-const loadImgs = require('./loadImgs').default;
+import loadImgs from './loadImgs';
 
 export default async function(contents, addImgs = []) {
   const imgs = contents.querySelectorAll('img');

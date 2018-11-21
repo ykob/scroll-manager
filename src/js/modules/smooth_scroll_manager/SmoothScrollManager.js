@@ -6,15 +6,15 @@
 * http://opensource.org/licenses/mit-license.php
 */
 
-const ConsoleSignature = require('../common/ConsoleSignature').default;
-const consoleSignature = new ConsoleSignature('this content is rendered with scroll-manager', 'https://github.com/ykob/scroll-manager');
+import debounce from 'js-util/debounce';
+import isiOS from 'js-util/isiOS';
+import isAndroid from 'js-util/isAndroid';
+import sleep from 'js-util/sleep';
+import Hookes from './Hookes';
+import ScrollItems from './ScrollItems';
+import ConsoleSignature from '../common/ConsoleSignature';
 
-const debounce = require('js-util/debounce');
-const isiOS = require('js-util/isiOS');
-const isAndroid = require('js-util/isAndroid');
-const sleep = require('js-util/sleep');
-const Hookes = require('./Hookes').default;
-const ScrollItems = require('./ScrollItems').default;
+const consoleSignature = new ConsoleSignature('this content is rendered with scroll-manager', 'https://github.com/ykob/scroll-manager');
 
 const CLASSNAME_DUMMY_SCROLL = 'js-dummy-scroll';
 const CLASSNAME_CONTENTS = 'js-contents';
