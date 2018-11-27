@@ -25,7 +25,6 @@
     "browser-sync": "^2.23.5",
     "cross-env": "^5.1.5",
     "del": "^3.0.0",
-    "event-stream": "^4.0.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-clean-css": "^3.9.2",
