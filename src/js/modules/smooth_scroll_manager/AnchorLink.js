@@ -1,5 +1,5 @@
-const easings = require('easing-js');
-const ScrollInnerPage = require('js-util/ScrollInnerPage');
+import easings from 'easing-js';
+import ScrollInnerPage from 'js-util/ScrollInnerPage';
 
 export default class AnchorLink {
   constructor(elm, scrollManager) {

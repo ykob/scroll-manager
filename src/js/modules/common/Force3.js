@@ -1,4 +1,4 @@
-const glMatrix = require('gl-matrix');
+import * as glMatrix from 'gl-matrix';
 
 export default {
   updateVelocity: (velocity, acceleration, mass) => {

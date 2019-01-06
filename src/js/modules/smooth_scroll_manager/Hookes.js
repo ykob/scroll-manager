@@ -1,5 +1,5 @@
-const glMatrix = require('gl-matrix');
-const Force3 = require('../common/Force3').default;
+import * as glMatrix from 'gl-matrix';
+import Force3 from '../common/Force3';
 
 export default class Hookes {
   constructor(opt) {

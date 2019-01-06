@@ -1,5 +1,5 @@
-const MathEx = require('js-util/MathEx');
-const isIE = require('js-util/isIE');
+import MathEx from 'js-util/MathEx';
+import isIE from 'js-util/isIE';
 
 export default class ParallaxItem {
   constructor(elm, scrollManager, hookes, opt) {
