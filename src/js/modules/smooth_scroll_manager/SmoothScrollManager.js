@@ -54,27 +54,27 @@ export default class SmoothScrollManager {
     this.on();
   }
   async start() {
-    // 動作用のフラグを一旦すべてオフ
+    // Temporary turn off flags that are to run Scroll Manager.
     this.isWorkingScroll = false;
     this.isWorkingRender = false;
     this.isWorkingTransform = false;
 
-    // スムーススクロールさせる対象のラッパーDOMを取得
+    // Get the DOM that is the target of the smooth scroll.
     this.elm.contents = document.querySelector(`.${CLASSNAME_CONTENTS}`);
 
     // It returns Promise with setTimeout to get a scroll top value accurately when a hash is included.
     await sleep(100);
 
-    // 初期スクロール値を取得する。(pjax遷移の際は不要)
+    // Get the initial scroll value. (it's unnecessary if it has Pjax)
     this.scrollTop = window.pageYOffset;
     this.resolution.x = window.innerWidth;
     this.resolution.y = window.innerHeight;
 
-    // Hookes と ScrollItems を初期化
+    // Initialize Hookes and ScrollItems.
     this.initHookes();
     this.scrollItems.init(this.elm.contents);
 
-    // hash があった場合は指定の箇所にスクロール位置を調整する
+    // If it has a hash in location, it adjusts the scroll position to the appropriate place.
     const { hash } = location;
     const target = (hash) ? document.querySelector(hash) : null;
     if (target) {
@@ -87,7 +87,8 @@ export default class SmoothScrollManager {
     }
     this.elm.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
 
-    // Scroll Manager の動作を開始する
+    // Turn off flags that are to run Scroll Manager.
+    this.isWorkingScroll = false;
     this.isWorkingScroll = true;
     this.isWorkingRender = true;
     this.isWorkingTransform = true;
