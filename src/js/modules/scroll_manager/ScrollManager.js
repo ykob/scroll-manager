@@ -49,7 +49,7 @@ export default class ScrollManager {
     this.scroll();
   }
   scrollBasis() {
-    // ScrollItems のスクロールメソッドを実行
+    // Run the resize method of ScrollItems.
     this.scrollItems.scroll();
   }
   scroll() {

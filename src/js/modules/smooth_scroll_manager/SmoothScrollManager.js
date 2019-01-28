@@ -177,9 +177,7 @@ export default class SmoothScrollManager {
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
-    // 基礎的なリサイズイベントはここに記述する。
-
-    // ScrollItems のリサイズメソッドを実行
+    // Run the resize method of ScrollItems.
     this.scrollItems.resize(this.isValidSmooth());
   }
   async resize() {
