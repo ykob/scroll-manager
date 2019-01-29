@@ -77,10 +77,12 @@ export default class ScrollManager {
     this.scrollItems.resize();
   }
   async resize() {
+    // Sequence of resize event.
+
     // リサイズイベントに関する要素の一時リセット
     if (this.resizeReset) this.resizeReset();
 
-    // 各値を取得
+    // Get each value.
     this.scrollTop = window.pageYOffset;
     this.resolution.x = window.innerWidth;
     this.resolution.y = window.innerHeight;
@@ -92,7 +94,7 @@ export default class ScrollManager {
 
     await sleep(100);
 
-    // 標準のリサイズイベントを実行
+    // Run basic resize event.
     this.resizeBasis();
 
     // 個別のリサイズイベントを実行（ページの高さ変更後）

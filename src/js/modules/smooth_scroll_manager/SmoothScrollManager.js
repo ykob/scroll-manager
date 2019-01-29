@@ -181,15 +181,15 @@ export default class SmoothScrollManager {
     this.scrollItems.resize(this.isValidSmooth());
   }
   async resize() {
-    // リサイズイベントの一連の流れ
+    // Sequence of resize event.
 
-    // リサイズ中にスクロールイベントが勝手に叩かれるのをキャンセル
+    // Cancel the scroll event while resizing.
     this.isWorkingScroll = false;
 
     // リサイズイベントに関する要素の一時リセット
     if (this.resizeReset) this.resizeReset();
 
-    // 各値を取得
+    // Get each value.
     this.scrollTop = window.pageYOffset;
     this.resolution.x = window.innerWidth;
     this.resolution.y = window.innerHeight;
@@ -198,11 +198,11 @@ export default class SmoothScrollManager {
 
     // window幅によってHookesオブジェクトの値を再設定する
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
-      // PCの場合
+      // In case of PC.
       this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = -this.scrollTop;
       this.hookes.parallax.velocity[1] = this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
     } else {
-      // スマホの場合
+      // In case of Smartphone.
       for (var key in this.hookes) {
         switch (key) {
           case 'contents':
@@ -225,7 +225,7 @@ export default class SmoothScrollManager {
     this.render();
     window.scrollTo(0, this.scrollTop);
 
-    // 標準のリサイズイベントを実行
+    // Run basic resize event.
     this.resizeBasis();
 
     // 個別のリサイズイベントを実行（ページの高さ変更後）
