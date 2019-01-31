@@ -56,7 +56,7 @@ export default class ScrollManager {
     // フラグが立たない場合はスクロールイベント内の処理を実行しない。
     if (this.isWorking === false) return;
 
-    // スクロール値の取得
+    // Get scroll top value.
     const pageYOffset = window.pageYOffset;
     this.scrollFrame = pageYOffset - this.scrollTop;
     this.scrollTop = pageYOffset;
@@ -79,7 +79,7 @@ export default class ScrollManager {
   async resize() {
     // Sequence of resize event.
 
-    // リサイズイベントに関する要素の一時リセット
+    // Reset elements related resize event temporary.
     if (this.resizeReset) this.resizeReset();
 
     // Get each value.
@@ -89,7 +89,7 @@ export default class ScrollManager {
     this.bodyResolution.x = document.body.clientWidth;
     this.bodyResolution.y = document.body.clientHeight;
 
-    // 個別のリサイズイベントを実行（ページの高さ変更前）
+    // Run unique resize event before page height is changed.
     if (this.resizePrev) this.resizePrev();
 
     await sleep(100);
@@ -97,7 +97,7 @@ export default class ScrollManager {
     // Run basic resize event.
     this.resizeBasis();
 
-    // 個別のリサイズイベントを実行（ページの高さ変更後）
+    // Run unique resize event after page height is changed.
     if (this.resizeNext) this.resizeNext();
 
     return;

@@ -113,7 +113,7 @@ export default class SmoothScrollManager {
     // if it is not paused, this methods doesn't run.
     if (this.isPaused === false) return;
 
-    // スムーススクロールの再生
+    // Run smooth scroll.
     this.isWorkingScroll = true;
     this.isPaused = false;
 
@@ -122,7 +122,7 @@ export default class SmoothScrollManager {
     window.scrollTo(0, this.scrollTop);
   }
   initDummyScroll() {
-    // ダミースクロールの初期化
+    // Initialize dummy scroll.
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       // PCの場合
       this.elm.contents.classList.add('is-fixed');
@@ -136,7 +136,7 @@ export default class SmoothScrollManager {
     this.render();
   }
   initHookes() {
-    // Hookesオブジェクトの初期化
+    // Initialize Hookes object.
     this.hookes = {
       contents: new Hookes({ k: 0.625, d: 0.8 }),
       smooth:   new Hookes({ k: 0.2, d: 0.7 }),
@@ -186,7 +186,7 @@ export default class SmoothScrollManager {
     // Cancel the scroll event while resizing.
     this.isWorkingScroll = false;
 
-    // リサイズイベントに関する要素の一時リセット
+    // Reset elements related resize event temporary.
     if (this.resizeReset) this.resizeReset();
 
     // Get each value.
@@ -215,7 +215,7 @@ export default class SmoothScrollManager {
       }
     }
 
-    // 個別のリサイズイベントを実行（ページの高さ変更前）
+    // Run unique resize event before page height is changed.
     if (this.resizePrev) this.resizePrev();
 
     await sleep(100);
@@ -228,7 +228,7 @@ export default class SmoothScrollManager {
     // Run basic resize event.
     this.resizeBasis();
 
-    // 個別のリサイズイベントを実行（ページの高さ変更後）
+    // Run unique resize event after page height is changed.
     if (this.resizeNext) this.resizeNext();
 
     // スクロールイベントを再開（一時停止中は再開しない）
