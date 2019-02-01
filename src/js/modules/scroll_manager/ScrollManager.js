@@ -107,6 +107,7 @@ export default class ScrollManager {
       ? 'orientationchange'
       : 'resize';
 
+    // Bind the scroll event
     window.addEventListener('scroll', (event) => {
       this.scroll(event);
     }, false);
@@ -121,6 +122,7 @@ export default class ScrollManager {
       this.mousemove.y = 0;
     }, false);
 
+    // Bind the esize event
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
       this.scroll(event);

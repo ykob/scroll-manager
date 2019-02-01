@@ -260,12 +260,12 @@ export default class SmoothScrollManager {
       ? 'orientationchange'
       : 'resize';
 
-    // スクロール
+    // Bind the scroll event
     window.addEventListener('scroll', (event) => {
       this.scroll(event);
     }, false);
 
-    // リサイズ（debounceで連発を防ぐ）
+    // Bind the esize event
     window.addEventListener(hookEventForResize, debounce((event) => {
       this.resize();
     }, 400), false);
