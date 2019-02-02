@@ -2,23 +2,21 @@
 * Preload images with Promise.all()
 */
 
-export default function(imgArr) {
-  const length = imgArr.length;
-  const ps = [];
+const loadImg = (target) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      resolve(true, img);
+    };
+    img.onerror = () => {
+      reject(false);
+    };
+    img.src = target;
+  });
+}
 
-  for (var i = 0; i < length; i++) {
-    const index = i;
-    ps[index] = new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => {
-        resolve();
-      };
-      img.onerror = () => {
-        reject();
-      };
-      img.src = imgArr[index];
-    });
-  }
-
-  return Promise.all(ps);
+export default function(targets) {
+  return Promise.all(targets.map((target) => {
+    return loadImg(target);
+  }));
 }
