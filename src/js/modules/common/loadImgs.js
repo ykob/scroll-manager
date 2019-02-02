@@ -1,3 +1,7 @@
+/**
+* Preload images with Promise.all()
+*/
+
 export default function(imgArr) {
   const length = imgArr.length;
   const ps = [];
