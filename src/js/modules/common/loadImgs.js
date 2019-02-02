@@ -3,6 +3,7 @@
 */
 
 const loadImg = (target) => {
+  // Preload the Image object with Promise.
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
@@ -16,6 +17,7 @@ const loadImg = (target) => {
 }
 
 export default function(targets) {
+  //  Check whether the first argument String, Array or others.
   if (typeof(targets) === 'string') {
     return loadImg(targets);
   } else if (Array.isArray(targets) === true) {
