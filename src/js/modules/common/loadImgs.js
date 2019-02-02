@@ -16,7 +16,14 @@ const loadImg = (target) => {
 }
 
 export default function(targets) {
-  return Promise.all(targets.map((target) => {
-    return loadImg(target);
-  }));
+  if (typeof(targets) === 'string') {
+    return loadImg(targets);
+  } else if (Array.isArray(targets) === true) {
+    return Promise.all(targets.map((target) => {
+      return loadImg(target);
+    }));
+  } else {
+    console.warn('You should set String or Array to the first attribute of loadImgs function.');
+    return;
+  }
 }
