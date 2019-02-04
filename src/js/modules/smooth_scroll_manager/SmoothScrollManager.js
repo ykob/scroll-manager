@@ -101,11 +101,11 @@ export default class SmoothScrollManager {
     // if it is paused, this methods doesn't run.
     if (this.isPaused === true) return;
 
-    // スムーススクロールの一時停止
+    // Pause smooth scroll.
     this.isWorkingScroll = false;
     this.isPaused = true;
 
-    // 一時停止時の位置を記憶
+    //  Memorize the position ran pause.
     this.scrollTopPause = this.scrollTop;
     window.scrollTo(0, this.scrollTop);
   }
@@ -153,7 +153,7 @@ export default class SmoothScrollManager {
       this.hookes.parallax.anchor[1] = this.scrollTop + this.resolution.y * 0.5;
     }
 
-    // ScrollItems のスクロールメソッドを実行
+    // Run the scroll method of ScrollItems.
     this.scrollItems.scroll();
   }
   scroll(event) {
@@ -162,18 +162,18 @@ export default class SmoothScrollManager {
     // フラグが立たない場合はスクロールイベント内の処理を実行しない。
     if (this.isWorkingScroll === false) return;
 
-    // スクロール値の取得
+    // Get scroll top value.
     const pageYOffset = window.pageYOffset;
     this.scrollFrame = pageYOffset - this.scrollTop;
     this.scrollTop = pageYOffset;
 
-    // 個別のスクロールイベントを実行（標準のスクロール処理前）
+    // Run the individual scroll events. (Previous to the basic scroll event)
     if (this.scrollPrev) this.scrollPrev();
 
-    // 標準のスクロール処理を実行
+    // Run the basic scroll process.
     this.scrollBasis();
 
-    // 個別のスクロールイベントを実行（標準のスクロール処理後）
+    // Run the individual scroll events. (Next to the basic scroll event)
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
@@ -220,7 +220,7 @@ export default class SmoothScrollManager {
 
     await sleep(100);
 
-    // 本文やダミースクロールのレイアウトを再設定
+    // Reset the layout of the content and dummy scroll element.
     this.initDummyScroll();
     this.render();
     window.scrollTo(0, this.scrollTop);
@@ -231,7 +231,7 @@ export default class SmoothScrollManager {
     // Run unique resize event after page height is changed.
     if (this.resizeNext) this.resizeNext();
 
-    // スクロールイベントを再開（一時停止中は再開しない）
+    // Restart the scroll events. (it doesn't restart during a pause.)
     if (this.isPaused === false) this.isWorkingScroll = true;
 
     return;
@@ -254,8 +254,8 @@ export default class SmoothScrollManager {
     this.scrollItems.render(this.isValidSmooth());
   }
   on() {
-    // モバイルOSでは orientationchange でリサイズイベントを着火させる。
-    // ステータスバーのtoggleでresizeは着火してしまうのを避ける目的。
+    // In the case of to browse with iOS or Android, running the resize event by orientationchange.
+    // It's a purpose of preventing to run the resize event when status bar toggles.
     const hookEventForResize = (os === 'iOS' || os === 'Android')
       ? 'orientationchange'
       : 'resize';

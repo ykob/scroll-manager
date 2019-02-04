@@ -49,7 +49,7 @@ export default class ScrollManager {
     this.scroll();
   }
   scrollBasis() {
-    // Run the resize method of ScrollItems.
+    // Run the scroll method of ScrollItems.
     this.scrollItems.scroll();
   }
   scroll() {
@@ -61,13 +61,13 @@ export default class ScrollManager {
     this.scrollFrame = pageYOffset - this.scrollTop;
     this.scrollTop = pageYOffset;
 
-    // 個別のスクロールイベントを実行（標準のスクロール処理前）
+    // Run the individual scroll events. (Previous to the basic scroll event)
     if (this.scrollPrev) this.scrollPrev();
 
-    // 標準のスクロール処理を実行
+    // Run the basic scroll process.
     this.scrollBasis();
 
-    // 個別のスクロールイベントを実行（標準のスクロール処理後）
+    // Run the individual scroll events. (Next to the basic scroll event)
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
@@ -103,6 +103,8 @@ export default class ScrollManager {
     return;
   }
   on() {
+    // In the case of to browse with iOS or Android, running the resize event by orientationchange.
+    // It's a purpose of preventing to run the resize event when status bar toggles.
     const hookEventForResize = (os === 'iOS' || os === 'Android')
       ? 'orientationchange'
       : 'resize';
