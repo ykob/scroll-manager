@@ -1,7 +1,7 @@
 /**
 * Smooth Scroll Manager
 *
-* Copyright (c) 2018 Yoichi Kobayashi
+* Copyright (c) 2019 Yoichi Kobayashi
 * Released under the MIT license
 * http://opensource.org/licenses/mit-license.php
 */
