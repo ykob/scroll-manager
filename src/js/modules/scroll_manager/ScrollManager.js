@@ -1,7 +1,7 @@
 /**
 * Scroll Manager
 *
-* Copyright (c) 2019 Yoichi Kobayashi
+* Copyright (c) 2018 Yoichi Kobayashi
 * Released under the MIT license
 * http://opensource.org/licenses/mit-license.php
 */
@@ -49,11 +49,11 @@ export default class ScrollManager {
     this.scroll();
   }
   scrollBasis() {
-    // Run the scroll method of ScrollItems.
+    // Run the resize method of ScrollItems.
     this.scrollItems.scroll();
   }
   scroll() {
-    // フラグが立たない場合はスクロールイベント内の処理を実行しない。
+    // In the case of the flag to work smooth scroll is disabled, it doesn't run the processing in scroll event.
     if (this.isWorking === false) return;
 
     // Get scroll top value.
@@ -71,9 +71,7 @@ export default class ScrollManager {
     if (this.scrollNext) this.scrollNext();
   }
   resizeBasis() {
-    // 基礎的なリサイズイベントはここに記述する。
-
-    // ScrollItems のリサイズメソッドを実行
+    // Run the resize method of ScrollItems.
     this.scrollItems.resize();
   }
   async resize() {
@@ -103,8 +101,6 @@ export default class ScrollManager {
     return;
   }
   on() {
-    // In the case of to browse with iOS or Android, running the resize event by orientationchange.
-    // It's a purpose of preventing to run the resize event when status bar toggles.
     const hookEventForResize = (os === 'iOS' || os === 'Android')
       ? 'orientationchange'
       : 'resize';

@@ -98,7 +98,7 @@ export default class SmoothScrollManager {
     return;
   }
   pause() {
-    // if it is paused, this methods doesn't run.
+    // If it's paused, this methods doesn't run.
     if (this.isPaused === true) return;
 
     // Pause smooth scroll.
@@ -110,7 +110,7 @@ export default class SmoothScrollManager {
     window.scrollTo(0, this.scrollTop);
   }
   play() {
-    // if it is not paused, this methods doesn't run.
+    // If it is not paused, this methods doesn't run.
     if (this.isPaused === false) return;
 
     // Run smooth scroll.
@@ -124,11 +124,11 @@ export default class SmoothScrollManager {
   initDummyScroll() {
     // Initialize dummy scroll.
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
-      // PCの場合
+      // In case of PC.
       this.elm.contents.classList.add('is-fixed');
       this.elm.dummyScroll.style.height = `${this.elm.contents.clientHeight}px`;
     } else {
-      // スマホの場合
+      // In case of Smartphone.
       this.elm.contents.style.transform = '';
       this.elm.contents.classList.remove('is-fixed');
       this.elm.dummyScroll.style.height = `0`;
@@ -144,8 +144,6 @@ export default class SmoothScrollManager {
     }
   }
   scrollBasis() {
-    // 基礎的なスクロールイベントはここに記述する。
-
     // スクロール値を元に各Hookesオブジェクトを更新
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       this.hookes.contents.anchor[1] = this.scrollTop * -1;
@@ -157,9 +155,7 @@ export default class SmoothScrollManager {
     this.scrollItems.scroll();
   }
   scroll(event) {
-    // スクロールイベントの一連の流れ
-
-    // フラグが立たない場合はスクロールイベント内の処理を実行しない。
+    // In the case of the flag to work smooth scroll is disabled, it doesn't run the processing in scroll event.
     if (this.isWorkingScroll === false) return;
 
     // Get scroll top value.
