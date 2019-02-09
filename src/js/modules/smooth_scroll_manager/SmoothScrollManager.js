@@ -144,7 +144,7 @@ export default class SmoothScrollManager {
     }
   }
   scrollBasis() {
-    // スクロール値を元に各Hookesオブジェクトを更新
+    // Update each Hookes instances based on scrollTop value.
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       this.hookes.contents.anchor[1] = this.scrollTop * -1;
       this.hookes.smooth.velocity[1] += this.scrollFrame;
@@ -192,7 +192,7 @@ export default class SmoothScrollManager {
     this.bodyResolution.x = this.elm.contents.clientWidth;
     this.bodyResolution.y = this.elm.contents.clientHeight;
 
-    // window幅によってHookesオブジェクトの値を再設定する
+    // Reset the value of Hookes instance properties based on window width.
     if (this.resolution.x > this.X_SWITCH_SMOOTH) {
       // In case of PC.
       this.hookes.contents.velocity[1] = this.hookes.contents.anchor[1] = -this.scrollTop;
