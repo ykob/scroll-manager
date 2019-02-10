@@ -117,7 +117,7 @@ export default class SmoothScrollManager {
     this.isWorkingScroll = true;
     this.isPaused = false;
 
-    // 一時停止時の位置に移動（pause後に標準のスクロールがされても元の位置から動いていないように見せるため）
+    // Move to the position that paused.
     this.scrollTop = this.scrollTopPause;
     window.scrollTo(0, this.scrollTop);
   }
