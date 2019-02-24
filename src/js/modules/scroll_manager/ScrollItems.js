@@ -19,8 +19,10 @@ export default class ScrollItems {
   scroll() {
     for (var i = 0; i < this.scrollItems.length; i++) {
       this.scrollItems[i].show(
-        this.scrollManager.scrollTop + this.scrollManager.resolution.y,
-        this.scrollManager.scrollTop
+        // The top of a range to judge that the element is view in a window or not.
+        this.scrollManager.scrollTop + this.scrollManager.resolution.y * 0.9,
+        // The bottom of a range to judge that the element is view in a window or not.
+        this.scrollManager.scrollTop + this.scrollManager.resolution.y * 0.1
       );
     }
   }
