@@ -74,6 +74,14 @@ export default class SmoothScrollManager {
     this.initHookes();
     this.scrollItems.init(this.elm.contents);
 
+    // Turn off flags that are to run Scroll Manager.
+    this.isWorkingScroll = false;
+    this.isWorkingScroll = true;
+    this.isWorkingRender = true;
+    this.isWorkingTransform = true;
+
+    await this.resize();
+
     // If it has a hash in location, it adjusts the scroll position to the appropriate place.
     const { hash } = location;
     const target = (hash) ? document.querySelector(hash) : null;
@@ -87,13 +95,6 @@ export default class SmoothScrollManager {
     }
     this.elm.contents.style.transform = `translate3D(0, ${this.hookes.contents.velocity[1]}px, 0)`;
 
-    // Turn off flags that are to run Scroll Manager.
-    this.isWorkingScroll = false;
-    this.isWorkingScroll = true;
-    this.isWorkingRender = true;
-    this.isWorkingTransform = true;
-
-    await this.resize();
     this.scroll();
     return;
   }
