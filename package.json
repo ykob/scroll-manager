@@ -24,7 +24,7 @@
     "babel-loader": "^8.0.4",
     "browser-sync": "^2.23.5",
     "cross-env": "^5.1.5",
-    "del": "^3.0.0",
+    "del": "^4.1.1",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-clean-css": "^4.0.0",
@@ -47,7 +47,7 @@
     "pump": "^3.0.0",
     "require-dir": "^1.0.0",
     "run-sequence": "^2.2.1",
-    "slash": "^2.0.0",
+    "slash": "^3.0.0",
     "vinyl-source-stream": "^2.0.0",
     "webpack": "^4.20.2",
     "webpack-stream": "^5.1.1"
