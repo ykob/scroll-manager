@@ -18,13 +18,13 @@ modules.contentsHeader.modules = modules;
 
 export default async function() {
   [...document.querySelectorAll('.js-anchor-link')].map(elm => {
-    new AnchorLink(elm, modules.scrollManager);
+    return new AnchorLink(elm, modules.scrollManager);
   });
   [...document.querySelectorAll('.js-hover')].map(elm => {
-    new Hover(elm);
+    return new Hover(elm);
   });
   const accordions = [...document.querySelectorAll('.js-accordion')].map(elm => {
-    new Accordion(elm, modules.scrollManager);
+    return new Accordion(elm, modules.scrollManager);
   });
 
   for (var i = 0; i < elmOpenModal.length; i++) {
