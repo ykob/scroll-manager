@@ -1,12 +1,14 @@
 const gulp = require('gulp');
 
 const $ = require('../plugins');
+const DOMAIN = require('../conf').DOMAIN;
+const DIR = require('../conf').DIR;
 const conf = require('../conf').pug;
 
 gulp.task('pug', () => {
   const data = require(`../../${conf.json}`);
-  data.meta.domain = conf.domain;
-  data.meta.path = conf.path;
+  data.meta.domain = DOMAIN;
+  data.meta.path = DIR.PATH;
   return gulp.src(conf.src)
     .pipe($.plumber({
       errorHandler: $.notify.onError('<%= error.message %>')

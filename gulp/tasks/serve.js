@@ -6,6 +6,7 @@ const fs = require('fs');
 const url = require("url");
 const pug = require('pug');
 
+const DOMAIN = require('../conf').DOMAIN;
 const DIR = require('../conf').DIR;
 const conf = require('../conf').serve;
 const confPug = require('../conf').pug;
@@ -19,8 +20,8 @@ const getPugTemplatePath = (baseDir, req)=>{
 const pugMiddleWare = (req, res, next) => {
   const requestPath = getPugTemplatePath(process.cwd(), req);
   const data = JSON.parse(fs.readFileSync(confPug.json));
-  data.meta.domain = confPug.domain;
-  data.meta.path = confPug.path;
+  data.meta.domain = DOMAIN;
+  data.meta.path = DIR.PATH;
   if (path.parse(requestPath).ext !== '.html') {
     return next();
   }
