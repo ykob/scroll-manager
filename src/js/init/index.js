@@ -11,25 +11,22 @@ const modules = {
   scrollManager: new SmoothScrollManager(),
   contentsHeader: new ContentsHeader(),
 }
-const elmAnchorLink = document.querySelectorAll('.js-anchor-link');
-const elmHover = document.querySelectorAll('.js-hover');
-const elmAccordion = document.querySelectorAll('.js-accordion');
 const elmOpenModal = document.querySelectorAll('.js-open-modal');
-const accordions = [];
 
 modules.scrollManager.modules = modules;
 modules.contentsHeader.modules = modules;
 
 export default async function() {
-  for (var i = 0; i < elmAnchorLink.length; i++) {
-    new AnchorLink(elmAnchorLink[i], modules.scrollManager);
-  }
-  for (var i = 0; i < elmHover.length; i++) {
-    new Hover(elmHover[i]);
-  }
-  for (var i = 0; i < elmAccordion.length; i++) {
-    accordions[i] = new Accordion(elmAccordion[i], modules.scrollManager);
-  }
+  [...document.querySelectorAll('.js-anchor-link')].map(elm => {
+    new AnchorLink(elm, modules.scrollManager);
+  });
+  [...document.querySelectorAll('.js-hover')].map(elm => {
+    new Hover(elm);
+  });
+  const accordions = [...document.querySelectorAll('.js-accordion')].map(elm => {
+    new Accordion(elm, modules.scrollManager);
+  });
+
   for (var i = 0; i < elmOpenModal.length; i++) {
     elmOpenModal[i].addEventListener('click', () => {
       if (modules.scrollManager.isWorking) {
