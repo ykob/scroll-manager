@@ -11,7 +11,6 @@ const modules = {
   scrollManager: new SmoothScrollManager(),
   contentsHeader: new ContentsHeader(),
 }
-const elmOpenModal = document.querySelectorAll('.js-open-modal');
 
 modules.scrollManager.modules = modules;
 modules.contentsHeader.modules = modules;
@@ -26,16 +25,15 @@ export default async function() {
   const accordions = [...document.querySelectorAll('.js-accordion')].map(elm => {
     return new Accordion(elm, modules.scrollManager);
   });
-
-  for (var i = 0; i < elmOpenModal.length; i++) {
-    elmOpenModal[i].addEventListener('click', () => {
+  [...document.querySelectorAll('.js-open-modal')].map(elm => {
+    return elm.addEventListener('click', () => {
       if (modules.scrollManager.isWorking) {
         modules.scrollManager.pause();
       } else {
         modules.scrollManager.play();
       }
     });
-  }
+  });
 
   modules.scrollManager.scrollNext = () => {
     modules.contentsHeader.scroll();
