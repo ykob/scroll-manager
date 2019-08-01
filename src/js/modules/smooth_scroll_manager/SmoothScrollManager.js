@@ -67,7 +67,7 @@ export default class SmoothScrollManager {
 
     // Get the initial scroll value. (it's unnecessary if it has Pjax)
     this.scrollTop = window.pageYOffset;
-    this.resolution.x = window.innerWidth;
+    this.resolution.x = document.body.clientWidth;
     this.resolution.y = window.innerHeight;
 
     // Initialize Hookes and ScrollItems.
@@ -188,7 +188,7 @@ export default class SmoothScrollManager {
 
     // Get each value.
     this.scrollTop = window.pageYOffset;
-    this.resolution.x = window.innerWidth;
+    this.resolution.x = document.body.clientWidth;
     this.resolution.y = window.innerHeight;
     this.bodyResolution.x = this.elm.contents.clientWidth;
     this.bodyResolution.y = this.elm.contents.clientHeight;

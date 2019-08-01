@@ -82,7 +82,7 @@ export default class ScrollManager {
 
     // Get each value.
     this.scrollTop = window.pageYOffset;
-    this.resolution.x = window.innerWidth;
+    this.resolution.x = document.body.clientWidth;
     this.resolution.y = window.innerHeight;
     this.bodyResolution.x = document.body.clientWidth;
     this.bodyResolution.y = document.body.clientHeight;
