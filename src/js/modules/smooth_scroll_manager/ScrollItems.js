@@ -10,35 +10,25 @@ export default class ScrollItems {
     this.parallaxItems = [];
   }
   init(contents) {
-    const elmScrollItems = contents.querySelectorAll('.js-scroll-item');
-    const elmSmoothItems = contents.querySelectorAll('.js-smooth-item');
-    const elmParallaxItems = contents.querySelectorAll('.js-parallax-item');
-
-    this.scrollItems = [];
-    this.smoothItems = [];
-    this.parallaxItems = [];
-
-    for (var i = 0; i < elmScrollItems.length; i++) {
-      this.scrollItems[i] = new ScrollItem(
-        elmScrollItems[i], this.scrollManager
-      );
-    }
-    for (var i = 0; i < elmSmoothItems.length; i++) {
-      this.smoothItems[i] = new SmoothItem(
-        elmSmoothItems[i],
+    this.scrollItems = [...contents.querySelectorAll('.js-scroll-item')].map(o => {
+      return new ScrollItem(o, this.scrollManager);
+    });
+    this.smoothItems = [...contents.querySelectorAll('.js-smooth-item')].map(o => {
+      return new SmoothItem(
+        o,
         this.scrollManager,
         this.scrollManager.hookes.smooth,
-        elmSmoothItems[i].dataset
+        o.dataset
       );
-    }
-    for (var i = 0; i < elmParallaxItems.length; i++) {
-      this.parallaxItems[i] = new ParallaxItem(
-        elmParallaxItems[i],
+    });
+    this.parallaxItems = [...contents.querySelectorAll('.js-parallax-item')].map(o => {
+      return new ParallaxItem(
+        o,
         this.scrollManager,
         this.scrollManager.hookes.parallax,
-        elmParallaxItems[i].dataset
+        o.dataset
       );
-    }
+    });
   }
   scroll() {
     for (var i = 0; i < this.scrollItems.length; i++) {
