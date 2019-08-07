@@ -44,7 +44,7 @@ export default async function() {
     }
   }
   modules.renderer.render = () => {
-    modules.scrollManager.render();
+    modules.scrollManager.update();
     modules.contentsHeader.render();
   }
 

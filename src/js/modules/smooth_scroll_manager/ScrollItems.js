@@ -9,7 +9,7 @@ export default class ScrollItems {
     this.smoothItems = [];
     this.parallaxItems = [];
   }
-  init(contents) {
+  start(contents) {
     this.scrollItems = [...contents.querySelectorAll('.js-scroll-item')].map(o => {
       return new ScrollItem(o, this.scrollManager);
     });
@@ -51,12 +51,12 @@ export default class ScrollItems {
       this.parallaxItems[i].init(this.scrollManager.scrollTop, isWorking);
     }
   }
-  render(isWorking) {
+  update(isWorking) {
     for (var i = 0; i < this.smoothItems.length; i++) {
-      this.smoothItems[i].render(isWorking);
+      this.smoothItems[i].update(isWorking);
     }
     for (var i = 0; i < this.parallaxItems.length; i++) {
-      this.parallaxItems[i].render(isWorking);
+      this.parallaxItems[i].update(isWorking);
     }
   }
 }

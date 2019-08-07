@@ -20,7 +20,7 @@ export default class SmoothItem {
     this.top = scrollTop + rect.top;
     this.elm.style.backfaceVisibility = 'hidden';
   }
-  render(isWorking) {
+  update(isWorking) {
     let x = 0;
     let y = 0;
     if (isWorking === true) {

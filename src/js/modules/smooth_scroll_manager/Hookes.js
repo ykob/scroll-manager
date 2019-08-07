@@ -10,7 +10,7 @@ export default class Hookes {
     this.d = (opt && opt.d !== undefined) ? opt.d : 0.7;
     this.m = (opt && opt.m !== undefined) ? opt.m : 1;
   }
-  render() {
+  update() {
     Force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, this.k);
     Force3.applyDrag(this.acceleration, this.d);
     Force3.updateVelocity(this.velocity, this.acceleration, this.m);

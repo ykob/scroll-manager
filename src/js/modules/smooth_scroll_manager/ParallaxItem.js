@@ -23,9 +23,9 @@ export default class ParallaxItem {
       this.top = scrollTop + rect.top;
       this.elm.style.backfaceVisibility = 'hidden';
     }
-    this.render();
+    this.update();
   }
-  render(iwWorking) {
+  update(iwWorking) {
     if (iwWorking === false) return;
     const x = MathEx.clamp(
       this.hookes.velocity[0] * this.ratioX,
