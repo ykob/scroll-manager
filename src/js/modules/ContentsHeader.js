@@ -12,7 +12,7 @@ export default class ContentsHeaderBg {
       if (this.bg.classList.contains('is-hidden')) this.bg.classList.remove('is-hidden');
     }
   }
-  render() {
+  update() {
     var v = this.modules.scrollManager.hookes.contents.velocity[1] / this.modules.scrollManager.resolution.y * -0.5 + 1;
     v = MathEx.clamp(v, 1, 2)
     this.bg.style.transform = `scale(${v})`;
